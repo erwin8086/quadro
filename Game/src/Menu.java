@@ -224,7 +224,6 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			return;
 		}
 		if(move) {
-			System.out.println("Move");
 			Rectangle bounds = gui.getBounds();
 			if(mouse_x>e.getX()) {
 				bounds.x -= mouse_x-e.getX();

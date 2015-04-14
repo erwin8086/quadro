@@ -10,6 +10,7 @@ public class Game {
 	private Menu menu;
 	private Save save;
 	private Level level;
+	private Player player;
 	
 	private GUI gui;
 	public Game(GUI gui, Save save) {
@@ -37,7 +38,7 @@ public class Game {
 		level = new Level(gos,gui, this);
 		Mauer mauer = new Mauer(gui,level);
 		gos.add(mauer);
-		Player player = new Player(gui,mauer, level, this);
+		player = new Player(gui,mauer, level, this);
 		player.setKeys(save.getKeys(Save.KEY_LEFT), save.getKeys(Save.KEY_RIGHT), save.getKeys(Save.KEY_UP));
 		gos.add(player);
 		gos.add(new Evil(player,gui,mauer,level));
@@ -101,6 +102,10 @@ public class Game {
 	
 	public Level getLevel() {
 		return level;
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 
 }

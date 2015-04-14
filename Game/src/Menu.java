@@ -1,18 +1,21 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 
-public class Menu implements MouseListener, MouseMotionListener{
+public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	private GUI gui;
 	private boolean visible;
 	private Game game;
 	private boolean move;
 	private boolean clicked;
 	private int mouse_x=0, mouse_y=0;
+	private int last_key;
 	
 	public Menu(GUI gui, Game game) {
 		this.gui = gui;
@@ -22,6 +25,7 @@ public class Menu implements MouseListener, MouseMotionListener{
 		clicked=false;
 		gui.addMouseListener(this);
 		gui.addMouseMotionListener(this);
+		gui.addKeyListener(this);
 		game.addMenu(this);
 		
 	}
@@ -45,8 +49,61 @@ public class Menu implements MouseListener, MouseMotionListener{
 				return;
 			}
 			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-70,100,20), "Exit to Menu", g) && clicked) {
-				game.getSave().setConf(Save.LEVEL, String.valueOf(game.getLevel().getLevelCount()));
 				game.endGame();
+				return;
+			}
+			gui.finishPaint();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void showMSG(String msg, Graphics g) {
+		int x = gui.getWidth()/2 -100;
+		int y = gui.getHeight()/2 -50;
+		g.setColor(Color.white);
+		g.fillRect(x, y, 200, 100);
+		x += 20;
+		y += 25;
+		g.setColor(Color.black);
+		g.drawString(msg, x, y);
+	}
+	
+	private void setKey(int Key, String key_name) {
+		last_key=0;
+		while(last_key==0) {
+			Graphics g = gui.getPaint();
+			paintGeneric(g);
+			showMSG("Press Key to Set for " + key_name, g);
+			gui.finishPaint();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		game.getSave().setConf(Key, String.valueOf(last_key));
+	}
+	
+	private void showKeyMenu() {
+		while(true) {
+			visible=true;
+			Graphics g = gui.getPaint();
+			paintGeneric(g);
+			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-100,120,20), "KEY: UP", g) && clicked) {
+				setKey(Save.KEY_UP, "UP");
+			}
+			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-70,120,20), "KEY: RIGHT", g) && clicked) {
+				setKey(Save.KEY_RIGHT, "RIGHT");
+			}
+			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-40,120,20), "KEY: LEFT", g) && clicked) {
+				setKey(Save.KEY_LEFT, "LEFT");
+			}
+			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-10,120,20), "Exit Options", g) && clicked) {
+				clicked=false;
 				return;
 			}
 			gui.finishPaint();
@@ -68,6 +125,8 @@ public class Menu implements MouseListener, MouseMotionListener{
 				visible=false;
 				System.out.println("Game Starts");
 				game.getSave().setConf(Save.LEVEL, String.valueOf(0));
+				game.getSave().setConf(Save.SCORE, "0");
+				game.getSave().setConf(Save.LIVES, "3");
 				game.start();
 				clicked=false;
 			}
@@ -76,8 +135,28 @@ public class Menu implements MouseListener, MouseMotionListener{
 				game.start();
 				clicked=false;
 			}
+			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-40,120,20), "Options", g) && clicked) {
+				clicked=false;
+				showKeyMenu();
+			}
 			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-10,120,20), "Exit Game", g) && clicked) {
 				System.exit(0);
+			}
+			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2+20,120,20), "Clear Save", g) && clicked) {
+				last_key=0;
+				while(last_key==0) {
+					Graphics g2 = gui.getPaint();
+					paintGeneric(g2);
+					showMSG("Press Y to Delete Game", g2);
+					gui.finishPaint();
+				}
+				if(last_key==KeyEvent.VK_Y)
+					game.getSave().clear();
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 			gui.finishPaint();
 			try {
@@ -168,5 +247,16 @@ public class Menu implements MouseListener, MouseMotionListener{
 		mouse_x=e.getX();
 		mouse_y=e.getY();
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		last_key=e.getKeyCode();
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {}
 
 }

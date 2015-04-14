@@ -46,6 +46,9 @@ public class Level {
 			JOptionPane.showMessageDialog(gui, "Finish - Score: " + score.toString());
 			game.endGame();
 		}
+		game.getSave().setConf(Save.LEVEL, String.valueOf(getLevelCount()));
+		game.getSave().setConf(Save.SCORE, String.valueOf(game.getPlayer().getScore()));
+		game.getSave().setConf(Save.LIVES, String.valueOf(game.getPlayer().getLives()));
 		// Reset all GameObjects
 		for(GameObject g : gos) {
 			g.reset();

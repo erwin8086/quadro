@@ -47,8 +47,8 @@ public class Player implements GameObject, KeyListener {
 		KEY_LEFT = KeyEvent.VK_LEFT;
 		KEY_RIGHT = KeyEvent.VK_RIGHT;
 		KEY_UP = KeyEvent.VK_UP;
-		lives=3;
-		score=0;
+		lives=Integer.valueOf(game.getSave().getConf(Save.LIVES));
+		score=Integer.valueOf(game.getSave().getConf(Save.SCORE));
 		this.reset();
 	}
 	/**
@@ -239,6 +239,8 @@ public class Player implements GameObject, KeyListener {
 		}
 		JOptionPane.showMessageDialog(gui, "GameOver - Score: " + score.toString());
 		game.getSave().setConf(Save.LEVEL, "0");
+		game.getSave().setConf(Save.SCORE, "0");
+		game.getSave().setConf(Save.LIVES, "3");
 		game.endGame();
 	}
 	

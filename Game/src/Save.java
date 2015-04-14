@@ -15,6 +15,8 @@ public class Save {
 	public static final int KEY_LEFT=1;
 	public static final int KEY_RIGHT=2;
 	public static final int LEVEL=3;
+	public static final int LIVES=4;
+	public static final int SCORE=5;
 	
 	
 	public int getKeys(int key) {
@@ -34,6 +36,12 @@ public class Save {
 			return KeyEvent.VK_RIGHT;
 		}
 		return 0;
+	}
+	
+	public void clear() {
+		if(getConfFile().exists()) {
+			getConfFile().delete();
+		}
 	}
 	
 	public File getConfFile() {
@@ -73,47 +81,54 @@ public class Save {
 	}
 	
 	public void setConf(int conf, String val) {
+		boolean saved=false;
 		File f = getConfFile();
 		if(!f.exists()) {
 			try {
+				Scanner s = new Scanner(getClass().getResourceAsStream("/res/conf.txt"));
 				PrintWriter pr = new PrintWriter(f);
-				pr.println(conf + ":" + val);
+				while(s.hasNextLine()) {
+					pr.print(s.nextLine());
+				}
+				s.close();
 				pr.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
 			
-		} else {
-			try {
-				ByteArrayOutputStream bout = new ByteArrayOutputStream();
-				PrintWriter p = new PrintWriter(bout);
-				Scanner in = new Scanner(f);
-				while(in.hasNextLine()) {
-					p.println(in.nextLine());
-				}
-				in.close();
-				p.close();
-				in = new Scanner(new ByteArrayInputStream(bout.toByteArray()));
-				p = new PrintWriter(f);
-				while(in.hasNextLine()) {
-					String line = in.nextLine();
-					String[] split = line.split(":");
-					if(split[0].equals(String.valueOf(conf))) {
-						p.println(conf + ":" + val);
-					} else {
-						p.println(line);
-					}
-				}
-				in.close();
-				p.close();
-				
-				
-				
-				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+		}
+		try {
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
+			PrintWriter p = new PrintWriter(bout);
+			Scanner in = new Scanner(f);
+			while(in.hasNextLine()) {
+				p.println(in.nextLine());
 			}
+			in.close();
+			p.close();
+			in = new Scanner(new ByteArrayInputStream(bout.toByteArray()));
+			p = new PrintWriter(f);
+			while(in.hasNextLine()) {
+				String line = in.nextLine();
+				String[] split = line.split(":");
+				if(split[0].equals(String.valueOf(conf))) {
+					p.println(conf + ":" + val);
+					saved=true;
+				} else {
+					p.println(line);
+				}
+			}
+			if(!saved) {
+				p.println(conf + ":" + val);
+			}
+			in.close();
+			p.close();
+			
+			
+			
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
-
 }

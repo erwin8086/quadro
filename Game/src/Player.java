@@ -58,6 +58,12 @@ public class Player implements GameObject, KeyListener {
 		lives++;
 	}
 	
+	/**
+	 * Set Keybinds
+	 * @param left
+	 * @param right
+	 * @param up
+	 */
 	public void setKeys(int left, int right, int up) {
 		KEY_LEFT = left;
 		KEY_UP = up;

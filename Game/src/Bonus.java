@@ -1,0 +1,271 @@
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+
+/**
+ * Bonus Objects in Game
+ * Used for Coins, Lives, Invincible
+ * @author erwin
+ *
+ */
+public class Bonus implements GameObject{
+	// The Player
+	private Player player;
+	// The Level Instance
+	private Level level;
+	// Contains all Boni
+	private ArrayList<BonusObject> boni;
+	/**
+	 * Creates and resets Bonus
+	 * @param player // The Player
+	 * @param level  // The Level instance
+	 */
+	public Bonus(Player player, Level level) {
+		this.player=player;
+		this.level=level;
+		this.reset();
+	}
+
+	/**
+	 * Calculate Bonus(Check if Player colidate)
+	 * @time Time sience Last Frame in Secounds
+	 */
+	@Override
+	public boolean calc(float time) {
+		int i;
+		for(i=0;i<boni.size();i++) {
+			if(boni.get(i).calc()) {
+				boni.remove(i);
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Paint Bonus Image
+	 */
+	@Override
+	public boolean paint(Graphics g) {
+		for(BonusObject b : boni) {
+			b.paint(g);
+		}
+		return false;
+	}
+
+	/**
+	 * Resets Bonus on Level Starts
+	 */
+	@Override
+	public boolean reset() {
+		boni = new ArrayList<BonusObject>();
+		BufferedImage image=null;
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream("/res/coin50.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		final BufferedImage image_50=image;
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream("/res/coin100.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		final BufferedImage image_100=image;
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream("/res/coin500.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		final BufferedImage image_500=image;
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream("/res/live.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		final BufferedImage image_live=image;
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream("/res/invincible.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		final BufferedImage image_invincible=image;
+		new Level.LevelLoader() {
+			
+			@Override
+			void onFound(int x, int y) {
+				boni.add(new Coin().setValue(50).setImage(image_50).setPos(x, y));
+			}
+		}.load('5', level.getLevel());
+		new Level.LevelLoader() {
+			
+			@Override
+			void onFound(int x, int y) {
+				boni.add(new Coin().setValue(100).setImage(image_100).setPos(x, y));
+			}
+		}.load('1', level.getLevel());
+		new Level.LevelLoader() {
+			
+			@Override
+			void onFound(int x, int y) {
+				boni.add(new Coin().setValue(500).setImage(image_500).setPos(x, y));
+			}
+		}.load('%', level.getLevel());
+		new Level.LevelLoader() {
+			
+			@Override
+			void onFound(int x, int y) {
+				boni.add(new Invincible().setImage(image_invincible).setPos(x, y));
+			}
+		}.load('I', level.getLevel());
+		new Level.LevelLoader() {
+			
+			@Override
+			void onFound(int x, int y) {
+				boni.add(new Live().setImage(image_live).setPos(x, y));
+			}
+		}.load('L', level.getLevel());
+		
+		return false;
+	}
+
+	/**
+	 * Do Noting
+	 */
+	@Override
+	public boolean isColidate(Rectangle r) {
+		return false;
+	}
+
+	/**
+	 * Do Noting
+	 */
+	@Override
+	public boolean destroyColidate(Rectangle r) {
+		return false;
+	}
+	
+	/**
+	 * General BonusObject
+	 * @author erwin
+	 *
+	 */
+	abstract class BonusObject {
+		protected BufferedImage image;
+		private int x,y;
+		/**
+		 * On Player colidate with Bonus
+		 */
+		abstract void onBonus();
+		/**
+		 * Calculate if Player Colidate with Bonus
+		 * and Calls onBonus();
+		 * @return if true Bonus are destroyed
+		 */
+		public boolean calc() {
+			if(player.isColidate(getPOS())) {
+				onBonus();
+				return true;
+			}
+			return false;
+		}
+		/**
+		 * Get Postion as Rectangle
+		 * @return
+		 */
+		public Rectangle getPOS() {
+			return new Rectangle(x,y,image.getWidth(), image.getHeight());
+		}
+		/**
+		 * Paint Bonus
+		 * @param g
+		 */
+		public void paint(Graphics g) {
+			g.drawImage(image, x, y, null);
+		}
+		/**
+		 * Sets Bonus Position
+		 * @param x
+		 * @param y
+		 * @return
+		 */
+		public BonusObject setPos(int x, int y) {
+			this.x=x;
+			this.y=y;
+			return this;
+		}
+		/**
+		 * Set Bonus Image
+		 * @param image
+		 * @return
+		 */
+		public BonusObject setImage(BufferedImage image) {
+			this.image=image;
+			return this;
+		}
+	}
+	/**
+	 * Coin Bonus
+	 * @author erwin
+	 *
+	 */
+	class Coin extends BonusObject {
+		// The Coin Value
+		private int value=10;
+		/**
+		 * Set Coin Value
+		 * @param value
+		 * @return
+		 */
+		public Coin setValue(int value) {
+			this.value=value;
+			return this;
+		}
+		/**
+		 * Add Score to Player
+		 */
+		@Override
+		void onBonus() {
+			player.addScore(value);
+		}
+		
+	}
+	/**
+	 * Invincible Bonus
+	 * @author erwin
+	 *
+	 */
+	class Invincible extends BonusObject {
+
+		/**
+		 * Set Player Invincible
+		 */
+		@Override
+		void onBonus() {
+			player.addInvincible(5, true);
+		}
+		
+	}
+	/**
+	 * Live Bonus
+	 * @author erwin
+	 *
+	 */
+	class Live extends BonusObject {
+
+		/**
+		 * Add a Live to Player
+		 */
+		@Override
+		void onBonus() {
+			player.addLive();
+		}
+		
+	}
+
+	
+
+}

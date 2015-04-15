@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -6,6 +8,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.font.LineMetrics;
+import java.awt.geom.Rectangle2D;
 
 
 public class Menu implements MouseListener, MouseMotionListener, KeyListener{
@@ -40,7 +44,11 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		g.setColor(Color.white);
 		g.fillRect(0, 0, gui.getWidth(), 16);
 		g.setColor(Color.black);
-		g.drawString(Main.title, gui.getWidth()/2 - 24, 12);
+		int width=0;
+		for(char c : Main.title.toCharArray()) {
+			width+=g.getFontMetrics().charWidth(c);
+		}
+		g.drawString(Main.title, gui.getWidth()/2 - width/2, 12);
 	}
 	
 	public void showPauseMenu() {
@@ -172,6 +180,15 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	}
 	
 	private boolean drawButton(Rectangle r, String text, Graphics g) {
+		FontMetrics fm = g.getFontMetrics();
+		LineMetrics lm = fm.getLineMetrics(text, g);
+		int width=0;
+		for(char c : text.toCharArray()) {
+			width+=fm.charWidth(c);
+		}
+
+
+
 		Color color=Color.white;
 		boolean mouseover=false;
 		if(mouse_x>r.x && mouse_x<r.x+r.width && mouse_y>r.y && mouse_y<r.y+r.height) {
@@ -181,7 +198,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		g.setColor(color);
 		g.fillRect(r.x, r.y, r.width, r.height);
 		g.setColor(Color.black);
-		g.drawString(text, r.x + r.width/2 - text.length()*8/2, r.y + r.height/2 + 4);
+		g.drawString(text, r.x + r.width/2 - width/2, r.y + r.height/2 + (int)Math.round(lm.getHeight()/2.8f));
 		return mouseover;
 	}
 

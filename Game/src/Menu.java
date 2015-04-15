@@ -30,6 +30,10 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		
 	}
 	
+	/**
+	 * paints Titlebar and Background
+	 * @param g Grphics to Paint
+	 */
 	private void paintGeneric(Graphics g) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, gui.getWidth(), gui.getHeight());

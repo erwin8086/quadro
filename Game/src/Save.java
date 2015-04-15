@@ -46,10 +46,11 @@ public class Save {
 			String name;
 			name=JOptionPane.showInputDialog("Bitte Namen eingeben [A-Z, a-z, 0-9]:");
 			if(name==null) return;
-			if(name=="") name="a Player";
+			if(name=="" || name.length()<1) name="a Player";
 			for(int i=0;i<5;i++) {
 				if(score>getHighScore(i).getScore()) {
 					newHighScore(i, new Score(name, score));
+					return;
 				}
 			}
 		}
@@ -64,10 +65,11 @@ public class Save {
 		String scores = getConf(HIGHSCORE);
 		if(scores==null) return;
 		String[] split = scores.split(";");
-		for(int i=num+1;i<5;i++) {
+		for(int i=4;i>num;i--) {
 			split[i] = split[i-1];
 		}
 		split[num]=score.getName() + "-" + String.valueOf(score.getScore());
+		scores="";
 		for(String s : split) {
 			scores+=s+";";
 		}
@@ -151,7 +153,7 @@ public class Save {
 				Scanner s = new Scanner(getClass().getResourceAsStream("/res/conf.txt"));
 				PrintWriter pr = new PrintWriter(f);
 				while(s.hasNextLine()) {
-					pr.print(s.nextLine());
+					pr.println(s.nextLine());
 				}
 				s.close();
 				pr.close();
@@ -207,10 +209,13 @@ public class Save {
 		}
 		
 		public void setName(String name) {
+			if(name.length()>10) {
+				name = name.substring(0, 10);
+			}
 			if(!checkName(name)) {
 				this.name=name;
 			} else {
-				this.name="null";
+				this.name="a Player";
 			}
 		}
 		
@@ -223,7 +228,7 @@ public class Save {
 		}
 		
 		public boolean checkName(String name) {
-			return name.matches("-") || name.matches(";") || name.matches(":");
+			return name.contains(new StringBuffer(";")) || name.contains(new StringBuffer("-")) || name.contains(new StringBuffer(":"));
 		}
 	}
 }

@@ -45,6 +45,10 @@ public class Level {
 		if(level>=levels.length) {
 			JOptionPane.showMessageDialog(gui, "Finish - Score: " + score.toString());
 			game.endGame();
+			game.getSave().setConf(Save.LEVEL, "0");
+			game.getSave().setConf(Save.SCORE, "0");
+			game.getSave().setConf(Save.LIVES, "3");
+			return;
 		}
 		game.getSave().setConf(Save.LEVEL, String.valueOf(getLevelCount()));
 		game.getSave().setConf(Save.SCORE, String.valueOf(game.getPlayer().getScore()));

@@ -10,6 +10,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Menu implements MouseListener, MouseMotionListener, KeyListener{
@@ -205,6 +208,53 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			}
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2+50,120,20), "Exit Game", g) && clicked) {
 				System.exit(0);
+			}
+			gui.finishPaint();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void showScreen(InputStream text) {
+		ArrayList<String> lines = new ArrayList<String>();
+		String line="";
+		String display="";
+		Scanner s = new Scanner(text);
+		while(true) {
+			visible=true;
+			Graphics g = gui.getPaint();
+			paintGeneric(g);
+			g.setColor(Color.white);
+			int x=20, y=60;
+			if(lines.size()>0) {
+				for(String str: lines) {
+					g.drawString(str, x, y);
+					y+=g.getFontMetrics().getHeight()+5;
+				}
+			}
+			
+			if(display.length()>0) {
+				g.drawString(display, x, y);
+			}
+			
+			if(line.length()>0) {
+				display += line.substring(0, 1);
+				line = line.substring(1);
+			} else {
+				if(display.length()>0) {
+					lines.add(display);
+				}
+				display="";
+				if(s.hasNextLine()) {
+					line = s.nextLine();
+				}
+			}
+			
+			if(drawButton(new Rectangle(gui.getWidth()-100,gui.getHeight()-30,90,20), "Next ->", g) && clicked) {
+				return;
 			}
 			gui.finishPaint();
 			try {

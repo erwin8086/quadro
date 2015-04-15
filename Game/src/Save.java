@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 
 public class Save {
 	public static final int KEY_UP=0;
@@ -17,6 +19,7 @@ public class Save {
 	public static final int LEVEL=3;
 	public static final int LIVES=4;
 	public static final int SCORE=5;
+	public static final int HIGHSCORE=6;
 	
 	
 	public int getKeys(int key) {
@@ -36,6 +39,66 @@ public class Save {
 			return KeyEvent.VK_RIGHT;
 		}
 		return 0;
+	}
+	
+	public void saveScore(GUI gui, int score) {
+		if(isHighScore(score)) {
+			String name;
+			name=JOptionPane.showInputDialog("Bitte Namen eingeben [A-Z, a-z, 0-9]:");
+			if(name==null) return;
+			if(name=="") name="a Player";
+			for(int i=0;i<5;i++) {
+				if(score>getHighScore(i).getScore()) {
+					newHighScore(i, new Score(name, score));
+				}
+			}
+		}
+	}
+	
+	public boolean isHighScore(int score) {
+		if(score>getHighScore(4).getScore()) return true;
+		return false;
+	}
+	
+	public void newHighScore(int num, Score score) {
+		String scores = getConf(HIGHSCORE);
+		if(scores==null) return;
+		String[] split = scores.split(";");
+		for(int i=num+1;i<5;i++) {
+			split[i] = split[i-1];
+		}
+		split[num]=score.getName() + "-" + String.valueOf(score.getScore());
+		for(String s : split) {
+			scores+=s+";";
+		}
+		setConf(HIGHSCORE, scores);
+	}
+	
+	public Score getHighScore(int num) {
+		String scores = getConf(HIGHSCORE);
+		if(scores==null) return new Score("null", 0);
+		String[] split = scores.split(";");
+		if(split.length<num) return new Score("null", 0);
+		if(split[num]==null) return new Score("null", 0);
+		try {
+			String[] split2 = split[num].split("-");
+			return new Score(split2[0], Integer.valueOf(split2[1]));
+		} catch(NumberFormatException e) {
+			return new Score("null", 0);
+		}
+	}
+	
+	
+	public void setHighScore(int num, Score score) {
+		String scores = getConf(HIGHSCORE);
+		if(scores==null) return;
+		String[] split = scores.split(";");
+		split[num] = score.getName() + "-" + String.valueOf(score.getScore());
+		scores = "";
+		for(String s : split) {
+			scores+=s+";";
+		}
+		setConf(HIGHSCORE, scores);
 	}
 	
 	public void clear() {
@@ -129,6 +192,38 @@ public class Save {
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		}
+	}
+	static class Score {
+		public Score(String name, int score) {
+			setName(name);
+			this.score = score;
+		}
+		private String name;
+		private int score;
+		
+		public String getName() {
+			return name;
+		}
+		
+		public void setName(String name) {
+			if(!checkName(name)) {
+				this.name=name;
+			} else {
+				this.name="null";
+			}
+		}
+		
+		public int getScore() {
+			return score;
+		}
+		
+		public int setScore() {
+			return score;
+		}
+		
+		public boolean checkName(String name) {
+			return name.matches("-") || name.matches(";") || name.matches(":");
 		}
 	}
 }

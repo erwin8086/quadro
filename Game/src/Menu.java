@@ -161,14 +161,14 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 					paintGeneric(g2);
 					showMSG("Press Y to Delete Game", g2);
 					gui.finishPaint();
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 				if(last_key==KeyEvent.VK_Y)
 					game.getSave().clear();
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 			gui.finishPaint();
 			try {

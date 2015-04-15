@@ -241,6 +241,7 @@ public class Player implements GameObject, KeyListener {
 		game.getSave().setConf(Save.LEVEL, "0");
 		game.getSave().setConf(Save.SCORE, "0");
 		game.getSave().setConf(Save.LIVES, "3");
+		game.getSave().saveScore(gui, score);
 		game.endGame();
 	}
 	

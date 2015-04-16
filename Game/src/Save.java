@@ -21,6 +21,7 @@ public class Save {
 	public static final int SCORE=5;
 	public static final int HIGHSCORE=6;
 	public static final int LEVELSET=7;
+	public static final int RES=8;
 	
 	
 	public int getKeys(int key) {

@@ -19,14 +19,16 @@ public class Bonus implements GameObject{
 	private Level level;
 	// Contains all Boni
 	private ArrayList<BonusObject> boni;
+	private Game game;
 	/**
 	 * Creates and resets Bonus
 	 * @param player // The Player
 	 * @param level  // The Level instance
 	 */
-	public Bonus(Player player, Level level) {
-		this.player=player;
-		this.level=level;
+	public Bonus(Game game) {
+		this.player=game.getPlayer();
+		this.level=game.getLevel();
+		this.game=game;
 		this.reset();
 	}
 
@@ -99,35 +101,35 @@ public class Bonus implements GameObject{
 			void onFound(int x, int y) {
 				boni.add(new Coin().setValue(50).setImage(image_50).setPos(x, y));
 			}
-		}.load('5', level.getLevel());
+		}.load('5', level.getLevel(), game);
 		new Level.LevelLoader() {
 			
 			@Override
 			void onFound(int x, int y) {
 				boni.add(new Coin().setValue(100).setImage(image_100).setPos(x, y));
 			}
-		}.load('1', level.getLevel());
+		}.load('1', level.getLevel(), game);
 		new Level.LevelLoader() {
 			
 			@Override
 			void onFound(int x, int y) {
 				boni.add(new Coin().setValue(500).setImage(image_500).setPos(x, y));
 			}
-		}.load('%', level.getLevel());
+		}.load('%', level.getLevel(), game);
 		new Level.LevelLoader() {
 			
 			@Override
 			void onFound(int x, int y) {
 				boni.add(new Invincible().setImage(image_invincible).setPos(x, y));
 			}
-		}.load('I', level.getLevel());
+		}.load('I', level.getLevel(), game);
 		new Level.LevelLoader() {
 			
 			@Override
 			void onFound(int x, int y) {
 				boni.add(new Live().setImage(image_live).setPos(x, y));
 			}
-		}.load('L', level.getLevel());
+		}.load('L', level.getLevel(), game);
 		
 		return false;
 	}

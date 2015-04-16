@@ -21,6 +21,7 @@ public class Evil implements GameObject {
 	protected Mauer mauer;
 	// The Level
 	private Level level;
+	private Game game;
 	/**
 	 * Generate Generic Evil
 	 * @param play
@@ -28,11 +29,12 @@ public class Evil implements GameObject {
 	 * @param mauer
 	 * @param level
 	 */
-	public Evil(Player play, GUI gui, Mauer mauer, Level level) {
-		player=play;
-		this.mauer = mauer;
-		this.gui = gui;
-		this.level = level;
+	public Evil(Game game) {
+		player=game.getPlayer();
+		this.mauer = game.getMauer();
+		this.gui = game.getGUI();
+		this.level = game.getLevel();
+		this.game=game;
 		// Reset Evil
 		reset();
 	}
@@ -143,7 +145,7 @@ public class Evil implements GameObject {
 				evils.add(new Evils(x,y,1));
 				player.addEvil();
 			}
-		}.load(check, level.getLevel());
+		}.load(check, level.getLevel(), game);
 					
 
 		return false;

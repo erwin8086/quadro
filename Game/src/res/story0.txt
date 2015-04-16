@@ -1,8 +1,16 @@
-Dies Ist ein Text
+These are the adventures of Quadro The Blue Raindrop.
+ 
+img:quadro.png
+ 
+ 
+Quadro liked it in the clouds, it was his home. But one stormy day,
+he fell all the way down from the sky into the sewer. It was 
+depressing for poor little Quadro, separated from his family and
+friends. He wanted to go back home...but on his way there were many
+dangers, such as dirty water. 
+Quadro was afraid of touching it, because he wanted to stay clean to
+get back to the clouds.
+Will you be able to help little Quadro getting back to his family and
+friends in the sky?    
 
-img:coin100.png
  
- 
- 
- 
-Das War coin100.png

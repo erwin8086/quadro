@@ -107,7 +107,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		game.getSave().setConf(Key, String.valueOf(last_key));
 	}
 	
-	private void showKeyMenu() {
+	private boolean showKeyMenu() {
 		while(true) {
 			visible=true;
 			Graphics g = gui.getPaint();
@@ -121,9 +121,29 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-40,120,20), "KEY: LEFT", g) && clicked) {
 				setKey(Save.KEY_LEFT, "LEFT");
 			}
-			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-10,120,20), "Exit Options", g) && clicked) {
+			String size="800x600";
+			String res = game.getSave().getConf(Save.RES);
+			if(res==null) res="0";
+			if(res.length()<1) res="0";
+			switch(Integer.valueOf(res)) {
+			case 0:
+				break;
+			case 1:
+				size="1024x768";
+				break;
+			case 2:
+				size="640x480";
+				break;
+			}
+			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-10,120,20), "SIZE: " + size, g) && clicked) {
+				int save_res=Integer.valueOf(res)+1;
+				if(save_res>2) save_res=0;
+				game.getSave().setConf(Save.RES, String.valueOf(save_res));
+				return true;
+			}
+			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2+20,120,20), "Exit Options", g) && clicked) {
 				clicked=false;
-				return;
+				return false;
 			}
 			gui.finishPaint();
 			try {
@@ -163,7 +183,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	}
 	
 	
-	public void showMainMenu() {
+	public boolean showMainMenu(boolean show_options) {
 		while(true) {
 			visible=true;
 			Graphics g = gui.getPaint();
@@ -184,9 +204,13 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				clicked=false;
 				showHighScore();
 			}
+			if(show_options) {
+				if(showKeyMenu()) return true;
+				show_options=false;
+			}
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-10,120,20), "Options", g) && clicked) {
 				clicked=false;
-				showKeyMenu();
+				if(showKeyMenu()) return true;
 			}
 			
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2+20,120,20), "Clear Save", g) && clicked) {
@@ -209,7 +233,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				}
 			}
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2+50,120,20), "Exit Game", g) && clicked) {
-				System.exit(0);
+				return false;
 			}
 			gui.finishPaint();
 			try {
@@ -230,6 +254,8 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			visible=true;
 			Graphics g = gui.getPaint();
 			paintGeneric(g);
+			Font old = g.getFont();
+			g.setFont(Font.decode(old.getFontName() + " 22"));
 			g.setColor(Color.white);
 			int x=20, y=60;
 			if(lines.size()>0) {
@@ -271,7 +297,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 					}
 				}
 			}
-			
+			g.setFont(old);
 			if(drawButton(new Rectangle(gui.getWidth()-100,gui.getHeight()-30,90,20), "Next ->", g) && clicked) {
 				return;
 			}

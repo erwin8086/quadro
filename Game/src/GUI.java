@@ -13,13 +13,25 @@ import javax.swing.JFrame;
 public class GUI extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 6411499808530678723L;
 	// Size of Window
-	private final int size_x=800, size_y=600;
+	private int size_x=800, size_y=600;
 	private BufferStrategy buffer;
 	private Game game;
 	/**
 	 * inits Main GUI
 	 */
-	public GUI() {
+	public GUI(int res) {
+		switch(res) {
+		case 0:
+			break;
+		case 1:
+			size_x=1024;
+			size_y=768;
+			break;
+		case 2:
+			size_x=640;
+			size_y=480;
+			break;
+		}
 		// Set Options
 		this.setBounds(30,30,size_x, size_y);
 		this.setResizable(false);

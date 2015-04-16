@@ -187,7 +187,7 @@ public class Player implements GameObject, KeyListener {
 				x=x1;
 				y=y1;
 			}
-		}.load('P', level.getLevel());
+		}.load('P', level.getLevel(), game);
 		key_left=false;
 		key_right=false;
 		key_up=false;

@@ -14,10 +14,12 @@ public class Mauer implements GameObject {
 	// The Coordinates of Walls
 	private ArrayList<Rectangle> mauern;
 	private Level level;
+	private Game game;
 	
-	public Mauer(GUI gui, Level level) {
-		this.gui=gui;
-		this.level = level;
+	public Mauer(Game game) {
+		this.gui=game.getGUI();
+		this.level = game.getLevel();
+		this.game=game;
 		this.reset();
 	}
 	
@@ -61,7 +63,7 @@ public class Mauer implements GameObject {
 			void onFound(int x, int y) {
 				mauern.add(new Rectangle(x,y,16,16));
 			}
-		}.load('#', level.getLevel());
+		}.load('#', level.getLevel(), game);
 		return false;
 	}
 

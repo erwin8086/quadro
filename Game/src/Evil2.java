@@ -11,8 +11,8 @@ import java.awt.Rectangle;
  */
 public class Evil2 extends Evil{
 
-	public Evil2(Player play, GUI gui, Mauer mauer, Level level) {
-		super(play, gui, mauer, level);
+	public Evil2(Game g) {
+		super(g);
 	}
 
 	/**

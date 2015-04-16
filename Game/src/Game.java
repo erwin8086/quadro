@@ -12,6 +12,7 @@ public class Game {
 	private Level level;
 	private Player player;
 	private ArrayList<GameObject> gos = new ArrayList<GameObject>();
+	private Mauer mauer;
 	
 	private GUI gui;
 	public Game(GUI gui, Save save) {
@@ -38,15 +39,15 @@ public class Game {
 				
 		// Create GameObjects 
 		level = new Level(this);
-		Mauer mauer = new Mauer(gui,level);
+		mauer = new Mauer(this);
 		gos.add(mauer);
 		player = new Player(gui,mauer, level, this);
 		player.setKeys(save.getKeys(Save.KEY_LEFT), save.getKeys(Save.KEY_RIGHT), save.getKeys(Save.KEY_UP));
 		gos.add(player);
-		gos.add(new Evil(player,gui,mauer,level));
-		gos.add(new Evil2(player,gui,mauer,level));
-		gos.add(new Evil3(player,gui,mauer,level));
-		gos.add(new Bonus(player,level));
+		gos.add(new Evil(this));
+		gos.add(new Evil2(this));
+		gos.add(new Evil3(this));
+		gos.add(new Bonus(this));
 		
 		// Call LevelStarts
 		level.onLevelStarts();
@@ -124,6 +125,10 @@ public class Game {
 	
 	public ArrayList<GameObject> getGameObjects() {
 		return gos;
+	}
+	
+	public Mauer getMauer() {
+		return mauer;
 	}
 
 }

@@ -9,8 +9,8 @@ import java.awt.Graphics;
  */
 public class Evil3 extends Evil{
 
-	public Evil3(Player play, GUI gui, Mauer mauer, Level level) {
-		super(play, gui, mauer, level);
+	public Evil3(Game g) {
+		super(g);
 	}
 
 	/**

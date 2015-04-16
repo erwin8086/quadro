@@ -111,7 +111,7 @@ public class Level {
 		 * @param check Identifier
 		 * @param in InputStream for Level
 		 */
-		public void load(char check, InputStream in) {
+		public void load(char check, InputStream in, Game g) {
 			Scanner read = new Scanner(in);
 			int x=0,y=0;
 			while(read.hasNextLine()) {
@@ -122,10 +122,10 @@ public class Level {
 						// on Symbol Found
 						onFound(x,y);
 					}
-					x+=16;
+					x+=g.getGUI().getWidth()/50;
 				}
 				x=0;
-				y+=16;
+				y+=g.getGUI().getHeight()/37;
 			}
 			read.close();
 		}

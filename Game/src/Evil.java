@@ -14,7 +14,7 @@ public class Evil implements GameObject {
 	Player player;
 	// The Evils
 	protected ArrayList<Evils> evils;
-	protected final int speed=64;
+	protected int speed;
 	// The Main Window
 	private GUI gui;
 	// The Wall
@@ -35,6 +35,7 @@ public class Evil implements GameObject {
 		this.gui = game.getGUI();
 		this.level = game.getLevel();
 		this.game=game;
+		speed=(gui.getWidth()/50)*4;
 		// Reset Evil
 		reset();
 	}
@@ -186,8 +187,8 @@ public class Evil implements GameObject {
 		 * @param dest
 		 */
 		public Evils(int x, int y, int dest) {
-			size_x=16;
-			size_y=16;
+			size_x=gui.getWidth()/50;
+			size_y=gui.getHeight()/37;
 			this.x = x;
 			this.y = y;
 			this.dest = dest;

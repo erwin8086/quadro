@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -186,7 +187,8 @@ public class Bonus implements GameObject{
 		 * @param g
 		 */
 		public void paint(Graphics g) {
-			g.drawImage(image, x, y, null);
+			Image im2 = image.getScaledInstance(game.getGUI().getWidth()/50, game.getGUI().getHeight()/37, 0);
+			g.drawImage(im2, x, y, null);
 		}
 		/**
 		 * Sets Bonus Position

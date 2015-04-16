@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class Player implements GameObject, KeyListener {
 	// Coordinates and Size
 	private float x, y;
-	private final int size_x=16, size_y=16;
+	private int size_x, size_y;
 	// Pressed Keys
 	private boolean key_left, key_up, key_right;
 	private int KEY_LEFT, KEY_UP, KEY_RIGHT;
@@ -23,7 +23,7 @@ public class Player implements GameObject, KeyListener {
 	// Jumping Count
 	private float up;
 	// Speed of Player
-	private final int speed=128;
+	private int speed;
 	// Num of Evils to KILL
 	private int num_evils;
 	private Level level;
@@ -40,6 +40,9 @@ public class Player implements GameObject, KeyListener {
 	private Game game;
 	public Player(GUI gui, Mauer mauer, Level level, Game game) {
 		gui.addKeyListener(this);
+		size_x = gui.getWidth()/50;
+		size_y = gui.getHeight()/37;
+		speed=size_x*8;
 		this.gui = gui;
 		this.mauer = mauer;
 		this.level = level;
@@ -92,7 +95,7 @@ public class Player implements GameObject, KeyListener {
 	 * @param time // time sience last frame
 	 */
 	public void jump(int up, float time) {
-		this.up=up;
+		this.up=(up/16)*size_x;
 		this.y -= speed*time*2;
 		jumping=true;
 	}
@@ -105,10 +108,10 @@ public class Player implements GameObject, KeyListener {
 		// Decrase Invincible
 		invincible-=time;
 		// Check if Player shold fall down
-		if(!mauer.isColidate(new Rectangle((int)x, (int)y+17, size_x, 1))) {
+		if(!mauer.isColidate(new Rectangle((int)x, (int)y+size_y+1, size_x, 1))) {
 			if(up<=0) {
 				this.y += time*speed*2;
-				while(mauer.isColidate(new Rectangle((int)x, (int)y+16, size_x, 1))) {
+				while(mauer.isColidate(new Rectangle((int)x, (int)y+size_y, size_x, 1))) {
 					this.y--;
 				}
 			}

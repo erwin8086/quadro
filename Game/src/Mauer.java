@@ -61,7 +61,7 @@ public class Mauer implements GameObject {
 			
 			@Override
 			void onFound(int x, int y) {
-				mauern.add(new Rectangle(x,y,16,16));
+				mauern.add(new Rectangle(x,y,gui.getWidth()/50,gui.getHeight()/37));
 			}
 		}.load('#', level.getLevel(), game);
 		return false;

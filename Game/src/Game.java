@@ -11,12 +11,14 @@ public class Game {
 	private Save save;
 	private Level level;
 	private Player player;
+	private ArrayList<GameObject> gos = new ArrayList<GameObject>();
 	
 	private GUI gui;
 	public Game(GUI gui, Save save) {
 		this.gui=gui;
 		this.save=save;
 		gui.addGame(this);
+		level=new Level(this);
 	}
 	
 	public Save getSave() {
@@ -31,11 +33,11 @@ public class Game {
 	 */
 	public void start() {
 		// Create Array for GameObjects
-		ArrayList<GameObject> gos = new ArrayList<GameObject>();
+		gos = new ArrayList<GameObject>();
 				
 				
 		// Create GameObjects 
-		level = new Level(gos,gui, this);
+		level = new Level(this);
 		Mauer mauer = new Mauer(gui,level);
 		gos.add(mauer);
 		player = new Player(gui,mauer, level, this);
@@ -45,6 +47,10 @@ public class Game {
 		gos.add(new Evil2(player,gui,mauer,level));
 		gos.add(new Evil3(player,gui,mauer,level));
 		gos.add(new Bonus(player,level));
+		
+		// Call LevelStarts
+		level.onLevelStarts();
+		
 		// Create Variable for Time Calculate
 		long last_frame, this_frame;
 		// Set Time for LastFrame
@@ -106,6 +112,18 @@ public class Game {
 	
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public Menu getMenu() {
+		return menu;
+	}
+	
+	public GUI getGUI() {
+		return gui;
+	}
+	
+	public ArrayList<GameObject> getGameObjects() {
+		return gos;
 	}
 
 }

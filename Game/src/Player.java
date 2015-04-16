@@ -237,12 +237,7 @@ public class Player implements GameObject, KeyListener {
 			invincible=1;
 			return;
 		}
-		JOptionPane.showMessageDialog(gui, "GameOver - Score: " + score.toString());
-		game.getSave().setConf(Save.LEVEL, "0");
-		game.getSave().setConf(Save.SCORE, "0");
-		game.getSave().setConf(Save.LIVES, "3");
-		game.getSave().saveScore(gui, score);
-		game.endGame();
+		game.getLevel().gameOver();
 	}
 	
 	/**

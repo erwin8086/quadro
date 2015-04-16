@@ -167,9 +167,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-100,120,20), "New Game", g) && clicked) {
 				visible=false;
 				System.out.println("Game Starts");
-				game.getSave().setConf(Save.LEVEL, String.valueOf(0));
-				game.getSave().setConf(Save.SCORE, "0");
-				game.getSave().setConf(Save.LIVES, "3");
+				game.getLevel().newGame();
 				game.start();
 				clicked=false;
 			}

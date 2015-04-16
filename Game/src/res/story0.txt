@@ -1,0 +1,2 @@
+Dies Ist ein Text
+img:coin100.png

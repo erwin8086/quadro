@@ -33,22 +33,29 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		this.move=false;
 		visible=false;
 		clicked=false;
+		
+		// Add Listeners
 		gui.addMouseListener(this);
 		gui.addMouseMotionListener(this);
 		gui.addKeyListener(this);
+		
+		// Attach Instance to Game
 		game.addMenu(this);
 		
 	}
 	
 	/**
 	 * paints Titlebar and Background
-	 * @param g Grphics to Paint
+	 * @param g Graphics to Paint
 	 */
 	private void paintGeneric(Graphics g) {
+		// Draw Background
 		g.setColor(Color.black);
 		g.fillRect(0, 0, gui.getWidth(), gui.getHeight());
+		// Draw Titlebar
 		g.setColor(Color.white);
 		g.fillRect(0, 0, gui.getWidth(), 16);
+		// Calc width of Text and display Title
 		g.setColor(Color.black);
 		int width=0;
 		for(char c : Main.title.toCharArray()) {
@@ -65,10 +72,12 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			visible=true;
 			Graphics g = gui.getPaint();
 			paintGeneric(g);
+			// Continue
 			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-100,100,20), "Resume Game", g) && clicked) {
 				visible=false;
 				return;
 			}
+			// Exit
 			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-70,100,20), "Exit to Menu", g) && clicked) {
 				game.endGame();
 				return;
@@ -84,6 +93,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	
 	/**
 	 * Show Message in Game
+	 * Message are not automatic redrawd
 	 * @param msg Message
 	 * @param g Grphics to Paint
 	 */
@@ -128,12 +138,15 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			visible=true;
 			Graphics g = gui.getPaint();
 			paintGeneric(g);
+			// UP
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-100,120,20), "KEY: UP", g) && clicked) {
 				setKey(Save.KEY_UP, "UP");
 			}
+			// Right
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-70,120,20), "KEY: RIGHT", g) && clicked) {
 				setKey(Save.KEY_RIGHT, "RIGHT");
 			}
+			// Left
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-40,120,20), "KEY: LEFT", g) && clicked) {
 				setKey(Save.KEY_LEFT, "LEFT");
 			}
@@ -151,12 +164,14 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				size="640x480";
 				break;
 			}
+			// Resultion
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-10,120,20), "SIZE: " + size, g) && clicked) {
 				int save_res=Integer.valueOf(res)+1;
 				if(save_res>2) save_res=0;
 				game.getSave().setConf(Save.RES, String.valueOf(save_res));
 				return true;
 			}
+			// Exit
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2+20,120,20), "Exit Options", g) && clicked) {
 				clicked=false;
 				return false;
@@ -183,11 +198,13 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			visible=true;
 			Graphics g = gui.getPaint();
 			paintGeneric(g);
+			// Hiscores
 			drawButton(new Rectangle(gui.getWidth()/2-80,gui.getHeight()/2-70,160,20), scores[0], g);
 			drawButton(new Rectangle(gui.getWidth()/2-80,gui.getHeight()/2-40,160,20), scores[1], g);
 			drawButton(new Rectangle(gui.getWidth()/2-80,gui.getHeight()/2-10,160,20), scores[2], g);
 			drawButton(new Rectangle(gui.getWidth()/2-80,gui.getHeight()/2+20,160,20), scores[3], g);
 			drawButton(new Rectangle(gui.getWidth()/2-80,gui.getHeight()/2+50,160,20), scores[4], g);
+			// Exit Button
 			if(drawButton(new Rectangle(gui.getWidth()/2-80,gui.getHeight()/2+80,160,20), "Exit Highscore", g) && clicked) {
 				clicked=false;
 				return;
@@ -212,6 +229,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			visible=true;
 			Graphics g = gui.getPaint();
 			paintGeneric(g);
+			// New Game
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-100,120,20), "New Game", g) && clicked) {
 				visible=false;
 				System.out.println("Game Starts");
@@ -219,24 +237,29 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				game.start();
 				clicked=false;
 			}
+			// Continue Game
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-70,120,20), "Continue Game", g) && clicked) {
 				visible=false;
 				game.start();
 				clicked=false;
 			}
+			// Hiscore
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-40,120,20), "Highscore", g) && clicked) {
 				clicked=false;
 				showHighScore();
 			}
+			// Auto Open Options on Resultion change
 			if(show_options) {
 				if(showKeyMenu()) return true;
 				show_options=false;
 			}
+			// Options Menu
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-10,120,20), "Options", g) && clicked) {
 				clicked=false;
 				if(showKeyMenu()) return true;
 			}
 			
+			// Clear SaveGame
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2+20,120,20), "Clear Save", g) && clicked) {
 				last_key=0;
 				while(last_key==0) {
@@ -279,6 +302,8 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		String display="";
 		Scanner s = new Scanner(text);
 		String size="22";
+		
+		// Set Size for Text
 		int size_x = gui.getWidth()/50;
 		if(size_x<16) {
 			size="16";
@@ -287,12 +312,17 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		}
 		while(true) {
 			visible=true;
+			// Set Font Size
 			Graphics g = gui.getPaint();
 			paintGeneric(g);
 			Font old = g.getFont();
 			g.setFont(Font.decode(old.getFontName() + " " + size));
+			
+			// Set Font Color
 			g.setColor(Color.white);
 			int x=20, y=60;
+			
+			// Draw Loaded Lines
 			if(lines.size()>0) {
 				for(String str: lines) {
 					g.drawString(str, x, y);
@@ -300,16 +330,19 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				}
 			}
 			
+			// Draw Loaded Images
 			if(imgs.size()>0) {
 				for(DisplayedImage i : imgs) {
 					i.display(g);
 				}
 			}
 			
+			// Draw current Line
 			if(display.length()>0) {
 				g.drawString(display, x, y);
 			}
 			
+			// Read Line
 			if(line.length()>0) {
 				display += line.substring(0, 1);
 				line = line.substring(1);
@@ -320,6 +353,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				display="";
 				if(s.hasNextLine()) {
 					line = s.nextLine();
+					// Load Image
 					if(line.startsWith("img:")) {
 						String[] split = line.split(":");
 						try {
@@ -332,6 +366,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 					}
 				}
 			}
+			// Set Font for Button
 			g.setFont(old);
 			if(drawButton(new Rectangle(gui.getWidth()-100,gui.getHeight()-30,90,20), "Next ->", g) && clicked) {
 				break;
@@ -344,6 +379,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			}
 		}
 		s.close();
+		visible=false;
 	}
 	
 	/**

@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.font.LineMetrics;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -299,7 +298,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			}
 			g.setFont(old);
 			if(drawButton(new Rectangle(gui.getWidth()-100,gui.getHeight()-30,90,20), "Next ->", g) && clicked) {
-				return;
+				break;
 			}
 			gui.finishPaint();
 			try {
@@ -308,6 +307,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				e.printStackTrace();
 			}
 		}
+		s.close();
 	}
 	
 	private boolean drawButton(Rectangle r, String text, Graphics g) {

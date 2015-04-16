@@ -52,7 +52,7 @@ public class Mauer implements GameObject {
 		// Clear Walls
 		mauern = new ArrayList<Rectangle>();
 		// Define the food wall
-		mauern.add(new Rectangle(0, gui.getHeight()-16, gui.getWidth(), 16));
+		mauern.add(new Rectangle(0, gui.getHeight()-gui.getHeight()/37, gui.getWidth(), gui.getHeight()/37));
 		
 		/**
 		 * Load Wall Coordinates from Level File

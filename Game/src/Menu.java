@@ -249,12 +249,19 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		String line="";
 		String display="";
 		Scanner s = new Scanner(text);
+		String size="22";
+		int size_x = gui.getWidth()/50;
+		if(size_x<16) {
+			size="16";
+		} else if(size_x>19) {
+			size="28";
+		}
 		while(true) {
 			visible=true;
 			Graphics g = gui.getPaint();
 			paintGeneric(g);
 			Font old = g.getFont();
-			g.setFont(Font.decode(old.getFontName() + " 22"));
+			g.setFont(Font.decode(old.getFontName() + " " + size));
 			g.setColor(Color.white);
 			int x=20, y=60;
 			if(lines.size()>0) {

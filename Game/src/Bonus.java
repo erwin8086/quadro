@@ -157,7 +157,7 @@ public class Bonus implements GameObject{
 	 *
 	 */
 	abstract class BonusObject {
-		protected BufferedImage image;
+		protected Image image;
 		private int x,y;
 		/**
 		 * On Player colidate with Bonus
@@ -180,15 +180,15 @@ public class Bonus implements GameObject{
 		 * @return
 		 */
 		public Rectangle getPOS() {
-			return new Rectangle(x,y,image.getWidth(), image.getHeight());
+			return new Rectangle(x,y,image.getWidth(null), image.getHeight(null));
 		}
 		/**
 		 * Paint Bonus
 		 * @param g
 		 */
 		public void paint(Graphics g) {
-			Image im2 = image.getScaledInstance(game.getGUI().getWidth()/50, game.getGUI().getHeight()/37, 0);
-			g.drawImage(im2, x, y, null);
+			
+			g.drawImage(image, x, y, null);
 		}
 		/**
 		 * Sets Bonus Position
@@ -206,8 +206,9 @@ public class Bonus implements GameObject{
 		 * @param image
 		 * @return
 		 */
-		public BonusObject setImage(BufferedImage image) {
-			this.image=image;
+		public BonusObject setImage(Image image) {
+			Image im2 = image.getScaledInstance(game.getGUI().getWidth()/50, game.getGUI().getHeight()/37, 0);
+			this.image=im2;
 			return this;
 		}
 	}

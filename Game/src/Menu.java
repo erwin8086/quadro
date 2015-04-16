@@ -10,9 +10,13 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 
 public class Menu implements MouseListener, MouseMotionListener, KeyListener{
@@ -218,6 +222,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	
 	public void showScreen(InputStream text) {
 		ArrayList<String> lines = new ArrayList<String>();
+		ArrayList<DisplayedImage> imgs = new ArrayList<DisplayedImage>();
 		String line="";
 		String display="";
 		Scanner s = new Scanner(text);
@@ -231,6 +236,12 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				for(String str: lines) {
 					g.drawString(str, x, y);
 					y+=g.getFontMetrics().getHeight()+5;
+				}
+			}
+			
+			if(imgs.size()>0) {
+				for(DisplayedImage i : imgs) {
+					i.display(g);
 				}
 			}
 			
@@ -248,6 +259,16 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				display="";
 				if(s.hasNextLine()) {
 					line = s.nextLine();
+					if(line.startsWith("img:")) {
+						String[] split = line.split(":");
+						try {
+							BufferedImage img = ImageIO.read(getClass().getResourceAsStream("/res/" + split[1]));
+							imgs.add(new DisplayedImage(x, y, img));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						line="";
+					}
 				}
 			}
 			
@@ -362,5 +383,21 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {}
+	
+	class DisplayedImage {
+		private BufferedImage image;
+		private int x, y;
+		
+		public DisplayedImage(int x, int y, BufferedImage image) {
+			this.x =x;
+			this.y=y;
+			this.image=image;
+		}
+		
+		public void display(Graphics g) {
+			g.drawImage(image, x, y, null);
+		}
+		
+	}
 
 }

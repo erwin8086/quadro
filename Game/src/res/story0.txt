@@ -1,2 +1,8 @@
 Dies Ist ein Text
+
 img:coin100.png
+ 
+ 
+ 
+ 
+Das War coin100.png

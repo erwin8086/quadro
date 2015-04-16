@@ -57,6 +57,9 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		g.drawString(Main.title, gui.getWidth()/2 - width/2, 12);
 	}
 	
+	/**
+	 * Show Menu when user press ESC to Pause Game
+	 */
 	public void showPauseMenu() {
 		while(true) {
 			visible=true;
@@ -79,6 +82,11 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		}
 	}
 	
+	/**
+	 * Show Message in Game
+	 * @param msg Message
+	 * @param g Grphics to Paint
+	 */
 	private void showMSG(String msg, Graphics g) {
 		int x = gui.getWidth()/2 -100;
 		int y = gui.getHeight()/2 -50;
@@ -90,6 +98,11 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		g.drawString(msg, x, y);
 	}
 	
+	/**
+	 * Set Key
+	 * @param Key key to set
+	 * @param key_name name of key
+	 */
 	private void setKey(int Key, String key_name) {
 		last_key=0;
 		while(last_key==0) {
@@ -106,6 +119,10 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		game.getSave().setConf(Key, String.valueOf(last_key));
 	}
 	
+	/**
+	 * Show OptionsMenu
+	 * @return
+	 */
 	private boolean showKeyMenu() {
 		while(true) {
 			visible=true;
@@ -153,6 +170,9 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		}
 	}
 	
+	/**
+	 * Show Hiscore Menu
+	 */
 	private void showHighScore() {
 		String[] scores = new String[5];
 		for(int i=0;i<5;i++) {
@@ -182,6 +202,11 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	}
 	
 	
+	/**
+	 * Show Main Menu
+	 * @param show_options
+	 * @return
+	 */
 	public boolean showMainMenu(boolean show_options) {
 		while(true) {
 			visible=true;
@@ -243,6 +268,10 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		}
 	}
 	
+	/**
+	 * Show TextScreen for Story
+	 * @param text
+	 */
 	public void showScreen(InputStream text) {
 		ArrayList<String> lines = new ArrayList<String>();
 		ArrayList<DisplayedImage> imgs = new ArrayList<DisplayedImage>();
@@ -317,6 +346,13 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		s.close();
 	}
 	
+	/**
+	 * Draw Button for Menu
+	 * @param r Coordinates and Size of Button
+	 * @param text Text for Screen
+	 * @param g Graphics to Paint
+	 * @return
+	 */
 	private boolean drawButton(Rectangle r, String text, Graphics g) {
 		FontMetrics fm = g.getFontMetrics();
 		LineMetrics lm = fm.getLineMetrics(text, g);
@@ -340,21 +376,27 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		return mouseover;
 	}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
-	public void mouseExited(MouseEvent e) {
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 
+	/**
+	 * Set Move and clicked for Buttons and Titlebar
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1) {
@@ -368,6 +410,9 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		mouse_y=e.getY();
 	}
 
+	/**
+	 * Unset Move and clicked
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		move=false;
@@ -400,33 +445,59 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		}
 	}
 
+	/**
+	 * set mouse_x and mouse_y
+	 */
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		mouse_x=e.getX();
 		mouse_y=e.getY();
 	}
 
+	/**
+	 * Saves last key_code
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		last_key=e.getKeyCode();
 	}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public void keyReleased(KeyEvent arg0) {}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public void keyTyped(KeyEvent arg0) {}
 	
+	/**
+	 * DisplayImage for showScreen
+	 * @author erwin
+	 *
+	 */
 	class DisplayedImage {
 		private BufferedImage image;
 		private int x, y;
 		
+		/**
+		 * Create Instance
+		 * @param x
+		 * @param y
+		 * @param image Image to Paint
+		 */
 		public DisplayedImage(int x, int y, BufferedImage image) {
 			this.x =x;
 			this.y=y;
 			this.image=image;
 		}
-		
+		/**
+		 * Display the Image
+		 * @param g Graphics to Display
+		 */
 		public void display(Graphics g) {
 			g.drawImage(image, x, y, null);
 		}

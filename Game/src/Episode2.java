@@ -1,7 +1,15 @@
+import java.awt.Color;
+import java.awt.Graphics;
 import java.io.InputStream;
 
 
 public class Episode2 implements LevelSet {
+	private Game game;
+	private Color color = new Color(0, 50,0);
+	
+	public Episode2(Game game) {
+		this.game=game;
+	}
 
 	@Override
 	public InputStream getLevel() {
@@ -26,6 +34,12 @@ public class Episode2 implements LevelSet {
 	@Override
 	public int getLevelNum() {
 		return 0;
+	}
+
+	@Override
+	public void drawBackground(Graphics g) {
+		g.setColor(color);
+		g.fillRect(0, 0, game.getGUI().getWidth(), game.getGUI().getHeight());
 	}
 
 	

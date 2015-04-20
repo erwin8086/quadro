@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.io.InputStream;
 
 
@@ -7,5 +8,6 @@ public interface LevelSet {
 	public LevelSet nextLevelSet();
 	public void onLevelStarts();
 	public int getLevelNum();
+	public void drawBackground(Graphics g);
 	
 }

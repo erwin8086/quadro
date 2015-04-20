@@ -7,12 +7,14 @@ import java.io.InputStream;
 public class Episode1 implements LevelSet, GameObject {
 	
 	private Game game;
-	private String[] levels = {"level.txt", "level2.txt", "level3.txt", "level4.txt", "level5.txt", "level6.txt", "level7.txt", "level8.txt", "level9.txt", "level10.txt"};
+	private String[] levels = {"level.txt", "level2.txt", "level3.txt", "level4.txt", "level5.txt", "level6.txt", "level7.txt", "level8.txt", "level9.txt", "level10.txt", "level11.txt"};
 	private int level;
+	private int size_y;
 	
 	public Episode1(Game game, int level) {
 		this.game=game;
 		this.level=level;
+		size_y = game.getGUI().getHeight()/37;
 	}
 
 	@Override
@@ -30,7 +32,8 @@ public class Episode1 implements LevelSet, GameObject {
 
 	@Override
 	public LevelSet nextLevelSet() {
-		return new Episode2();
+		game.getGameObjects().remove(this);
+		return new Episode2(game);
 	}
 
 	@Override
@@ -38,22 +41,39 @@ public class Episode1 implements LevelSet, GameObject {
 		if(level==0) {
 			game.getMenu().showScreen(getClass().getResourceAsStream("/res/story0.txt"));
 		}
+		if(level==10)
+			game.getGameObjects().add(this);
+	}
+
+	@Override
+	public int getLevelNum() {
+		return level;
 	}
 
 	@Override
 	public boolean calc(float time) {
+		if(level==10) {
+			Player player = game.getPlayer();
+			if(player.isColidate(new Rectangle(0, 0, game.getGUI().getWidth(), size_y))) {
+				player.delEvil();
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean paint(Graphics g) {
-		g.setColor(Color.green);
-		g.fillRect(0, 0,0 , 0);
+		if(level==10) {
+			g.setColor(Color.green);
+			g.fillRect(0, 0, game.getGUI().getWidth(), size_y);
+		}
 		return false;
 	}
 
 	@Override
 	public boolean reset() {
+		if(level==10)
+			game.getPlayer().addEvil();
 		return false;
 	}
 
@@ -68,8 +88,9 @@ public class Episode1 implements LevelSet, GameObject {
 	}
 
 	@Override
-	public int getLevelNum() {
-		return level;
-	}	
+	public void drawBackground(Graphics g) {
+		g.setColor(Color.black);
+		g.fillRect(0, 0, game.getGUI().getWidth(), game.getGUI().getHeight());
+	}
 
 }

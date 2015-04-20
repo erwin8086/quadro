@@ -66,14 +66,13 @@ public class Game {
 			// Set Max Time
 			if(time>0.5) time=0.1f;
 			// calculate all Objects
-			for(GameObject go: gos) {
-				go.calc(time);
+			for(int i=0;i<gos.size();i++) {
+				gos.get(i).calc(time);
 			}
 			// Get Graphics
 			Graphics g = gui.getPaint();
 			// Draw Background
-			g.setColor(Color.black);
-			g.fillRect(0, 0, gui.getWidth(), gui.getHeight());
+			level.drawBackground(g);
 			
 			// Draw Objects
 			for(GameObject go: gos) {
@@ -92,7 +91,7 @@ public class Game {
 				pause=false;
 			}
 			try {
-				Thread.sleep(5);
+				Thread.sleep(2);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

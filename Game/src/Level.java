@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -41,7 +42,8 @@ public class Level {
 		JOptionPane.showMessageDialog(game.getGUI(), "Finish - Score: " + game.getPlayer().getScore().toString());
 		game.endGame();
 		level = new Episode1(game, 0);
-		newGame();
+		game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore()+5000);
+		newGame(true);
 	}
 	
 	public void saveLevel() {
@@ -52,18 +54,24 @@ public class Level {
 	
 	public void gameOver() {
 		JOptionPane.showMessageDialog(game.getGUI(), "GameOver - Score: " + game.getPlayer().getScore().toString());
-		game.getSave().setConf(Save.LEVEL, "0");
-		game.getSave().setConf(Save.SCORE, "0");
-		game.getSave().setConf(Save.LIVES, "3");
 		game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore());
 		game.endGame();
+		newGame(false);
 	}
 	
-	public void newGame() {
+	public void newGame(boolean user) {
 		game.getSave().setConf(Save.LEVEL, String.valueOf(0));
 		game.getSave().setConf(Save.SCORE, "0");
 		game.getSave().setConf(Save.LIVES, "3");
-		game.getSave().setConf(Save.LEVELSET, "0");
+		if(user)
+			game.getSave().setConf(Save.LEVELSET, "0");
+	}
+	
+	/**
+	 * Draw Background
+	 */
+	public void drawBackground(Graphics g) {
+		level.drawBackground(g);
 	}
 	
 	/**
@@ -76,10 +84,12 @@ public class Level {
 			level=level.nextLevelSet();
 			if(level==null) {
 				gameComplete();
+				return;
 			} else {
 				game.getSave().setConf(Save.LEVELSET, String.valueOf(Integer.valueOf(game.getSave().getConf(Save.LEVELSET))+1));
 			}
 		}
+		level.onLevelStarts();
 		
 		
 		// Reset all GameObjects

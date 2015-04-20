@@ -11,6 +11,8 @@ public interface GameObject {
 	public static final int PLAYER=2;
 	public static final int MAUER=3;
 	public static final int BONUS=4;
+	public static final int CONS_MAUER=1;
+	public static final int CONS_EVIL=2;
 	
 	/**
 	 * Calculate Object
@@ -47,5 +49,10 @@ public interface GameObject {
 	 * Changing the destination of Colidating
 	 */
 	public void changeDest(Rectangle r);
+	
+	/**
+	 * Get Consistancy of the Object
+	 */
+	public int getCons();
 	
 }

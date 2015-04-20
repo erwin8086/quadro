@@ -51,8 +51,15 @@ public class Evil2 extends Evil{
 			r.x+=e.size_x-1;
 			r.width=1;
 			r.y++;
+		
+			boolean r_col=false, r2_col=false;
+			for(GameObject g : game.getGameObjects()) {
+				if(g.getCons()!=GameObject.CONS_MAUER) continue;
+				if(g.isColidate(r)) r_col=true;
+				if(g.isColidate(r2)) r2_col=true;
+			}
 			// Check if exit Platform
-			if(!mauer.isColidate(r) || !mauer.isColidate(r2)) {
+			if(!r_col || !r2_col) {
 				e.dest *= -1;
 				e.x += time*speed*e.dest;
 			}

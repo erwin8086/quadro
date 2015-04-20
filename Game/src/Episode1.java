@@ -101,4 +101,9 @@ public class Episode1 implements LevelSet, GameObject {
 	@Override
 	public void changeDest(Rectangle r) {}
 
+	@Override
+	public int getCons() {
+		return GameObject.CONS_EVIL;
+	}
+
 }

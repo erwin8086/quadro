@@ -21,7 +21,7 @@ public class Evil implements GameObject {
 	protected Mauer mauer;
 	// The Level
 	private Level level;
-	private Game game;
+	protected Game game;
 	/**
 	 * Generate Generic Evil
 	 * @param play
@@ -64,11 +64,31 @@ public class Evil implements GameObject {
 				e.x=0;
 				e.dest *= -1;
 			}
+			
+			boolean is_mauer=false;
+			for(GameObject g: game.getGameObjects()) {
+				if(g.getCons()!=GameObject.CONS_MAUER) continue;
+				if(g.isColidate(e.getPOS())) {
+					is_mauer=true;
+					break;
+				}
+			}
+			
 			// Evil Fall if no Wall is under it
-			if(!mauer.isColidate(e.getPOS())) {
+			if(!is_mauer) {
 				e.y += time*speed;
-				while(mauer.isColidate(e.getPOS())) {
-					e.y--;
+				GameObject m=null;
+				for(GameObject g: game.getGameObjects()) {
+					if(g.getCons()!=GameObject.CONS_MAUER) continue;
+					if(g.isColidate(e.getPOS())) {
+						m=g;
+						break;
+					}
+				}
+				if(m!=null) {
+					while(m.isColidate(e.getPOS())) {
+						e.y--;
+					}
 				}
 			}
 			// Set Player Gameover of destroy Evil
@@ -222,6 +242,11 @@ public class Evil implements GameObject {
 				e.dest*=-1;
 			}
 		}
+	}
+
+	@Override
+	public int getCons() {
+		return GameObject.CONS_EVIL;
 	}
 	
 	

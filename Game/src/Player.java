@@ -105,12 +105,35 @@ public class Player implements GameObject, KeyListener {
 	public boolean calc(float time) {
 		// Decrase Invincible
 		invincible-=time;
+		boolean is_mauer=false;
+		for (GameObject g : game.getGameObjects()) {
+			if(g.getCons()!=GameObject.CONS_MAUER) continue;
+			if(g.isColidate(new Rectangle((int)x, (int)y+size_y+1, size_x, 1))) {
+				is_mauer=true;
+				break;
+			}
+			
+		}
 		// Check if Player shold fall down
-		if(!mauer.isColidate(new Rectangle((int)x, (int)y+size_y+1, size_x, 1))) {
+		if(!is_mauer) {
 			if(up<=0) {
 				this.y += time*speed*2;
-				while(mauer.isColidate(new Rectangle((int)x, (int)y+size_y, size_x, 1))) {
-					this.y--;
+				GameObject m = null;
+				for (GameObject g : game.getGameObjects()) {
+					if(g.getCons()!=GameObject.CONS_MAUER) continue;
+					if(g.isColidate(new Rectangle((int)x, (int)y+size_y+1, size_x, 1))) {
+						m=g;
+						if(g.getType()==GameObject.EVIL) {
+							gameOver();
+						}
+						break;
+					}
+					
+				}
+				if(m!=null) {
+					while(m.isColidate(new Rectangle((int)x, (int)y+size_y, size_x, 1))) {
+						this.y--;
+					}
 				}
 			}
 		// Check if Player shold jump
@@ -342,6 +365,10 @@ public class Player implements GameObject, KeyListener {
 		key_left=false;
 		key_right=false;
 		jumping=false;
+	}
+	@Override
+	public int getCons() {
+		return GameObject.CONS_EVIL;
 	}
 
 

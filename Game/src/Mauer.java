@@ -94,5 +94,10 @@ public class Mauer implements GameObject {
 
 	@Override
 	public void changeDest(Rectangle r) {}
+
+	@Override
+	public int getCons() {
+		return GameObject.CONS_MAUER;
+	}
 	
 }

@@ -150,7 +150,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-40,120,20), "KEY: LEFT", g) && clicked) {
 				setKey(Save.KEY_LEFT, "LEFT");
 			}
-			String size="800x600";
+			String size="800x592";
 			String res = game.getSave().getConf(Save.RES);
 			if(res==null) res="0";
 			if(res.length()<1) res="0";
@@ -158,10 +158,10 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			case 0:
 				break;
 			case 1:
-				size="1024x768";
+				size="1000x740";
 				break;
 			case 2:
-				size="640x480";
+				size="600x444";
 				break;
 			}
 			// Resultion

@@ -95,6 +95,7 @@ public class Evil implements GameObject {
 			if(player.isColidate(e.getPOS())) {
 				if(e.y-8 > player.getPOS().y) {
 					this.destroy(e,time);
+					player.jump(72, time);
 				} else {
 					if (player.destroyColidate(e.getPOS())) {
 						this.destroy(e, time);
@@ -172,13 +173,17 @@ public class Evil implements GameObject {
 			
 			@Override
 			void onFound(int x, int y) {
-				evils.add(new Evils(x,y,1));
-				player.addEvil();
+				addEvil(x, y);
 			}
 		}.load(check, level.getLevel(), game);
 					
 
 		return false;
+	}
+	
+	public void addEvil(int x, int y) {
+		evils.add(new Evils(x,y,1));
+		player.addEvil();
 	}
 
 	/**

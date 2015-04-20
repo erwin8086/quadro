@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class StandingEvil implements GameObject {
 	
-	private ArrayList<Rectangle> evils;
-	private Game game;
-	private int size_x, size_y;
+	protected ArrayList<Rectangle> evils;
+	protected Game game;
+	protected int size_x, size_y;
 	
 	public StandingEvil(Game game) {
 		this.game=game;

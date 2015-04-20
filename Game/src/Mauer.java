@@ -91,5 +91,8 @@ public class Mauer implements GameObject {
 	public int getType() {
 		return GameObject.MAUER;
 	}
+
+	@Override
+	public void changeDest(Rectangle r) {}
 	
 }

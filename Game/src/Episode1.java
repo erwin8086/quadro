@@ -98,4 +98,7 @@ public class Episode1 implements LevelSet, GameObject {
 		return 0;
 	}
 
+	@Override
+	public void changeDest(Rectangle r) {}
+
 }

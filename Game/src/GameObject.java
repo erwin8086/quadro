@@ -43,4 +43,9 @@ public interface GameObject {
 	 */
 	public int getType();
 	
+	/**
+	 * Changing the destination of Colidating
+	 */
+	public void changeDest(Rectangle r);
+	
 }

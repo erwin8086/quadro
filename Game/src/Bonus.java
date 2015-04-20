@@ -275,6 +275,9 @@ public class Bonus implements GameObject{
 		return GameObject.BONUS;
 	}
 
+	@Override
+	public void changeDest(Rectangle r) {}
+
 	
 
 }

@@ -83,6 +83,15 @@ public class Evil implements GameObject {
 			}
 			
 		}
+		
+		for(GameObject g : game.getGameObjects()) {
+			for(Evils e : evils) {
+				if(g.isColidate(e.getPOS())) {
+					g.changeDest(e.getPOS());
+				}
+			}
+		}
+		
 		return false;
 	}
 	/**
@@ -205,5 +214,15 @@ public class Evil implements GameObject {
 	public int getType() {
 		return GameObject.EVIL;
 	}
+
+	@Override
+	public void changeDest(Rectangle r) {
+		for(Evils e : evils) {
+			if(r.intersects(e.getPOS())) {
+				e.dest*=-1;
+			}
+		}
+	}
+	
 	
 }

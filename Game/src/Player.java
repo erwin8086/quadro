@@ -157,6 +157,16 @@ public class Player implements GameObject, KeyListener {
 		if(num_evils==0) {
 			gameComplete();
 		}
+		
+		for(GameObject g : game.getGameObjects()) {
+			if(g==this) continue;
+			if(g.isColidate(getPOS())) {
+				if(g.getType()==GameObject.EVIL) {
+					gameOver();
+				}
+				g.changeDest(getPOS());
+			}
+		}
 		return false;
 	}
 
@@ -233,6 +243,7 @@ public class Player implements GameObject, KeyListener {
 	 * Set Player gameOver and exit
 	 */
 	public void gameOver() {
+		if(invincible>0) return;
 		if(lives>0) {
 			lives--;
 			invincible=1;
@@ -324,6 +335,13 @@ public class Player implements GameObject, KeyListener {
 	@Override
 	public int getType() {
 		return GameObject.PLAYER;
+	}
+	@Override
+	public void changeDest(Rectangle r) {
+		key_up=false;
+		key_left=false;
+		key_right=false;
+		jumping=false;
 	}
 
 

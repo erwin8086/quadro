@@ -93,4 +93,9 @@ public class Episode1 implements LevelSet, GameObject {
 		g.fillRect(0, 0, game.getGUI().getWidth(), game.getGUI().getHeight());
 	}
 
+	@Override
+	public int getType() {
+		return 0;
+	}
+
 }

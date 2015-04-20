@@ -7,6 +7,11 @@ import java.awt.Rectangle;
  *
  */
 public interface GameObject {
+	public static final int EVIL=1;
+	public static final int PLAYER=2;
+	public static final int MAUER=3;
+	public static final int BONUS=4;
+	
 	/**
 	 * Calculate Object
 	 */
@@ -31,5 +36,11 @@ public interface GameObject {
 	 * destroy Colidating Object
 	 */
 	public boolean destroyColidate(Rectangle r);
+	
+	
+	/**
+	 * Get Type of Object
+	 */
+	public int getType();
 	
 }

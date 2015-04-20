@@ -321,6 +321,10 @@ public class Player implements GameObject, KeyListener {
 		invincible=time;
 		destroyEvils=destroy;
 	}
+	@Override
+	public int getType() {
+		return GameObject.PLAYER;
+	}
 
 
 }

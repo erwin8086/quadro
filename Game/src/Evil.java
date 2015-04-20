@@ -201,5 +201,9 @@ public class Evil implements GameObject {
 			return new Rectangle((int)x, (int)y, size_x, size_y);
 		}
 	}
+	@Override
+	public int getType() {
+		return GameObject.EVIL;
+	}
 	
 }

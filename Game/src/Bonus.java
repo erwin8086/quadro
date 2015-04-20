@@ -270,6 +270,10 @@ public class Bonus implements GameObject{
 		}
 		
 	}
+	@Override
+	public int getType() {
+		return GameObject.BONUS;
+	}
 
 	
 

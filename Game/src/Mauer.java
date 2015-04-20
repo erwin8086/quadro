@@ -86,5 +86,10 @@ public class Mauer implements GameObject {
 	public boolean destroyColidate(Rectangle r) {
 		return false;
 	}
+
+	@Override
+	public int getType() {
+		return GameObject.MAUER;
+	}
 	
 }

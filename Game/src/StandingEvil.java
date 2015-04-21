@@ -9,6 +9,7 @@ public class StandingEvil implements GameObject {
 	protected ArrayList<Rectangle> evils;
 	protected Game game;
 	protected int size_x, size_y;
+	private Color color= new Color(100,0,0);
 	
 	public StandingEvil(Game game) {
 		this.game=game;
@@ -33,7 +34,7 @@ public class StandingEvil implements GameObject {
 
 	@Override
 	public boolean paint(Graphics g) {
-		g.setColor(Color.red);
+		g.setColor(color);
 		for(Rectangle r : evils) {
 			g.fillRect(r.x, r.y, r.width, r.height);
 		}

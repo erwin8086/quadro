@@ -276,7 +276,8 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				if(last_key==KeyEvent.VK_Y) {
 					String score = game.getSave().getConf(Save.HIGHSCORE);
 					game.getSave().clear();
-					game.getSave().setConf(Save.HIGHSCORE, score);
+					if(score!=null)
+						game.getSave().setConf(Save.HIGHSCORE, score);
 				}
 			}
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2+50,120,20), "Exit Game", g) && clicked) {

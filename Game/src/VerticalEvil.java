@@ -7,8 +7,8 @@ public class VerticalEvil implements GameObject {
 
 	private int size_x, size_y;
 	private final int speed=128;
-	private Game game;
-	private ArrayList<VEvil> evils;
+	protected Game game;
+	protected ArrayList<VEvil> evils;
 	private Color color = new Color(100,0,0);
 	
 	public VerticalEvil(Game game) {
@@ -99,6 +99,7 @@ public class VerticalEvil implements GameObject {
 		
 		public void calc(float time) {
 			y+=dest*speed*time;
+			if(y<0) dest*=-1;
 			GameObject m=null;
 			for(GameObject g : game.getGameObjects()) {
 				if(g.getCons()!=GameObject.CONS_MAUER) continue;
@@ -113,6 +114,21 @@ public class VerticalEvil implements GameObject {
 					y+=dest*1;
 				}
 			}
+		}
+		
+		public int getDest() {
+			return dest;
+		}
+		
+		public void setDest(int dest) {
+			this.dest=dest;
+		}
+		
+		public float getY() {
+			return y;
+		}
+		public void setY(float y) {
+			this.y=y;
 		}
 	}
 

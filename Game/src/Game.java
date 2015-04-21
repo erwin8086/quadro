@@ -53,6 +53,7 @@ public class Game {
 		gos.add(new StandingEvil(this));
 		gos.add(new DublicatingEvil(this));
 		gos.add(new VerticalEvil(this));
+		gos.add(new VerticalMauer(this));
 		
 		// Call LevelStarts
 		level.onLevelStarts();

@@ -370,6 +370,19 @@ public class Player implements GameObject, KeyListener {
 	public int getCons() {
 		return GameObject.CONS_EVIL;
 	}
+	
+	public float getX() {
+		return x;
+	}
+	public void setX(float x) {
+		this.x=x;
+	}
+	public float getY() {
+		return y;
+	}
+	public void setY(float y) {
+		this.y=y;
+	}
 
 
 }

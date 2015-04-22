@@ -25,7 +25,10 @@ public class Episode1 implements LevelSet, GameObject {
 	@Override
 	public boolean nextLevel() {
 		level++;
-		if(level>=levels.length) return false;
+		if(level>=levels.length) {
+			level=0;
+			return false;
+		}
 		game.getLevel().saveLevel();
 		return true;
 	}
@@ -33,7 +36,7 @@ public class Episode1 implements LevelSet, GameObject {
 	@Override
 	public LevelSet nextLevelSet() {
 		game.getGameObjects().remove(this);
-		return new Episode2(game);
+		return new Episode2(game,level);
 	}
 
 	@Override

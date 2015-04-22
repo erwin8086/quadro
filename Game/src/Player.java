@@ -17,7 +17,6 @@ public class Player implements GameObject, KeyListener {
 	private boolean key_left, key_up, key_right;
 	private int KEY_LEFT, KEY_UP, KEY_RIGHT;
 	private GUI gui;
-	private Mauer mauer;
 	// Jumping Count
 	private float up;
 	// Speed of Player
@@ -42,7 +41,6 @@ public class Player implements GameObject, KeyListener {
 		size_y = gui.getHeight()/37;
 		speed=size_x*8;
 		this.gui = gui;
-		this.mauer = mauer;
 		this.level = level;
 		this.game = game;
 		KEY_LEFT = KeyEvent.VK_LEFT;
@@ -143,8 +141,21 @@ public class Player implements GameObject, KeyListener {
 		}
 		// Jump Player
 		if(up>0 && (key_up || jumping) ) {
-			if(mauer.isColidate(getPOS())) {
+			is_mauer=false;
+			for(GameObject g : game.getGameObjects()) {
+				if(g==this) continue;
+				if(g.getCons()!=GameObject.CONS_MAUER) continue;
+				if(g.isColidate(getPOS())) {
+					is_mauer=true;
+					while(g.isColidate(getPOS())) {
+						y++;
+					}
+					break;
+				}
+			}
+			if(is_mauer) {
 				up=0;
+				jumping=false;
 			} else {
 				if(up>36)
 					this.y -= speed*time*2;
@@ -160,7 +171,16 @@ public class Player implements GameObject, KeyListener {
 		// Go Right
 		if(key_right) {
 			this.x += time*speed;
-			if(mauer.isColidate(getPOS()))
+			is_mauer=false;
+			for(GameObject g : game.getGameObjects()) {
+				if(g==this) continue;
+				if(g.getCons()!=GameObject.CONS_MAUER) continue;
+				if(g.isColidate(getPOS())) {
+					is_mauer=true;
+					break;
+				}
+			}
+			if(is_mauer)
 				this.x -= time*speed;
 			if(this.x>gui.getWidth()-size_x) {
 				this.x=gui.getWidth()-size_x;
@@ -169,7 +189,16 @@ public class Player implements GameObject, KeyListener {
 		// Go Left
 		if(key_left) {
 			this.x -= time*speed;
-			if(mauer.isColidate(getPOS()))
+			is_mauer=false;
+			for(GameObject g : game.getGameObjects()) {
+				if(g==this) continue;
+				if(g.getCons()!=GameObject.CONS_MAUER) continue;
+				if(g.isColidate(getPOS())) {
+					is_mauer=true;
+					break;
+				}
+			}
+			if(is_mauer)
 				this.x += time*speed;
 			if(this.x<0) {
 				this.x=0;

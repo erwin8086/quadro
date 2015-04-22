@@ -6,19 +6,27 @@ import java.io.InputStream;
 public class Episode2 implements LevelSet {
 	private Game game;
 	private Color color = new Color(0, 50,0);
+	private String[] levels = {"level2_1.txt", "level2_2.txt", "level2_3.txt"};
+	private int level;
 	
-	public Episode2(Game game) {
+	public Episode2(Game game, int level) {
 		this.game=game;
+		this.level=level;
 	}
 
 	@Override
 	public InputStream getLevel() {
-		return getClass().getResourceAsStream("/res/level.txt");
+		return getClass().getResourceAsStream("/res/" + levels[level]);
 	}
 
 	@Override
 	public boolean nextLevel() {
-		return false;
+		level++;
+		if(level>=levels.length) {
+			level=0;
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -28,7 +36,9 @@ public class Episode2 implements LevelSet {
 
 	@Override
 	public void onLevelStarts() {
-		
+		if(level==0) {
+			game.getMenu().showScreen(getClass().getResourceAsStream("/res/story1.txt"));
+		}
 	}
 
 	@Override

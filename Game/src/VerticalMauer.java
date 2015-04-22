@@ -33,7 +33,7 @@ public class VerticalMauer implements GameObject{
 			for(Rectangle r : mauern) {
 				Moving m = new Moving();
 				m.x = r.x;
-				m.y = r.y + r.height;
+				m.y = r.y - r.height;
 				mov.add(m);
 			}
 		}
@@ -54,6 +54,7 @@ public class VerticalMauer implements GameObject{
 			}
 			Player play = game.getPlayer();
 			while(play.isColidate(new Rectangle((int)m.x, (int)m.y, size_x, size_y))) {
+				if(play.getY()>m.y) break;
 				play.setY(play.getY()-1);
 				for(GameObject g: game.getGameObjects()) {
 					if(g==this) continue;

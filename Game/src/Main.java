@@ -7,7 +7,7 @@
  */
 public class Main {
 	// The Title of the Game
-	public static String title = "Game";
+	public static String title = "Quadro";
 	
 	/**
 	 * Main Function

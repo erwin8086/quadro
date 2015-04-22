@@ -6,7 +6,7 @@ import java.io.InputStream;
 public class Episode2 implements LevelSet {
 	private Game game;
 	private Color color = new Color(0, 50,0);
-	private String[] levels = {"level2_1.txt", "level2_2.txt", "level2_3.txt"};
+	private String[] levels = {"level2_1.txt", "level2_2.txt", "level2_3.txt", "level2_4.txt"};
 	private int level;
 	
 	public Episode2(Game game, int level) {

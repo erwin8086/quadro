@@ -66,36 +66,42 @@ public class Bonus implements GameObject{
 	public boolean reset() {
 		boni = new ArrayList<BonusObject>();
 		BufferedImage image=null;
+		// Coin 50
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/res/coin50.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		final BufferedImage image_50=image;
+		// Coin 100
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/res/coin100.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		final BufferedImage image_100=image;
+		// Coin 500
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/res/coin500.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		final BufferedImage image_500=image;
+		// Live
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/res/live.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		final BufferedImage image_live=image;
+		// Invincible
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/res/invincible.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		final BufferedImage image_invincible=image;
+		// Coin 50
 		new Level.LevelLoader() {
 			
 			@Override
@@ -103,6 +109,7 @@ public class Bonus implements GameObject{
 				boni.add(new Coin().setValue(50).setImage(image_50).setPos(x, y));
 			}
 		}.load('5', level.getLevel(), game);
+		// Coin 100
 		new Level.LevelLoader() {
 			
 			@Override
@@ -110,6 +117,7 @@ public class Bonus implements GameObject{
 				boni.add(new Coin().setValue(100).setImage(image_100).setPos(x, y));
 			}
 		}.load('1', level.getLevel(), game);
+		// Coin 500
 		new Level.LevelLoader() {
 			
 			@Override
@@ -117,6 +125,7 @@ public class Bonus implements GameObject{
 				boni.add(new Coin().setValue(500).setImage(image_500).setPos(x, y));
 			}
 		}.load('%', level.getLevel(), game);
+		// Invincible
 		new Level.LevelLoader() {
 			
 			@Override
@@ -124,6 +133,7 @@ public class Bonus implements GameObject{
 				boni.add(new Invincible().setImage(image_invincible).setPos(x, y));
 			}
 		}.load('I', level.getLevel(), game);
+		// Live
 		new Level.LevelLoader() {
 			
 			@Override

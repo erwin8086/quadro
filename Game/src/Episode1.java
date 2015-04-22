@@ -3,25 +3,46 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.InputStream;
 
-
+/**
+ * The First Episode of The Game
+ * The Underground
+ * @author erwin
+ *
+ */
 public class Episode1 implements LevelSet, GameObject {
 	
 	private Game game;
+	// The Levelfiles in res
 	private String[] levels = {"level.txt", "level2.txt", "level3.txt", "level4.txt", "level5.txt", "level6.txt", "level7.txt", "level8.txt", "level9.txt", "level10.txt", "level11.txt"};
+	// The Current Level
 	private int level;
 	private int size_y;
 	
+	/**
+	 * Creates a Episode1 Object
+	 * @param game The Game Instance
+	 * @param level The Level to start
+	 */
 	public Episode1(Game game, int level) {
 		this.game=game;
 		this.level=level;
 		size_y = game.getGUI().getHeight()/37;
+		if(level>levels.length) this.level=0;
 	}
 
+	/**
+	 * Gets a Level as Inputstream
+	 */
 	@Override
 	public InputStream getLevel() {
 		return getClass().getResourceAsStream("/res/" + levels[level]);
 	}
 
+	/**
+	 * Go to next Level
+	 * @return true if Level loadable
+	 * 			false if Level not exist
+	 */
 	@Override
 	public boolean nextLevel() {
 		level++;
@@ -33,26 +54,43 @@ public class Episode1 implements LevelSet, GameObject {
 		return true;
 	}
 
+	/**
+	 * Returns the Next Level Set
+	 * @return the LevelSet
+	 * 			null if not Exist
+	 */
 	@Override
 	public LevelSet nextLevelSet() {
 		game.getGameObjects().remove(this);
 		return new Episode2(game,level);
 	}
 
+	/**
+	 * Called on a Level starts
+	 */
 	@Override
 	public void onLevelStarts() {
+		// Show Story0.txt
 		if(level==0) {
 			game.getMenu().showScreen(getClass().getResourceAsStream("/res/story0.txt"));
 		}
+		// Show green bar
 		if(level==10)
 			game.getGameObjects().add(this);
 	}
 
+	/**
+	 * Get Number of Current Level
+	 */
 	@Override
 	public int getLevelNum() {
 		return level;
 	}
 
+	/**
+	 * Calculate green bar
+	 * finish if Player colidate
+	 */
 	@Override
 	public boolean calc(float time) {
 		if(level==10) {
@@ -64,6 +102,9 @@ public class Episode1 implements LevelSet, GameObject {
 		return false;
 	}
 
+	/**
+	 * Paint green bar
+	 */
 	@Override
 	public boolean paint(Graphics g) {
 		if(level==10) {
@@ -73,6 +114,9 @@ public class Episode1 implements LevelSet, GameObject {
 		return false;
 	}
 
+	/**
+	 * on Level 10 add a Evil to exit after green bar toucht
+	 */
 	@Override
 	public boolean reset() {
 		if(level==10)
@@ -80,30 +124,48 @@ public class Episode1 implements LevelSet, GameObject {
 		return false;
 	}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
 		return false;
 	}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public boolean destroyColidate(Rectangle r) {
 		return false;
 	}
 
+	/**
+	 * Draw Background for Episode 1
+	 */
 	@Override
 	public void drawBackground(Graphics g) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, game.getGUI().getWidth(), game.getGUI().getHeight());
 	}
 
+	/**
+	 * Returns 0
+	 */
 	@Override
 	public int getType() {
 		return 0;
 	}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public void changeDest(Rectangle r) {}
 
+	/**
+	 * Returns CONS_EVIL
+	 */
 	@Override
 	public int getCons() {
 		return GameObject.CONS_EVIL;

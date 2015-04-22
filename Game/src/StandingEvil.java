@@ -3,23 +3,40 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-
+/**
+ * A Static Evil
+ * Symbol: 's'
+ * @author erwin
+ *
+ */
 public class StandingEvil implements GameObject {
 	
+	// The Evils
 	protected ArrayList<Rectangle> evils;
 	protected Game game;
+	// The Size
 	protected int size_x, size_y;
+	// The Color
 	private Color color= new Color(100,0,0);
 	
+	/**
+	 * Creates The StandingEvil
+	 * @param game the Game
+	 */
 	public StandingEvil(Game game) {
 		this.game=game;
 		GUI gui = game.getGUI();
 		size_x = gui.getWidth()/50;
 		size_y = gui.getHeight()/37;
 		
+		// Resets the Evil
 		reset();
 	}
 
+	/**
+	 * Calculate Collissions
+	 * Dont move the Evil
+	 */
 	@Override
 	public boolean calc(float time) {
 		for(Rectangle r : evils) {
@@ -32,6 +49,9 @@ public class StandingEvil implements GameObject {
 		return false;
 	}
 
+	/**
+	 * Paint to Screen
+	 */
 	@Override
 	public boolean paint(Graphics g) {
 		g.setColor(color);
@@ -41,6 +61,9 @@ public class StandingEvil implements GameObject {
 		return false;
 	}
 
+	/**
+	 * Resets Evil on Level Starts
+	 */
 	@Override
 	public boolean reset() {
 		evils = new ArrayList<Rectangle>();
@@ -55,6 +78,9 @@ public class StandingEvil implements GameObject {
 		return false;
 	}
 
+	/**
+	 * check if Object collidate with Evil
+	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
 		for(Rectangle r2 : evils) {
@@ -63,19 +89,32 @@ public class StandingEvil implements GameObject {
 		return false;
 	}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public boolean destroyColidate(Rectangle r) {
 		return false;
 	}
 
+	/**
+	 * @return EVIL
+	 */
 	@Override
 	public int getType() {
 		return GameObject.EVIL;
 	}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public void changeDest(Rectangle r) {}
 
+	/**
+	 * get Consistency of EVIL
+	 * @return CONS_MAUER
+	 */
 	@Override
 	public int getCons() {
 		return GameObject.CONS_MAUER;

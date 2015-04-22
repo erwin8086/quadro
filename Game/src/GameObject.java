@@ -7,11 +7,34 @@ import java.awt.Rectangle;
  *
  */
 public interface GameObject {
+	/**
+	 * The Generic EVIL
+	 * Player checks for Collision
+	 */
 	public static final int EVIL=1;
+	/**
+	 * The Player
+	 */
 	public static final int PLAYER=2;
+	/**
+	 * Generic Wall Objects check for Collision
+	 */
 	public static final int MAUER=3;
+	/**
+	 * a Bonus the Bonus checks for Collision
+	 */
 	public static final int BONUS=4;
+	/**
+	 * A Evil the Evil checks for Collision
+	 */
+	public static final int EVIL_SELF_CALC=5;
+	/**
+	 * Consistency of a Mauer
+	 */
 	public static final int CONS_MAUER=1;
+	/**
+	 * Consistency of a Evil
+	 */
 	public static final int CONS_EVIL=2;
 	
 	/**
@@ -35,7 +58,7 @@ public interface GameObject {
 	public boolean isColidate(Rectangle r);
 	
 	/**
-	 * destroy Colidating Object
+	 * destroy Collidating Object
 	 */
 	public boolean destroyColidate(Rectangle r);
 	

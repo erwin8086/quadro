@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 
 /**
  * The Player
+ * Symbol: 'P'
  * @author erwin
  *
  */
@@ -35,19 +36,33 @@ public class Player implements GameObject, KeyListener {
 	private Integer score;
 	
 	private Game game;
-	public Player(GUI gui, Mauer mauer, Level level, Game game) {
+	
+	/**
+	 * Create the Player
+	 * @param game the Game Instance
+	 */
+	public Player(Game game) {
+		// Sets Variables
+		this.game = game;
+		this.gui = game.getGUI();
+		this.level = game.getLevel();
+		// Add KeyListener
 		gui.addKeyListener(this);
+		// Calc size and speed
 		size_x = gui.getWidth()/50;
 		size_y = gui.getHeight()/37;
 		speed=size_x*8;
-		this.gui = gui;
-		this.level = level;
-		this.game = game;
+		
+		// Sets Keys
 		KEY_LEFT = KeyEvent.VK_LEFT;
 		KEY_RIGHT = KeyEvent.VK_RIGHT;
 		KEY_UP = KeyEvent.VK_UP;
+		
+		// Sets Lives and Score
 		lives=Integer.valueOf(game.getSave().getConf(Save.LIVES));
 		score=Integer.valueOf(game.getSave().getConf(Save.SCORE));
+		
+		// Reset Player
 		this.reset();
 	}
 	/**
@@ -292,7 +307,7 @@ public class Player implements GameObject, KeyListener {
 	}
 	
 	/**
-	 * Set Player gameOver and exit
+	 * Remove live from player if lives==0 destroy Player and exits game
 	 */
 	public void gameOver() {
 		if(invincible>0) return;
@@ -388,27 +403,52 @@ public class Player implements GameObject, KeyListener {
 	public int getType() {
 		return GameObject.PLAYER;
 	}
+	
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public void changeDest(Rectangle r) {
-		key_up=false;
-		key_left=false;
-		key_right=false;
-		jumping=false;
+		
 	}
+	
+	/**
+	 * get Consistency of Player
+	 * @return CONS_EVIL
+	 */
 	@Override
 	public int getCons() {
 		return GameObject.CONS_EVIL;
 	}
 	
+	/**
+	 * get x coordinate from Player
+	 * @return the x coordinate
+	 */
 	public float getX() {
 		return x;
 	}
+	
+	/**
+	 * set x coordinate from Player
+	 * @param x the x coordinate
+	 */
 	public void setX(float x) {
 		this.x=x;
 	}
+	
+	/**
+	 * get y coordinate from Player
+	 * @return the y coordinate
+	 */
 	public float getY() {
 		return y;
 	}
+	
+	/**
+	 * set y coordinate from Player
+	 * @param y the y coordinate
+	 */
 	public void setY(float y) {
 		this.y=y;
 	}

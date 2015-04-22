@@ -52,6 +52,7 @@ public class Evil2 extends Evil{
 			r.width=1;
 			r.y++;
 		
+			// Calculate if Evil exits Platform
 			boolean r_col=false, r2_col=false;
 			for(GameObject g : game.getGameObjects()) {
 				if(g.getCons()!=GameObject.CONS_MAUER) continue;

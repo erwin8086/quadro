@@ -1,15 +1,29 @@
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-
+/**
+ * Evil that are Static like StaticEvil and
+ * Generates a Evil all 15 secounds
+ * @author erwin
+ *
+ */
 public class DublicatingEvil extends StandingEvil{
 	
+	// Last Dublicating
 	private float last_dub=0;
 
+	/**
+	 * Generates Dublicating Evil
+	 * @param game The Game Instance
+	 */
 	public DublicatingEvil(Game game) {
 		super(game);
 	}
 
+	/**
+	 * Calculate Dublicating and
+	 * creates the Evil
+	 */
 	@Override
 	public boolean calc(float time) {
 		for(Rectangle r : evils) {
@@ -22,6 +36,9 @@ public class DublicatingEvil extends StandingEvil{
 		return super.calc(time);
 	}
 	
+	/**
+	 * Resets the Evil on Level Load
+	 */
 	@Override
 	public boolean reset() {
 		evils = new ArrayList<Rectangle>();

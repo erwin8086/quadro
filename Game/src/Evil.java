@@ -24,10 +24,7 @@ public class Evil implements GameObject {
 	protected Game game;
 	/**
 	 * Generate Generic Evil
-	 * @param play
-	 * @param gui
-	 * @param mauer
-	 * @param level
+	 * @param game The Game
 	 */
 	public Evil(Game game) {
 		player=game.getPlayer();
@@ -47,9 +44,11 @@ public class Evil implements GameObject {
 	@Override
 	public boolean calc(float time) {
 		int i;
+		// Calculate all Evils
 		for(i=0;i<evils.size();i++) {
 			Evils e = evils.get(i);
 			e.x += speed*time*e.dest;
+			// TODO: Use GameObjects to Calculate
 			if(mauer.isColidate(e.getPOS())) e.dest*=-1;
 			while(mauer.isColidate(e.getPOS())) {
 				e.x += 1*e.dest;
@@ -64,7 +63,7 @@ public class Evil implements GameObject {
 				e.x=0;
 				e.dest *= -1;
 			}
-			
+			// Check if Evil colidate with Mauer
 			boolean is_mauer=false;
 			for(GameObject g: game.getGameObjects()) {
 				if(g.getCons()!=GameObject.CONS_MAUER) continue;
@@ -105,10 +104,22 @@ public class Evil implements GameObject {
 			
 		}
 		
+		// Calculate Changedest if Colidate
 		for(GameObject g : game.getGameObjects()) {
+			if(g==this) continue;
 			for(Evils e : evils) {
 				if(g.isColidate(e.getPOS())) {
 					g.changeDest(e.getPOS());
+				}
+			}
+		}
+		// Calculate Evil and Evil Colision 
+		for(Evils e1 : evils) {
+			for(Evils e2 : evils) {
+				if(e1==e2) continue;
+				if(e1.getPOS().intersects(e2.getPOS())) {
+					e1.dest*=-1;
+					e2.dest*=-1;
 				}
 			}
 		}
@@ -160,6 +171,7 @@ public class Evil implements GameObject {
 	public boolean reset() {
 		return reset('G');
 	}
+	
 	/**
 	 * Reset Evil
 	 * @param check // char to identify in Level
@@ -187,10 +199,15 @@ public class Evil implements GameObject {
 	}
 
 	/**
-	 * Do Noting
+	 * Check if Object Colidate
+	 * @param Rectangle to check for Colision
 	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
+		for(Evils e : evils) {
+			if(e.getPOS().intersects(r)) 
+				return true;
+		}
 		return false;
 	}
 
@@ -235,11 +252,17 @@ public class Evil implements GameObject {
 			return new Rectangle((int)x, (int)y, size_x, size_y);
 		}
 	}
+	/**
+	 * Return EVIL_SELF_CALC
+	 */
 	@Override
 	public int getType() {
-		return GameObject.EVIL;
+		return GameObject.EVIL_SELF_CALC;
 	}
 
+	/**
+	 * Change destination
+	 */
 	@Override
 	public void changeDest(Rectangle r) {
 		for(Evils e : evils) {
@@ -249,6 +272,9 @@ public class Evil implements GameObject {
 		}
 	}
 
+	/**
+	 * Get Consistency
+	 */
 	@Override
 	public int getCons() {
 		return GameObject.CONS_EVIL;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 /**
  * The Walls
+ * Symbol: '#'
  * @author erwin
  *
  */
@@ -16,6 +17,10 @@ public class Mauer implements GameObject {
 	private Level level;
 	private Game game;
 	
+	/**
+	 * Create a Instance
+	 * @param game The Game
+	 */
 	public Mauer(Game game) {
 		this.gui=game.getGUI();
 		this.level = game.getLevel();
@@ -87,14 +92,25 @@ public class Mauer implements GameObject {
 		return false;
 	}
 
+	/**
+	 * Get Type of Object
+	 * @return MAUER
+	 */
 	@Override
 	public int getType() {
 		return GameObject.MAUER;
 	}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public void changeDest(Rectangle r) {}
 
+	/**
+	 * Get Consistency of Object
+	 * @return CONS_MAUER
+	 */
 	@Override
 	public int getCons() {
 		return GameObject.CONS_MAUER;

@@ -2,34 +2,58 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-
+/**
+ * The Running Game
+ * Game is running if no Menu shown
+ * @author erwin
+ *
+ */
 public class Game {
-	
+	// Is GameOver?
 	private boolean gameover;
+	// Is Paused
 	private boolean pause;
+	// The Menu Instance
 	private Menu menu;
+	// The SaveGame
 	private Save save;
 	private Level level;
 	private Player player;
+	// The GameObjects
 	private ArrayList<GameObject> gos = new ArrayList<GameObject>();
+	// The Wall
 	private Mauer mauer;
 	private Evil evil;
 	
 	private GUI gui;
+	
+	/**
+	 * Creates Game
+	 * @param gui the MainWindow
+	 * @param save the SaveGame
+	 */
 	public Game(GUI gui, Save save) {
 		this.gui=gui;
 		this.save=save;
 		gui.addGame(this);
 		level=new Level(this);
 	}
-	
+	/**
+	 * gets the Save Instance
+	 * @return the Save Instance
+	 */
 	public Save getSave() {
 		return save;
 	}
 	
+	/**
+	 * Attach the Menu to the Game
+	 * @param menu
+	 */
 	public void addMenu(Menu menu) {
 		this.menu=menu;
 	}
+	
 	/**
 	 * start Game Contains Gameloop
 	 */
@@ -42,7 +66,7 @@ public class Game {
 		level = new Level(this);
 		mauer = new Mauer(this);
 		gos.add(mauer);
-		player = new Player(gui,mauer, level, this);
+		player = new Player(this);
 		player.setKeys(save.getKeys(Save.KEY_LEFT), save.getKeys(Save.KEY_RIGHT), save.getKeys(Save.KEY_UP));
 		gos.add(player);
 		evil=new Evil(this);
@@ -103,11 +127,16 @@ public class Game {
 			}
 		}
 	}
-	
+	/**
+	 * Pause Game and Show Menu
+	 */
 	public void pauseGame() {
 		pause=true;
 	}
 	
+	/**
+	 * Exits The Game
+	 */
 	public void endGame() {
 		gameover=true;
 	}
@@ -128,6 +157,10 @@ public class Game {
 		return gui;
 	}
 	
+	/**
+	 * Get The ArrayList of GameObjects
+	 * @return ArrayList of GameObjects
+	 */
 	public ArrayList<GameObject> getGameObjects() {
 		return gos;
 	}

@@ -16,6 +16,11 @@ public class Level {
 	
 	private Game game;
 	
+	/**
+	 * Create Level Instance
+	 * and Reads level from Save
+	 * @param game
+	 */
 	public Level(Game game) {
 		this.game = game;
 
@@ -38,6 +43,10 @@ public class Level {
 		return level.getLevel();
 	}
 	
+	/**
+	 * Game Finish
+	 * ends Game on Game complete
+	 */
 	public void gameComplete() {
 		JOptionPane.showMessageDialog(game.getGUI(), "Finish - Score: " + game.getPlayer().getScore().toString());
 		game.endGame();
@@ -46,12 +55,18 @@ public class Level {
 		newGame(true);
 	}
 	
+	/**
+	 * save the Level
+	 */
 	public void saveLevel() {
 		game.getSave().setConf(Save.LEVEL, String.valueOf(getLevelCount()));
 		game.getSave().setConf(Save.SCORE, String.valueOf(game.getPlayer().getScore()));
 		game.getSave().setConf(Save.LIVES, String.valueOf(game.getPlayer().getLives()));
 	}
 	
+	/**
+	 * Ends the Game on Player dies
+	 */
 	public void gameOver() {
 		JOptionPane.showMessageDialog(game.getGUI(), "GameOver - Score: " + game.getPlayer().getScore().toString());
 		game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore());
@@ -59,6 +74,10 @@ public class Level {
 		newGame(false);
 	}
 	
+	/**
+	 * Resets the SaveGame
+	 * @param user clear the LevelSet Save. True for Finish or new Game
+	 */
 	public void newGame(boolean user) {
 		game.getSave().setConf(Save.LEVEL, String.valueOf(0));
 		game.getSave().setConf(Save.SCORE, "0");
@@ -98,6 +117,10 @@ public class Level {
 		}
 	}
 	
+	/**
+	 * Called on Levelstart
+	 * Calls LevelSets on LevelStarts
+	 */
 	public void onLevelStarts() {
 		level.onLevelStarts();
 	}
@@ -109,6 +132,7 @@ public class Level {
 	public int getLevelCount() {
 		return level.getLevelNum();
 	}
+	
 	/**
 	 * SymbolParser for Level files
 	 * @author erwin

@@ -17,7 +17,11 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
-
+/**
+ * The Menu
+ * @author erwin
+ *
+ */
 public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	private GUI gui;
 	private boolean visible;
@@ -27,8 +31,12 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	private int mouse_x=0, mouse_y=0;
 	private int last_key;
 	
-	public Menu(GUI gui, Game game) {
-		this.gui = gui;
+	/**
+	 * Creates Object and add Listeners to GUI
+	 * @param game
+	 */
+	public Menu(Game game) {
+		this.gui = game.getGUI();
 		this.game = game;
 		this.move=false;
 		visible=false;
@@ -93,9 +101,9 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	
 	/**
 	 * Show Message in Game
-	 * Message are not automatic redrawd
+	 * Message are not automatic redrawn
 	 * @param msg Message
-	 * @param g Grphics to Paint
+	 * @param g Graphics to Paint
 	 */
 	private void showMSG(String msg, Graphics g) {
 		int x = gui.getWidth()/2 -100;
@@ -280,6 +288,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 						game.getSave().setConf(Save.HIGHSCORE, score);
 				}
 			}
+			// Exits the Game
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2+50,120,20), "Exit Game", g) && clicked) {
 				return false;
 			}
@@ -401,6 +410,8 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 
 
 		Color color=Color.white;
+		
+		// Check Mouseover
 		boolean mouseover=false;
 		if(mouse_x>r.x && mouse_x<r.x+r.width && mouse_y>r.y && mouse_y<r.y+r.height) {
 			mouseover=true;

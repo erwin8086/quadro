@@ -20,6 +20,8 @@ public class GUI extends JFrame implements KeyListener {
 	 * inits Main GUI
 	 */
 	public GUI(int res) {
+		
+		// Sets Resulution
 		switch(res) {
 		case 0:
 			break;
@@ -32,6 +34,7 @@ public class GUI extends JFrame implements KeyListener {
 			size_y=444;
 			break;
 		}
+		
 		// Set Options
 		this.setBounds(30,30,size_x, size_y);
 		this.setResizable(false);
@@ -52,6 +55,10 @@ public class GUI extends JFrame implements KeyListener {
 		
 	}
 	
+	/**
+	 * Attach The Game
+	 * @param game The Game Instance
+	 */
 	public void addGame(Game game) {
 		this.game=game;
 	}

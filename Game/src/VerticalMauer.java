@@ -5,7 +5,12 @@ import java.util.ArrayList;
 
 
 
-
+/**
+ * Vertical Moving Wall
+ * Symbol: 'm'
+ * @author erwin
+ *
+ */
 public class VerticalMauer implements GameObject{
 	
 	private Game game;
@@ -16,6 +21,10 @@ public class VerticalMauer implements GameObject{
 	private float last;
 	private int speed;
 	
+	/**
+	 * Creates the Instance
+	 * @param game the Game
+	 */
 	public VerticalMauer(Game game) {
 		this.game=game;
 		GUI gui = game.getGUI();
@@ -25,9 +34,13 @@ public class VerticalMauer implements GameObject{
 		reset();
 	}
 
+	/**
+	 * Calculate Movement
+	 */
 	@Override
 	public boolean calc(float time) {
 		last+=time;
+		// Creates new moving
 		if(last>5) {
 			last=0;
 			for(Rectangle r : mauern) {
@@ -37,6 +50,7 @@ public class VerticalMauer implements GameObject{
 				mov.add(m);
 			}
 		}
+		// Calculate Moving
 		for(int i=0;i<mov.size();i++) {
 			Moving m = mov.get(i);
 			m.y-=time*speed;
@@ -70,6 +84,9 @@ public class VerticalMauer implements GameObject{
 		return false;
 	}
 
+	/**
+	 * Paint Wall and Moving to Screen
+	 */
 	@Override
 	public boolean paint(Graphics g) {
 		g.setColor(Color.DARK_GRAY);
@@ -83,6 +100,9 @@ public class VerticalMauer implements GameObject{
 		return false;
 	}
 
+	/**
+	 * Resets on Level Starts
+	 */
 	@Override
 	public boolean reset() {
 		last=0;
@@ -98,6 +118,9 @@ public class VerticalMauer implements GameObject{
 		return false;
 	}
 
+	/**
+	 * check if it is Colidating
+	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
 		for(Rectangle r2 : mauern) {
@@ -111,26 +134,43 @@ public class VerticalMauer implements GameObject{
 		return false;
 	}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public boolean destroyColidate(Rectangle r) {
 		return false;
 	}
 
+	/**
+	 * @return MAUER
+	 */
 	@Override
 	public int getType() {
 		return GameObject.MAUER;
 	}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public void changeDest(Rectangle r) {
 		
 	}
 
+	/**
+	 * @return CONS_MAUER
+	 */
 	@Override
 	public int getCons() {
 		return GameObject.CONS_MAUER;
 	}
 	
+	/**
+	 * The Moving Object
+	 * @author erwin
+	 *
+	 */
 	class Moving {
 		public float x, y;
 	}

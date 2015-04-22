@@ -97,7 +97,7 @@ public class Game {
 				pause=false;
 			}
 			try {
-				Thread.sleep(2);
+				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

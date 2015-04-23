@@ -126,6 +126,7 @@ public class Game {
 				e.printStackTrace();
 			}
 		}
+		player.destroy();
 	}
 	/**
 	 * Pause Game and Show Menu

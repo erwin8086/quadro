@@ -34,6 +34,7 @@ public class Player implements GameObject, KeyListener {
 	// Destroy Evils if Invincible
 	private boolean destroyEvils;
 	private Integer score;
+	private float no_jump;
 	
 	private Game game;
 	
@@ -73,6 +74,13 @@ public class Player implements GameObject, KeyListener {
 	}
 	
 	/**
+	 * Destroy Player
+	 */
+	public void destroy() {
+		gui.removeKeyListener(this);
+	}
+	
+	/**
 	 * Set Keybinds
 	 * @param left
 	 * @param right
@@ -106,6 +114,7 @@ public class Player implements GameObject, KeyListener {
 	 * @param time // time sience last frame
 	 */
 	public void jump(int up, float time) {
+		if(no_jump>0) return;
 		this.up=(up/16)*size_x;
 		this.y -= speed*time*2;
 		jumping=true;
@@ -116,6 +125,7 @@ public class Player implements GameObject, KeyListener {
 	 */
 	@Override
 	public boolean calc(float time) {
+		if(no_jump>0) no_jump-=time;
 		// Decrase Invincible
 		invincible-=time;
 		boolean is_mauer=false;
@@ -171,6 +181,7 @@ public class Player implements GameObject, KeyListener {
 			if(is_mauer) {
 				up=0;
 				jumping=false;
+				no_jump=1;
 			} else {
 				if(up>36)
 					this.y -= speed*time*2;
@@ -179,7 +190,7 @@ public class Player implements GameObject, KeyListener {
 				up-= speed*time;
 			}
 		// Check if Player release key_up
-		} else if(up>0 && !key_up) {
+		} else if(up>0 && !key_up && !jumping) {
 			up=0;
 			jumping=false;
 		}

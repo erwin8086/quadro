@@ -92,7 +92,7 @@ public class Evil implements GameObject {
 			}
 			// Set Player Gameover of destroy Evil
 			if(player.isColidate(e.getPOS())) {
-				if(e.y-8 > player.getPOS().y) {
+				if(e.y-e.size_y/1.5 > player.getPOS().y) {
 					this.destroy(e,time);
 					player.jump(72, time);
 				} else {

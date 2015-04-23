@@ -181,7 +181,7 @@ public class Player implements GameObject, KeyListener {
 			if(is_mauer) {
 				up=0;
 				jumping=false;
-				no_jump=1;
+				no_jump=.5f;
 			} else {
 				if(up>36)
 					this.y -= speed*time*2;

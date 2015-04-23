@@ -99,11 +99,14 @@ public class VerticalEvil implements GameObject {
 	}
 
 	/**
-	 * Do Noting
+	 * Change vertical destination
 	 */
 	@Override
 	public void changeDest(Rectangle r) {
-		
+		for(VEvil e : evils) {
+			if(e.getPOS().intersects(r))
+				e.setDest(e.getDest()*-1);
+		}
 	}
 
 	/**

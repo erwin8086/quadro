@@ -134,6 +134,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				e.printStackTrace();
 			}
 		}
+		// Save Key
 		game.getSave().setConf(Key, String.valueOf(last_key));
 	}
 	

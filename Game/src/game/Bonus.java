@@ -54,8 +54,8 @@ public class Bonus implements GameObject{
 	 */
 	@Override
 	public boolean paint(Graphics g) {
-		for(BonusObject b : boni) {
-			b.paint(g);
+		for(int i=0;i<boni.size();i++) {
+			boni.get(i).paint(g);
 		}
 		return false;
 	}

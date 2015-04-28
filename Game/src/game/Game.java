@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author erwin
  *
  */
-public class Game {
+public class Game implements Runnable{
 	// Is GameOver?
 	private boolean gameover;
 	// Is Paused
@@ -92,6 +92,7 @@ public class Game {
 		// Set Time for LastFrame
 		last_frame = System.currentTimeMillis();
 		gameover=false;
+		new Thread(this).start();
 		while(!gameover) {
 			// Set Time for ThisFrame
 			this_frame = System.currentTimeMillis();
@@ -104,22 +105,6 @@ public class Game {
 			for(int i=0;i<gos.size();i++) {
 				gos.get(i).calc(time);
 			}
-			// Get Graphics
-			Graphics g = gui.getPaint();
-			// Draw Background
-			level.drawBackground(g);
-			
-			// Draw Objects
-			for(GameObject go: gos) {
-				go.paint(g);
-			}
-			// Draw Status Text
-			g.setColor(Color.WHITE);
-			g.drawString("Lives: " + player.getLives().toString() + " Score: " + player.getScore().toString() + " Level:" + (level.getLevelCount()+1), 0, 24);
-				
-			// Finish Draw
-			gui.finishPaint();
-			
 			if(pause) {
 				if(menu!=null)
 					menu.showPauseMenu();
@@ -177,6 +162,39 @@ public class Game {
 	
 	public Evil getEvil() {
 		return evil;
+	}
+	@Override
+	public void run() {
+		while(!gameover) {
+			// Get Graphics
+			Graphics g = gui.getPaint();
+			// Draw Background
+			level.drawBackground(g);
+			
+			// Draw Objects
+			for(int i=0;i<gos.size();i++) {
+				gos.get(i).paint(g);
+			}
+			// Draw Status Text
+			g.setColor(Color.WHITE);
+			g.drawString("Lives: " + player.getLives().toString() + " Score: " + player.getScore().toString() + " Level:" + (level.getLevelCount()+1), 0, 24);
+				
+			// Finish Draw
+			gui.finishPaint();
+			
+			while(pause) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

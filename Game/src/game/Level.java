@@ -99,7 +99,8 @@ public class Level {
 	 * Draw Background
 	 */
 	public void drawBackground(Graphics g) {
-		level.drawBackground(g);
+		if(level!=null)
+			level.drawBackground(g);
 	}
 	
 	/**
@@ -141,7 +142,9 @@ public class Level {
 	 * @return
 	 */
 	public int getLevelCount() {
-		return level.getLevelNum();
+		if(level!=null)
+			return level.getLevelNum();
+		return 0;
 	}
 	
 	/**

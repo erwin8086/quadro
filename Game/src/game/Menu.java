@@ -11,12 +11,17 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.font.LineMetrics;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 
 /**
  * The Menu
@@ -240,6 +245,37 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		while(true) {
 			Graphics g = gui.getPaint();
 			paintGeneric(g);
+			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-100,120,20), "Custom Level", g) && clicked) {
+				clicked=false;
+				visible=false;
+				JFileChooser file=new JFileChooser();
+				if(file.showOpenDialog(gui)==JFileChooser.APPROVE_OPTION) {
+					File f = file.getSelectedFile();
+					if(!f.exists()) {
+						visible=true;
+						continue;
+					}
+					Scanner in = null;
+					try {
+						in = new Scanner(f);
+						ByteArrayOutputStream out = new ByteArrayOutputStream();
+						PrintWriter pr = new PrintWriter(out);
+						while(in.hasNextLine()) {
+							pr.println(in.nextLine());
+						}
+						pr.close();
+						game.start(new CustomLevel(game, out.toByteArray()));
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					} finally {
+						if(in!=null)
+							in.close();
+					}
+				}
+				
+				
+				visible=true;
+			}
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-70,120,20), "Level Editor", g) && clicked) {
 				clicked=false;
 				startLevelEditor();

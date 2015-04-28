@@ -95,7 +95,8 @@ public class VerticalMauer implements GameObject{
 			g.fillRect(r.x, r.y, r.width, r.height);
 		}
 		g.setColor(new Color(0 , 0, 200));
-		for(Moving m : mov) {
+		for(int i=0;i<mov.size();i++) {
+			Moving m = mov.get(i);
 			g.fillRect((int)m.x, (int)m.y, size_x, size_y);
 		}
 		return false;

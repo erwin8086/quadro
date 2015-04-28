@@ -158,7 +158,8 @@ public class Evil implements GameObject {
 	 * @param g
 	 */
 	public void paintEvils(Graphics g) {
-		for(Evils e : evils) {
+		for(int i=0;i<evils.size();i++) {
+			Evils e = evils.get(i);
 			g.fillRect((int)e.x, (int)e.y, e.size_x, e.size_y);
 		}
 

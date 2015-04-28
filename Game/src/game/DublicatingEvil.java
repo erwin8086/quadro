@@ -27,12 +27,12 @@ public class DublicatingEvil extends StandingEvil{
 	 */
 	@Override
 	public boolean calc(float time) {
-		for(Rectangle r : evils) {
-			last_dub+=time;
-			if(last_dub>15) {
-				last_dub=0;
+		last_dub+=time;
+		if(last_dub>15) {
+			for(Rectangle r : evils) {
 				game.getEvil().addEvil(r.x+r.width, r.y);
 			}
+			last_dub=0;
 		}
 		return super.calc(time);
 	}

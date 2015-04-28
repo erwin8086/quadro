@@ -14,7 +14,7 @@ public class Episode2 implements LevelSet {
 	// The Background Color
 	private Color color = new Color(0, 50,0);
 	// The Levels as TextFiles in res
-	private String[] levels = {"level2_1.txt", "level2_2.txt", "level2_3.txt", "level2_4.txt", "level2_5.txt"};
+	private String[] levels = {"level2_1.txt", "level2_2.txt", "level2_3.txt", "level2_4.txt", "level2_5.txt", "level2_6.txt", "level2_7.txt"};
 	// The Current Level
 	private int level;
 	

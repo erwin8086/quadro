@@ -1,3 +1,4 @@
+package game;
 import java.awt.Graphics;
 import java.io.InputStream;
 import java.util.Scanner;
@@ -21,18 +22,22 @@ public class Level {
 	 * and Reads level from Save
 	 * @param game
 	 */
-	public Level(Game game) {
+	public Level(Game game, LevelSet levelSet) {
 		this.game = game;
 
-		level = new Episode1(game, Integer.valueOf(game.getSave().getConf(Save.LEVEL)));
-		int levelset = Integer.valueOf(game.getSave().getConf(Save.LEVELSET));
-		while(levelset > 0) {
-			level=level.nextLevelSet();
-			if(level==null) {
-				level=new Episode1(game, 0);
-				break;
+		if(levelSet==null) {
+			level = new Episode1(game, Integer.valueOf(game.getSave().getConf(Save.LEVEL)));
+			int levelset = Integer.valueOf(game.getSave().getConf(Save.LEVELSET));
+			while(levelset > 0) {
+				level=level.nextLevelSet();
+				if(level==null) {
+					level=new Episode1(game, 0);
+					break;
+				}
+				levelset--;
 			}
-			levelset--;
+		} else {
+			level=levelSet;
 		}
 	}
 	/**

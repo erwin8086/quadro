@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -103,17 +105,20 @@ public class Level {
 		}
 	}
 	
-	public void save(File file) {
+	public void save(OutputStream os) {
 		PrintWriter out=null;
+		out=new PrintWriter(os);
+		for(int y=0;y<37;y++) {
+			out.println(String.valueOf(level[y]));
+		}
+		out.close();
+	}
+	
+	public void save(File file) {
 		try {
-			out=new PrintWriter(file);
-			for(int y=0;y<37;y++) {
-				out.println(String.valueOf(level[y]));
-			}
+			save(new FileOutputStream(file));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} finally {
-			out.close();
 		}
 	}
 	

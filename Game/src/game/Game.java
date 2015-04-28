@@ -1,3 +1,4 @@
+package game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class Game {
 		this.gui=gui;
 		this.save=save;
 		gui.addGame(this);
-		level=new Level(this);
+		level=new Level(this,null);
 	}
 	/**
 	 * gets the Save Instance
@@ -54,16 +55,20 @@ public class Game {
 		this.menu=menu;
 	}
 	
+	public void start() {
+		start(null);
+	}
+	
 	/**
 	 * start Game Contains Gameloop
 	 */
-	public void start() {
+	public void start(LevelSet levels) {
 		// Create Array for GameObjects
 		gos = new ArrayList<GameObject>();
 				
 				
 		// Create GameObjects 
-		level = new Level(this);
+		level = new Level(this, levels);
 		mauer = new Mauer(this);
 		gos.add(mauer);
 		player = new Player(this);

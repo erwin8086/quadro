@@ -1,3 +1,4 @@
+package game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -229,7 +230,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	
 	private void startLevelEditor() {
 		visible=false;
-		new levelEdit.LevelEditor(gui).show();
+		new levelEdit.LevelEditor(gui, game).show();
 		visible=true;
 	}
 	

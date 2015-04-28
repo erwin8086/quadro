@@ -2,6 +2,8 @@ package levelEdit;
 
 
 
+import game.Game;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -24,6 +26,7 @@ import javax.swing.JOptionPane;
 /**
  * Level Editor for Quadro
  * @author erwin
+ * @param <Game>
  *
  */
 public class LevelEditor implements ActionListener, MouseListener, MouseMotionListener {
@@ -39,6 +42,7 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 	private JMenuItem save;
 	private JMenuItem load;
 	private JMenuItem fnew;
+	private JMenuItem start;
 	// Objects Menu
 	private JMenu objects;
 	private JMenuItem player;
@@ -74,7 +78,7 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 	
 	private int button=0;
 	
-	public LevelEditor(JFrame gui) {
+	public LevelEditor(JFrame gui, Game game) {
 		this.gui = gui;
 		gui.addMouseListener(this);
 		gui.addMouseMotionListener(this);
@@ -99,6 +103,7 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		save = new JMenuItem("Save");
 		exit = new JMenuItem("Exit");
 		load = new JMenuItem("Load");
+		start = new JMenuItem("Start");
 		
 		player = new JMenuItem("Player");
 		evil = new JMenuItem("Simple Evil");

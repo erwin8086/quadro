@@ -94,6 +94,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 			// Exit
 			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-70,100,20), "Exit to Menu", g) && clicked) {
 				game.endGame();
+				visible=false;
 				return;
 			}
 			gui.finishPaint();
@@ -542,9 +543,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	 */
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		if(!visible) {
-			return;
-		}
+		if(!visible) return;
 		if(move) {
 			Rectangle bounds = gui.getBounds();
 			if(mouse_x>e.getX()) {

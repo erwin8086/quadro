@@ -94,9 +94,11 @@ public class Level {
 				for(char c : line.toCharArray()) {
 					level[y][x] = c;
 					x++;
+					if(x>=50) break;
 				}
 				
 				y++;
+				if(y>=37) break;
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

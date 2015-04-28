@@ -80,7 +80,7 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		gui.addMouseMotionListener(this);
 		buffer = gui.getBufferStrategy();
 		tools=new JFrame("Tools");
-		tools.setBounds(gui.getWidth(), 0, 120, gui.getHeight());
+		tools.setBounds(gui.getWidth()+gui.getBounds().x, gui.getBounds().y, 120, gui.getHeight());
 		tools.setLayout(new FlowLayout());
 		tools.setUndecorated(true);
 		addComponents();

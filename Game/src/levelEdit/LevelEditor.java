@@ -108,10 +108,6 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		level.save(out);
 		game.start(new CustomLevel(game, out.toByteArray()));
-		Rectangle r = gui.getBounds();
-		r.x += r.width;
-		r.width=120;
-		tools.setBounds(r);
 		tools.setVisible(true);
 		active=true;
 		start_level=false;
@@ -236,6 +232,10 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		while(active) {
 			display();
 			if(start_level) startLevel();
+			Rectangle r = gui.getBounds();
+			r.x += r.width;
+			r.width=120;
+			tools.setBounds(r);
 			try {
 				Thread.sleep(150);
 			} catch (InterruptedException e) {

@@ -43,4 +43,9 @@ public class CustomLevel implements LevelSet {
 		g.fillRect(0, 0, game.getGUI().getWidth(), game.getGUI().getHeight());
 	}
 
+	@Override
+	public boolean isScore() {
+		return false;
+	}
+
 }

@@ -2,6 +2,7 @@ package levelEdit;
 
 
 
+import game.CustomLevel;
 import game.Game;
 
 import java.awt.Color;
@@ -15,6 +16,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
+import java.io.ByteArrayOutputStream;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -78,6 +81,10 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 	
 	private int button=0;
 	
+	private Game game;
+	
+	private boolean start_level;
+	
 	public LevelEditor(JFrame gui, Game game) {
 		this.gui = gui;
 		gui.addMouseListener(this);
@@ -91,7 +98,19 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		addListeners();
 		active=false;
 		level = new Level(gui);
+		this.game=game;
 		
+	}
+	
+	private void startLevel() {
+		active=false;
+		tools.setVisible(false);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		level.save(out);
+		game.start(new CustomLevel(game, out.toByteArray()));
+		tools.setVisible(true);
+		active=true;
+		start_level=false;
 	}
 	
 	private void addComponents() {
@@ -132,19 +151,25 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		sEvil_button=new JButton("Static Evil");
 		
 		file.add(fnew);
+		file.addSeparator();
+		file.add(start);
 		file.add(load);
 		file.add(save);
+		file.addSeparator();
 		file.add(exit);
 		
 		objects.add(player);
+		objects.addSeparator();
 		objects.add(evil);
 		objects.add(evil2);
 		objects.add(evil3);
 		objects.add(vEvil);
 		objects.add(sEvil);
 		objects.add(dEvil);
+		objects.addSeparator();
 		objects.add(mauer);
 		objects.add(vMauer);
+		objects.addSeparator();
 		objects.add(live);
 		objects.add(invincible);
 		objects.add(coin50);
@@ -194,6 +219,7 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		evil3_button.addActionListener(this);
 		vEvil_button.addActionListener(this);
 		sEvil_button.addActionListener(this);
+		start.addActionListener(this);
 	}
 	
 	
@@ -202,8 +228,10 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		sel.setText("Selecetd: ' '");
 		tools.setVisible(true);
 		active=true;
+		start_level=false;
 		while(active) {
 			display();
+			if(start_level) startLevel();
 			try {
 				Thread.sleep(150);
 			} catch (InterruptedException e) {
@@ -281,6 +309,8 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 			if(JOptionPane.showConfirmDialog(tools, "Clear the Level?")==JOptionPane.YES_OPTION) {
 				level.clear();
 			}
+		} else if(s==start) {
+			start_level=true;
 		}
 		sel.setText("Selected: '" + cSel + "'");
 	}

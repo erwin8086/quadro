@@ -14,6 +14,7 @@ public class Level {
 
 	// Start Level
 	private LevelSet level;
+	private LevelSet old_level;
 	
 	private Game game;
 	
@@ -55,8 +56,9 @@ public class Level {
 	public void gameComplete() {
 		JOptionPane.showMessageDialog(game.getGUI(), "Finish - Score: " + game.getPlayer().getScore().toString());
 		game.endGame();
+		if(old_level.isScore())
+			game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore()+5000);
 		level = new Episode1(game, 0);
-		game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore()+5000);
 		newGame(true);
 	}
 	
@@ -64,6 +66,7 @@ public class Level {
 	 * save the Level
 	 */
 	public void saveLevel() {
+		if(!level.isScore()) return;
 		game.getSave().setConf(Save.LEVEL, String.valueOf(getLevelCount()));
 		game.getSave().setConf(Save.SCORE, String.valueOf(game.getPlayer().getScore()));
 		game.getSave().setConf(Save.LIVES, String.valueOf(game.getPlayer().getLives()));
@@ -74,7 +77,8 @@ public class Level {
 	 */
 	public void gameOver() {
 		JOptionPane.showMessageDialog(game.getGUI(), "GameOver - Score: " + game.getPlayer().getScore().toString());
-		game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore());
+		if(level.isScore())
+			game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore());
 		game.endGame();
 		newGame(false);
 	}
@@ -104,13 +108,15 @@ public class Level {
 	 * @param score
 	 */
 	public void nextLevel(Integer score) {
+		old_level=level;
 		if(!level.nextLevel()) {
 			level=level.nextLevelSet();
 			if(level==null) {
 				gameComplete();
 				return;
 			} else {
-				game.getSave().setConf(Save.LEVELSET, String.valueOf(Integer.valueOf(game.getSave().getConf(Save.LEVELSET))+1));
+				if(level.isScore())
+					game.getSave().setConf(Save.LEVELSET, String.valueOf(Integer.valueOf(game.getSave().getConf(Save.LEVELSET))+1));
 			}
 		}
 		level.onLevelStarts();

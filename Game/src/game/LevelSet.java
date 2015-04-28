@@ -45,4 +45,6 @@ public interface LevelSet {
 	 */
 	public void drawBackground(Graphics g);
 	
+	public boolean isScore();
+	
 }

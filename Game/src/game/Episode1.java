@@ -172,4 +172,9 @@ public class Episode1 implements LevelSet, GameObject {
 		return GameObject.CONS_EVIL;
 	}
 
+	@Override
+	public boolean isScore() {
+		return true;
+	}
+
 }

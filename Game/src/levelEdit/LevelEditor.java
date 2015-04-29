@@ -4,10 +4,12 @@ package levelEdit;
 
 import game.CustomLevel;
 import game.Game;
+import game.Main;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -35,6 +37,7 @@ import javax.swing.JOptionPane;
 public class LevelEditor implements ActionListener, MouseListener, MouseMotionListener {
 	private JFrame gui;
 	private JFrame tools;
+	private TitleBar title;
 	private BufferStrategy buffer;
 	
 	// Tool Components
@@ -94,6 +97,14 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		tools.setBounds(gui.getWidth()+gui.getBounds().x, gui.getBounds().y, 120, gui.getHeight());
 		tools.setLayout(new FlowLayout());
 		tools.setUndecorated(true);
+		title = new TitleBar(Main.title + ": Level Editor");
+		Rectangle r = title.getBounds();
+		r.x = gui.getX();
+		r.y = gui.getY()-12;
+		r.width=gui.getWidth()+tools.getWidth();
+		r.height=12;
+		title.setBounds(r);
+		title.setUndecorated(true);
 		addComponents();
 		addListeners();
 		active=false;
@@ -105,10 +116,12 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 	private void startLevel() {
 		active=false;
 		tools.setVisible(false);
+		title.setVisible(false);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		level.save(out);
 		game.start(new CustomLevel(game, out.toByteArray()));
 		tools.setVisible(true);
+		title.setVisible(true);
 		active=true;
 		start_level=false;
 	}
@@ -227,17 +240,15 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		cSel=' ';
 		sel.setText("Selecetd: ' '");
 		tools.setVisible(true);
+		title.setVisible(true);
 		active=true;
 		start_level=false;
 		while(active) {
 			display();
 			if(start_level) startLevel();
-			Rectangle r = gui.getBounds();
-			r.x += r.width;
-			r.width=120;
-			tools.setBounds(r);
+			title.updatePOS();
 			try {
-				Thread.sleep(150);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -266,6 +277,7 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 			if(JOptionPane.showConfirmDialog(tools, "Exit?")==JOptionPane.YES_OPTION) {
 				active=false;
 				tools.setVisible(false);
+				title.setVisible(false);
 			}
 		} else if(s==load) {
 			JFileChooser f = new JFileChooser();
@@ -366,6 +378,71 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {}
+	
+	private class TitleBar extends JFrame implements MouseMotionListener {
+		private static final long serialVersionUID = -2592627871847839810L;
+		private String title;
+		private int oldx=0, oldy=0;
+		
+		public TitleBar(String title) {
+			this.title = title;
+			addMouseMotionListener(this);
+		}
+
+		@Override
+		public void paint(Graphics g) {
+			g.setColor(Color.black);
+			g.fillRect(0, 0, getWidth(), getHeight());
+			g.setColor(Color.white);
+			FontMetrics fm = g.getFontMetrics();
+			int width=0;
+			for(char c : title.toCharArray()) {
+				width+=fm.charWidth(c);
+			}
+			int height=Math.round(fm.getHeight()/1.75f);
+			g.drawString(title, getWidth()/2-width/2, height);
+		}
+		
+		public void updatePOS() {
+			Rectangle[] bounds = new Rectangle[3];
+			bounds[0] = getBounds();
+			bounds[1] = tools.getBounds();
+			bounds[2] = gui.getBounds();
+			bounds[2].x = bounds[0].x;
+			bounds[2].y = bounds[0].y+getHeight();
+			bounds[1].x = bounds[0].x + gui.getWidth();
+			bounds[1].y = bounds[0].y+getHeight();
+			tools.setBounds(bounds[1]);
+			gui.setBounds(bounds[2]);
+
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			if( (oldx!=e.getX()) || (oldy!=e.getY()) ) {
+				Rectangle r = getBounds();
+				if(oldx>e.getX()) {
+					r.x -= oldx-e.getX();
+				} else {
+					r.x += e.getX()-oldx;
+				}
+				if(oldy>e.getY()) {
+					r.y -= oldy-e.getY();
+				} else {
+					r.y += e.getY()-oldy;
+				}
+				setBounds(r);
+			}
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			oldx=e.getX();
+			oldy=e.getY();
+		}
+		
+		
+	}
 	
 	
 }

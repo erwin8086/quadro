@@ -28,7 +28,7 @@ public class Episode2 implements LevelSet, GameObject {
 	public Episode2(Game game, int level) {
 		this.game=game;
 		this.level=level;
-		if(level>levels.length) this.level=0;
+		if(level>=levels.length) this.level=0;
 		width=game.getGUI().getWidth();
 		height=game.getGUI().getHeight();
 	}

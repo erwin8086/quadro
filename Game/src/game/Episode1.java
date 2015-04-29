@@ -79,8 +79,10 @@ public class Episode1 implements LevelSet, GameObject {
 			game.getMenu().showScreen(getClass().getResourceAsStream("/res/story0.txt"));
 		}
 		// Show green bar
-		if(level==10)
+		if(level==10) {
 			game.getGameObjects().add(this);
+			game.getPlayer().addEvil();
+		}
 	}
 
 	/**
@@ -123,8 +125,6 @@ public class Episode1 implements LevelSet, GameObject {
 	 */
 	@Override
 	public boolean reset() {
-		if(level==10)
-			game.getPlayer().addEvil();
 		return false;
 	}
 

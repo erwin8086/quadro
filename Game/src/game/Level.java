@@ -54,12 +54,14 @@ public class Level {
 	 * ends Game on Game complete
 	 */
 	public void gameComplete() {
-		game.endGame();
+		game.pauseGame(false);
 		JOptionPane.showMessageDialog(game.getGUI(), "Finish - Score: " + game.getPlayer().getScore().toString());
 		if(old_level.isScore())
 			game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore()+5000);
 		level = new Episode1(game, 0);
 		newGame(true);
+		game.endGame();
+		game.exitPause();
 	}
 	
 	/**
@@ -76,11 +78,13 @@ public class Level {
 	 * Ends the Game on Player dies
 	 */
 	public void gameOver() {
-		game.endGame();
+		game.pauseGame(false);
 		JOptionPane.showMessageDialog(game.getGUI(), "GameOver - Score: " + game.getPlayer().getScore().toString());
 		if(level.isScore())
 			game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore());
 		newGame(false);
+		game.endGame();
+		game.exitPause();
 	}
 	
 	/**
@@ -109,6 +113,7 @@ public class Level {
 	 * @param score
 	 */
 	public void nextLevel(Integer score) {
+		game.pauseGame(false);
 		old_level=level;
 		if(!level.nextLevel()) {
 			level=level.nextLevelSet();
@@ -127,6 +132,7 @@ public class Level {
 		for(GameObject g : game.getGameObjects()) {
 			g.reset();
 		}
+		game.exitPause();
 	}
 	
 	/**

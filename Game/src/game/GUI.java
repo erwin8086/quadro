@@ -71,7 +71,7 @@ public class GUI extends JFrame implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()==KeyEvent.VK_ESCAPE) {
 			if(game!=null)
-				game.pauseGame();
+				game.pauseGame(true);
 		}
 	}
 	/**

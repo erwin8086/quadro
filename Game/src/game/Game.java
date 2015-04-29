@@ -13,7 +13,7 @@ public class Game implements Runnable{
 	// Is GameOver?
 	private boolean gameover;
 	// Is Paused
-	private boolean pause;
+	private boolean pause, pause_menu;
 	// The Menu Instance
 	private Menu menu;
 	// The SaveGame
@@ -87,17 +87,25 @@ public class Game implements Runnable{
 		// Call LevelStarts
 		level.onLevelStarts();
 		
-		for(GameObject g : gos) {
-			new Thread(new Calculator(g)).start();
-		}
-		
 		gameover=false;
+		pause=true;
+		for(int i=0;i<gos.size();i++) {
+			new Thread(new Calculator(gos.get(i))).start();
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		pause=false;
 		new Thread(this).start();
 		while(!gameover) {
-			if(pause) {
+			if(pause_menu) {
+				pause=true;
 				if(menu!=null)
 					menu.showPauseMenu();
 				pause=false;
+				pause_menu=false;
 			}
 			try {
 				Thread.sleep(50);
@@ -110,8 +118,9 @@ public class Game implements Runnable{
 	/**
 	 * Pause Game and Show Menu
 	 */
-	public void pauseGame() {
+	public void pauseGame(boolean menu) {
 		pause=true;
+		pause_menu=menu;
 	}
 	
 	/**
@@ -135,6 +144,10 @@ public class Game implements Runnable{
 	
 	public GUI getGUI() {
 		return gui;
+	}
+	
+	public void exitPause() {
+		pause=false;
 	}
 	
 	/**
@@ -204,6 +217,7 @@ public class Game implements Runnable{
 				this_frame = System.currentTimeMillis();
 				// Calculate Time in Secounds sience Last Frame
 				float time = ( (float) (this_frame-last_frame) )/1000;
+				if(time>0.5f) time=0.1f;
 				last_frame=this_frame;
 				g.calc(time);
 				while(pause) {

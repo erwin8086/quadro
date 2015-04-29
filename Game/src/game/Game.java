@@ -87,31 +87,20 @@ public class Game implements Runnable{
 		// Call LevelStarts
 		level.onLevelStarts();
 		
-		// Create Variable for Time Calculate
-		long last_frame, this_frame;
-		// Set Time for LastFrame
-		last_frame = System.currentTimeMillis();
+		for(GameObject g : gos) {
+			new Thread(new Calculator(g)).start();
+		}
+		
 		gameover=false;
 		new Thread(this).start();
 		while(!gameover) {
-			// Set Time for ThisFrame
-			this_frame = System.currentTimeMillis();
-			// Calculate Time in Secounds sience Last Frame
-			float time = ( (float) (this_frame-last_frame) )/1000;
-			last_frame=this_frame;
-			// Set Max Time
-			if(time>0.5) time=0.1f;
-			// calculate all Objects
-			for(int i=0;i<gos.size();i++) {
-				gos.get(i).calc(time);
-			}
 			if(pause) {
 				if(menu!=null)
 					menu.showPauseMenu();
 				pause=false;
 			}
 			try {
-				Thread.sleep(5);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -190,11 +179,49 @@ public class Game implements Runnable{
 				}
 			}
 			try {
-				Thread.sleep(5);
+				Thread.sleep(3);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private class Calculator implements Runnable {
+		
+		GameObject g;
+		
+		public Calculator(GameObject g) {
+			this.g = g;
+		}
+
+		@Override
+		public void run() {
+			long last_frame, this_frame;
+			// Set Time for LastFrame
+			last_frame = System.currentTimeMillis();
+			while(!gameover) {
+				// Set Time for ThisFrame
+				this_frame = System.currentTimeMillis();
+				// Calculate Time in Secounds sience Last Frame
+				float time = ( (float) (this_frame-last_frame) )/1000;
+				last_frame=this_frame;
+				g.calc(time);
+				while(pause) {
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				try {
+					Thread.sleep(15);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+		
 	}
 
 }

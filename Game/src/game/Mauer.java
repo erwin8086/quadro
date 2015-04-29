@@ -43,7 +43,8 @@ public class Mauer implements GameObject {
 	@Override
 	public boolean paint(Graphics g) {
 		g.setColor(Color.DARK_GRAY);
-		for(Rectangle r : mauern) {
+		for(int i=0;i<mauern.size();i++) {
+			Rectangle r = mauern.get(i);
 			g.fillRect(r.x, r.y, r.width, r.height);
 		}
 		return false;

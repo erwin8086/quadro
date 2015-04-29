@@ -54,8 +54,8 @@ public class Level {
 	 * ends Game on Game complete
 	 */
 	public void gameComplete() {
-		JOptionPane.showMessageDialog(game.getGUI(), "Finish - Score: " + game.getPlayer().getScore().toString());
 		game.endGame();
+		JOptionPane.showMessageDialog(game.getGUI(), "Finish - Score: " + game.getPlayer().getScore().toString());
 		if(old_level.isScore())
 			game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore()+5000);
 		level = new Episode1(game, 0);
@@ -76,10 +76,10 @@ public class Level {
 	 * Ends the Game on Player dies
 	 */
 	public void gameOver() {
+		game.endGame();
 		JOptionPane.showMessageDialog(game.getGUI(), "GameOver - Score: " + game.getPlayer().getScore().toString());
 		if(level.isScore())
 			game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore());
-		game.endGame();
 		newGame(false);
 	}
 	

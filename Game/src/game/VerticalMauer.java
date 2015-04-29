@@ -21,6 +21,7 @@ public class VerticalMauer implements GameObject{
 	private int size_x, size_y;
 	private float last;
 	private int speed;
+	private Color color=new Color(0 , 0, 200);
 	
 	/**
 	 * Creates the Instance
@@ -94,7 +95,7 @@ public class VerticalMauer implements GameObject{
 		for(Rectangle r : mauern) {
 			g.fillRect(r.x, r.y, r.width, r.height);
 		}
-		g.setColor(new Color(0 , 0, 200));
+		g.setColor(color);
 		for(int i=0;i<mov.size();i++) {
 			Moving m = mov.get(i);
 			g.fillRect((int)m.x, (int)m.y, size_x, size_y);

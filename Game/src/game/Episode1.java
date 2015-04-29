@@ -18,6 +18,7 @@ public class Episode1 implements LevelSet, GameObject {
 	// The Current Level
 	private int level;
 	private int size_y;
+	private int width, height;
 	
 	/**
 	 * Creates a Episode1 Object
@@ -29,6 +30,8 @@ public class Episode1 implements LevelSet, GameObject {
 		this.level=level;
 		size_y = game.getGUI().getHeight()/37;
 		if(level>levels.length) this.level=0;
+		width=game.getGUI().getWidth();
+		height=game.getGUI().getHeight();
 	}
 
 	/**
@@ -96,7 +99,7 @@ public class Episode1 implements LevelSet, GameObject {
 	public boolean calc(float time) {
 		if(level==10) {
 			Player player = game.getPlayer();
-			if(player.isColidate(new Rectangle(0, 0, game.getGUI().getWidth(), size_y))) {
+			if(player.isColidate(new Rectangle(0, 0, width, size_y))) {
 				player.delEvil();
 			}
 		}
@@ -110,7 +113,7 @@ public class Episode1 implements LevelSet, GameObject {
 	public boolean paint(Graphics g) {
 		if(level==10) {
 			g.setColor(Color.green);
-			g.fillRect(0, 0, game.getGUI().getWidth(), size_y);
+			g.fillRect(0, 0, width, size_y);
 		}
 		return false;
 	}
@@ -147,7 +150,7 @@ public class Episode1 implements LevelSet, GameObject {
 	@Override
 	public void drawBackground(Graphics g) {
 		g.setColor(Color.black);
-		g.fillRect(0, 0, game.getGUI().getWidth(), game.getGUI().getHeight());
+		g.fillRect(0, 0, width, height);
 	}
 
 	/**

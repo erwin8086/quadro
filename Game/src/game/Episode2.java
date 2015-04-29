@@ -1,6 +1,7 @@
 package game;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.io.InputStream;
 
 /**
@@ -9,14 +10,15 @@ import java.io.InputStream;
  * @author erwin
  *
  */
-public class Episode2 implements LevelSet {
+public class Episode2 implements LevelSet, GameObject {
 	private Game game;
 	// The Background Color
 	private Color color = new Color(0, 50,0);
 	// The Levels as TextFiles in res
-	private String[] levels = {"level2_1.txt", "level2_2.txt", "level2_3.txt", "level2_4.txt", "level2_5.txt", "level2_6.txt", "level2_7.txt"};
+	private String[] levels = {"level2_1.txt", "level2_2.txt", "level2_3.txt", "level2_4.txt", "level2_5.txt", "level2_6.txt", "level2_7.txt", "level2_8.txt", "level2_9.txt", "level2_10.txt"};
 	// The Current Level
 	private int level;
+	private int width, height;
 	
 	/**
 	 * Create Object
@@ -27,6 +29,8 @@ public class Episode2 implements LevelSet {
 		this.game=game;
 		this.level=level;
 		if(level>levels.length) this.level=0;
+		width=game.getGUI().getWidth();
+		height=game.getGUI().getHeight();
 	}
 
 	/**
@@ -57,6 +61,7 @@ public class Episode2 implements LevelSet {
 	 */
 	@Override
 	public LevelSet nextLevelSet() {
+		game.getGameObjects().remove(this);
 		return null;
 	}
 
@@ -68,6 +73,10 @@ public class Episode2 implements LevelSet {
 	public void onLevelStarts() {
 		if(level==0) {
 			game.getMenu().showScreen(getClass().getResourceAsStream("/res/story1.txt"));
+		}
+		if(level==9) {
+			game.getGameObjects().add(this);
+			game.getPlayer().addEvil();
 		}
 	}
 
@@ -85,12 +94,56 @@ public class Episode2 implements LevelSet {
 	@Override
 	public void drawBackground(Graphics g) {
 		g.setColor(color);
-		g.fillRect(0, 0, game.getGUI().getWidth(), game.getGUI().getHeight());
+		g.fillRect(0, 0, width, height);
 	}
 
 	@Override
 	public boolean isScore() {
 		return true;
+	}
+
+	@Override
+	public boolean calc(float time) {
+		if(game.getPlayer().isColidate(new Rectangle(0,0,width,16))) {
+			game.getPlayer().delEvil();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean paint(Graphics g) {
+		g.setColor(Color.white);
+		g.fillRect(0, 0, width, 16);
+		return false;
+	}
+
+	@Override
+	public boolean reset() {
+		return false;
+	}
+
+	@Override
+	public boolean isColidate(Rectangle r) {
+		return false;
+	}
+
+	@Override
+	public boolean destroyColidate(Rectangle r) {
+		return false;
+	}
+
+	@Override
+	public int getType() {
+		return 0;
+	}
+
+	@Override
+	public void changeDest(Rectangle r) {}
+
+	@Override
+	public int getCons() {
+
+		return GameObject.CONS_EVIL;
 	}
 
 	

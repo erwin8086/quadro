@@ -111,6 +111,8 @@ public class Evil implements GameObject {
 			for(Evils e : evils) {
 				if(g.isColidate(e.getPOS())) {
 					g.changeDest(e.getPOS());
+					e.dest*=-1;
+					e.x+=e.dest;
 				}
 			}
 		}

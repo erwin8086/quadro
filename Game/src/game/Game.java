@@ -212,7 +212,7 @@ public class Game implements Runnable{
 			long last_frame, this_frame;
 			// Set Time for LastFrame
 			last_frame = System.currentTimeMillis();
-			while(!gameover) {
+			while(!gameover && gos.contains(g)) {
 				// Set Time for ThisFrame
 				this_frame = System.currentTimeMillis();
 				// Calculate Time in Secounds sience Last Frame

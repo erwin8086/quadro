@@ -1,4 +1,5 @@
 package game;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.InputStream;
 
@@ -44,6 +45,8 @@ public interface LevelSet {
 	 * @param g the Graphics to Paint
 	 */
 	public void drawBackground(Graphics g);
+	
+	public Color getFontColor();
 	
 	public boolean isScore();
 	

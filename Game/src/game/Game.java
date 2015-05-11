@@ -1,6 +1,7 @@
 package game;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * @author erwin
  *
  */
-public class Game implements Runnable{
+public class Game implements Runnable, GameObject{
 	// Is GameOver?
 	private boolean gameover;
 	// Is Paused
@@ -25,6 +26,8 @@ public class Game implements Runnable{
 	// The Wall
 	private Mauer mauer;
 	private Evil evil;
+	
+	private Color color=Color.white;
 	
 	private GUI gui;
 	
@@ -83,6 +86,8 @@ public class Game implements Runnable{
 		gos.add(new DublicatingEvil(this));
 		gos.add(new VerticalEvil(this));
 		gos.add(new VerticalMauer(this));
+		gos.add(this);
+		this.reset();
 		
 		// Call LevelStarts
 		level.onLevelStarts();
@@ -178,7 +183,7 @@ public class Game implements Runnable{
 				gos.get(i).paint(g);
 			}
 			// Draw Status Text
-			g.setColor(Color.WHITE);
+			g.setColor(color);
 			g.drawString("Lives: " + player.getLives().toString() + " Score: " + player.getScore().toString() + " Level:" + (level.getLevelCount()+1), 0, 24);
 				
 			// Finish Draw
@@ -192,7 +197,7 @@ public class Game implements Runnable{
 				}
 			}
 			try {
-				Thread.sleep(3);
+				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -236,6 +241,41 @@ public class Game implements Runnable{
 			}
 		}
 		
+	}
+
+	@Override
+	public boolean calc(float time) {
+		return false;
+	}
+	@Override
+	public boolean paint(Graphics g) {
+		return false;
+	}
+	@Override
+	public boolean reset() {
+		color=level.getFontColor();
+		if(color==null)
+			color=Color.white;
+		return false;
+	}
+	@Override
+	public boolean isColidate(Rectangle r) {
+		return false;
+	}
+	@Override
+	public boolean destroyColidate(Rectangle r) {
+		return false;
+	}
+	@Override
+	public int getType() {
+		return 0;
+	}
+	@Override
+	public void changeDest(Rectangle r) {}
+	
+	@Override
+	public int getCons() {
+		return 0;
 	}
 
 }

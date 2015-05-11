@@ -48,4 +48,9 @@ public class CustomLevel implements LevelSet {
 		return false;
 	}
 
+	@Override
+	public Color getFontColor() {
+		return Color.white;
+	}
+
 }

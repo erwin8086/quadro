@@ -38,6 +38,8 @@ public class Episode2 implements LevelSet, GameObject {
 	 */
 	@Override
 	public InputStream getLevel() {
+		if(level>=levels.length)
+			level=0;
 		return getClass().getResourceAsStream("/res/" + levels[level]);
 	}
 
@@ -62,7 +64,7 @@ public class Episode2 implements LevelSet, GameObject {
 	@Override
 	public LevelSet nextLevelSet() {
 		game.getGameObjects().remove(this);
-		return null;
+		return new Episode3(game,level);
 	}
 
 	/**
@@ -144,6 +146,11 @@ public class Episode2 implements LevelSet, GameObject {
 	public int getCons() {
 
 		return GameObject.CONS_EVIL;
+	}
+
+	@Override
+	public Color getFontColor() {
+		return Color.white;
 	}
 
 	

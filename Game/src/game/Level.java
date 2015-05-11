@@ -1,4 +1,5 @@
 package game;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.InputStream;
 import java.util.Scanner;
@@ -151,6 +152,12 @@ public class Level {
 		if(level!=null)
 			return level.getLevelNum();
 		return 0;
+	}
+	
+	public Color getFontColor() {
+		if(level==null)
+			return null;
+		return level.getFontColor();
 	}
 	
 	/**

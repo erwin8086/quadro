@@ -39,6 +39,8 @@ public class Episode1 implements LevelSet, GameObject {
 	 */
 	@Override
 	public InputStream getLevel() {
+		if(level>=levels.length)
+			level=0;
 		return getClass().getResourceAsStream("/res/" + levels[level]);
 	}
 
@@ -178,6 +180,11 @@ public class Episode1 implements LevelSet, GameObject {
 	@Override
 	public boolean isScore() {
 		return true;
+	}
+
+	@Override
+	public Color getFontColor() {
+		return Color.white;
 	}
 
 }

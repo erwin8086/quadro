@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 public class Episode3 implements LevelSet{
 	
-	private String levels[] = {"level.txt"};
+	private String levels[] = {"level3_1.txt"};
 	private int level;
 	private int width,height;
 	private Color color = Color.white;

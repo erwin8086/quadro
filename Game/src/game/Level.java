@@ -16,6 +16,7 @@ public class Level {
 	// Start Level
 	private LevelSet level;
 	private LevelSet old_level;
+	private boolean endGame=false;
 	
 	private Game game;
 	
@@ -55,10 +56,13 @@ public class Level {
 	 * ends Game on Game complete
 	 */
 	public void gameComplete() {
+		if(endGame) return;
+		endGame=true;
 		game.pauseGame(false);
-		JOptionPane.showMessageDialog(game.getGUI(), "Finish - Score: " + game.getPlayer().getScore().toString());
 		if(old_level.isScore())
 			game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore()+5000);
+		else
+			game.getMenu().EnterScore(false, game.getPlayer().getScore());
 		level = new Episode1(game, 0);
 		newGame(true);
 		game.endGame();
@@ -79,10 +83,13 @@ public class Level {
 	 * Ends the Game on Player dies
 	 */
 	public void gameOver() {
+		if(endGame) return;
+		endGame=true;
 		game.pauseGame(false);
-		JOptionPane.showMessageDialog(game.getGUI(), "GameOver - Score: " + game.getPlayer().getScore().toString());
 		if(level.isScore())
 			game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore());
+		else
+			game.getMenu().EnterScore(false, game.getPlayer().getScore());
 		newGame(false);
 		game.endGame();
 		game.exitPause();
@@ -141,6 +148,7 @@ public class Level {
 	 * Calls LevelSets on LevelStarts
 	 */
 	public void onLevelStarts() {
+		endGame=false;
 		level.onLevelStarts();
 	}
 	

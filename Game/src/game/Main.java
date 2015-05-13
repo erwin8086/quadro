@@ -29,6 +29,7 @@ public class Main {
 			
 			// Creates Game and Menu
 			Game game = new Game(gui, save);
+			save.attachGame(game);
 			Menu menu = new Menu(game);
 			
 			// Show The Menu

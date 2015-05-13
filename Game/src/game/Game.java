@@ -224,7 +224,8 @@ public class Game implements Runnable, GameObject{
 				float time = ( (float) (this_frame-last_frame) )/1000;
 				if(time>0.5f) time=0.1f;
 				last_frame=this_frame;
-				g.calc(time);
+				g.calc(time/2);
+				g.calc(time/2);
 				while(pause) {
 					try {
 						Thread.sleep(50);

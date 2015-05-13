@@ -36,6 +36,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	private boolean clicked;
 	private int mouse_x=0, mouse_y=0;
 	private int last_key;
+	private char last_typed;
 	
 	/**
 	 * Creates Object and add Listeners to GUI
@@ -104,6 +105,58 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public String EnterScore(boolean isHigh, Integer score) {
+		String in = "";
+		boolean ok=false;
+		last_key = 0;
+		last_typed='\0';
+		char cur=' ';
+		visible=true;
+		while(last_key != KeyEvent.VK_ENTER) {
+			Graphics g = gui.getPaint();
+			paintGeneric(g);
+			
+			// Score
+			drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-100,120,20), "SCORE: " + score.toString(), g);
+			
+			// Name
+			if(isHigh) {
+				if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-70,120,20), "Name: " + in + cur, g)) {
+					if(cur==' ') {
+						cur='_';
+					} else {
+						cur=' ';
+					}
+					if(last_typed!='\0' && last_typed!=';' && last_typed!=':' && last_typed!='-' && last_typed!='\n') {
+						in += last_typed;
+						last_typed='\0';
+					}
+					if(last_key!=0) {
+						if(last_key==KeyEvent.VK_BACK_SPACE) {
+							in = in.substring(0, in.length()-2);
+							last_key=0;
+						}
+					}
+				}
+			}			
+			// OK
+			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-40,120,20), "OK", g) && clicked) {
+				break;
+			}
+			gui.finishPaint();
+			clicked=false;
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		clicked=false;
+		visible=false;
+		return in;
 	}
 	
 	/**
@@ -589,7 +642,9 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	 * Do Noting
 	 */
 	@Override
-	public void keyTyped(KeyEvent arg0) {}
+	public void keyTyped(KeyEvent e) {
+		last_typed=e.getKeyChar();
+	}
 	
 	/**
 	 * DisplayImage for showScreen

@@ -31,6 +31,11 @@ public class Save {
 	public static final int HIGHSCORE=6;
 	public static final int LEVELSET=7;
 	public static final int RES=8;
+	private Game game;
+	
+	public void attachGame(Game game) {
+		this.game=game;
+	}
 	
 	/**
 	 * Gets a Keybind
@@ -65,7 +70,7 @@ public class Save {
 	public void saveScore(GUI gui, int score) {
 		if(isHighScore(score)) {
 			String name;
-			name=JOptionPane.showInputDialog("Bitte Namen eingeben [A-Z, a-z, 0-9]:");
+			name=game.getMenu().EnterScore(true, score);
 			if(name==null) return;
 			if(name=="" || name.length()<1) name="a Player";
 			for(int i=0;i<5;i++) {
@@ -74,6 +79,8 @@ public class Save {
 					return;
 				}
 			}
+		} else {
+			game.getMenu().EnterScore(false, score);
 		}
 	}
 	

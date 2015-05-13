@@ -23,6 +23,7 @@ public class Game implements Runnable, GameObject{
 	private Player player;
 	// The GameObjects
 	private ArrayList<GameObject> gos = new ArrayList<GameObject>();
+	private ArrayList<Calculator> calcs;
 	// The Wall
 	private Mauer mauer;
 	private Evil evil;
@@ -87,21 +88,13 @@ public class Game implements Runnable, GameObject{
 		gos.add(new VerticalEvil(this));
 		gos.add(new VerticalMauer(this));
 		gos.add(this);
-		this.reset();
+		
 		
 		// Call LevelStarts
 		level.onLevelStarts();
-		
+		this.reset();
 		gameover=false;
-		pause=true;
-		for(int i=0;i<gos.size();i++) {
-			new Thread(new Calculator(gos.get(i))).start();
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		pause_menu=false;
 		pause=false;
 		new Thread(this).start();
 		while(!gameover) {
@@ -217,7 +210,7 @@ public class Game implements Runnable, GameObject{
 			long last_frame, this_frame;
 			// Set Time for LastFrame
 			last_frame = System.currentTimeMillis();
-			while(!gameover && gos.contains(g)) {
+			while(!gameover && gos.contains(g) && calcs.contains(this)) {
 				// Set Time for ThisFrame
 				this_frame = System.currentTimeMillis();
 				// Calculate Time in Secounds sience Last Frame
@@ -232,6 +225,7 @@ public class Game implements Runnable, GameObject{
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					System.out.println("Pause");
 				}
 				try {
 					Thread.sleep(15);
@@ -254,9 +248,22 @@ public class Game implements Runnable, GameObject{
 	}
 	@Override
 	public boolean reset() {
+		calcs=new ArrayList<Calculator>();
+		pause=true;
 		color=level.getFontColor();
 		if(color==null)
 			color=Color.white;
+		for(int i=0;i<gos.size();i++) {
+			Calculator c = new Calculator(gos.get(i));
+			calcs.add(c);
+			new Thread(c).start();
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		pause=false;
 		return false;
 	}
 	@Override

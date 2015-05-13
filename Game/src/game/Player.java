@@ -233,7 +233,7 @@ public class Player implements GameObject, KeyListener {
 		}
 		
 		// Set GameComplete if no evils
-		if(num_evils==0) {
+		if(num_evils<=0) {
 			gameComplete();
 		}
 		

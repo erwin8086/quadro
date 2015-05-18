@@ -36,6 +36,7 @@ public class Player implements GameObject, KeyListener {
 	private boolean destroyEvils;
 	private Integer score;
 	private float no_jump;
+	private boolean complete;
 	
 	private Game game;
 	
@@ -290,6 +291,7 @@ public class Player implements GameObject, KeyListener {
 		jumping=false;
 		invincible=2;
 		destroyEvils=false;
+		complete=false;
 		return false;
 	}
 
@@ -339,9 +341,9 @@ public class Player implements GameObject, KeyListener {
 	 * Set Player Level Complete
 	 */
 	public void gameComplete() {
-		if(game.getGameObjects().contains(this)) {
+		if(!complete) {
 			level.nextLevel(score);
-			game.getGameObjects().remove(this);
+			complete=true;
 		}
 	}
 

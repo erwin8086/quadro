@@ -250,6 +250,7 @@ public class Game implements Runnable, GameObject{
 	@Override
 	public boolean reset() {
 		pause=true;
+		calcs=new ArrayList<Calculator>();
 		color=level.getFontColor();
 		if(color==null)
 			color=Color.white;

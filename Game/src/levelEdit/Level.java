@@ -72,10 +72,35 @@ public class Level {
 		return level[y][x];
 	}
 	
+	private void showRect(Graphics g, Color c, int x, int y) {
+		Color old = g.getColor();
+		g.setColor(c);
+		g.fillRect(x*size_x, y*size_y, size_x, size_y);
+		g.setColor(old);
+	}
+	
 	public void display(Graphics g) {
 		g.setColor(Color.black);
 		for(int y=0;y<37;y++) {
 			for(int x=0;x<50;x++) {
+				switch(level[y][x]) {
+				case 'm':
+				case '#':
+					showRect(g, Color.DARK_GRAY, x, y);
+					break;
+				case 'G':
+				case 'S':
+					showRect(g, Color.RED, x, y);
+					break;
+				case 'D':
+				case 's':
+				case 'V':
+					showRect(g, new Color(100,0,0), x, y);
+					break;
+				case 'K':
+					showRect(g, Color.YELLOW, x, y);
+					break;
+				}
 				g.drawRect(x*size_x, y*size_y, size_x, size_y);
 				g.drawChars(level[y], x, 1, x*size_x+size_x/2, (y+1)*size_y);
 			}

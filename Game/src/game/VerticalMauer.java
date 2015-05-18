@@ -126,10 +126,13 @@ public class VerticalMauer implements GameObject{
 	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
-		for(Rectangle r2 : mauern) {
+		if(r==null) return false;
+		for(int i=0;i<mauern.size();i++) {
+			Rectangle r2 = mauern.get(i);
 			if(r2.intersects(r)) return true;
 		}
-		for(Moving m : mov) {
+		for(int i=0;i<mov.size();i++) {
+			Moving m = mov.get(i);
 			if(new Rectangle((int)m.x, (int)m.y, size_x, size_y).intersects(r)) {
 				return true;
 			}

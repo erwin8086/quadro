@@ -269,7 +269,8 @@ public class Evil implements GameObject {
 	 */
 	@Override
 	public void changeDest(Rectangle r) {
-		for(Evils e : evils) {
+		for(int i=0;i<evils.size();i++) {
+			Evils e = evils.get(i);
 			if(r.intersects(e.getPOS())) {
 				e.dest*=-1;
 			}

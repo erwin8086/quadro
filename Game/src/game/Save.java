@@ -10,8 +10,6 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-
 /**
  * The SaveGame
  * used for Store all

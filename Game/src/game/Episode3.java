@@ -6,10 +6,11 @@ import java.io.InputStream;
 
 public class Episode3 implements LevelSet{
 	
-	private String levels[] = {"level3_1.txt"};
+	private String levels[] = {"level3_1.txt", "level3_2.txt", "level3_3.txt", "level3_4.txt"};
 	private int level;
 	private int width,height;
 	private Color color = Color.white;
+	private Game game;
 	
 	public Episode3(Game game, int level) {
 		this.level=level;
@@ -17,6 +18,7 @@ public class Episode3 implements LevelSet{
 			this.level=0;
 		width=game.getGUI().getWidth();
 		height=game.getGUI().getHeight();
+		this.game=game;
 	}
 
 	@Override
@@ -33,6 +35,7 @@ public class Episode3 implements LevelSet{
 			level=0;
 			return false;
 		}
+		game.getLevel().saveLevel(false);
 		return true;
 			
 	}

@@ -60,10 +60,14 @@ public class Player implements GameObject, KeyListener {
 		KEY_RIGHT = KeyEvent.VK_RIGHT;
 		KEY_UP = KeyEvent.VK_UP;
 		
-		// Sets Lives and Score
-		lives=Integer.valueOf(game.getSave().getConf(Save.LIVES));
-		score=Integer.valueOf(game.getSave().getConf(Save.SCORE));
-		
+		if(game.getLevel().isScore()) {
+			// Sets Lives and Score
+			lives=Integer.valueOf(game.getSave().getConf(Save.LIVES));
+			score=Integer.valueOf(game.getSave().getConf(Save.SCORE));
+		} else {
+			lives=3;
+			score=0;
+		}
 		// Reset Player
 		this.reset();
 	}
@@ -335,7 +339,10 @@ public class Player implements GameObject, KeyListener {
 	 * Set Player Level Complete
 	 */
 	public void gameComplete() {
-		level.nextLevel(score);
+		if(game.getGameObjects().contains(this)) {
+			level.nextLevel(score);
+			game.getGameObjects().remove(this);
+		}
 	}
 
 	/**

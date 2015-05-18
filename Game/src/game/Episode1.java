@@ -56,7 +56,7 @@ public class Episode1 implements LevelSet, GameObject {
 			level=0;
 			return false;
 		}
-		game.getLevel().saveLevel();
+		game.getLevel().saveLevel(false);
 		return true;
 	}
 

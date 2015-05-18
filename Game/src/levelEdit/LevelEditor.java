@@ -122,6 +122,11 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		game.start(new CustomLevel(game, out.toByteArray()));
 		tools.setVisible(true);
 		title.setVisible(true);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		active=true;
 		start_level=false;
 	}

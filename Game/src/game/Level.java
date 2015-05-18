@@ -48,6 +48,7 @@ public class Level {
 	 * @return InputStream for CurrentLevel
 	 */
 	public InputStream getLevel() {
+		if(level==null) return null;
 		return level.getLevel();
 	}
 	
@@ -64,7 +65,8 @@ public class Level {
 		else
 			game.getMenu().EnterScore(false, game.getPlayer().getScore());
 		level = new Episode1(game, 0);
-		newGame(true);
+		if(old_level.isScore())
+			newGame(true);
 		game.endGame();
 		game.exitPause();
 	}
@@ -72,8 +74,11 @@ public class Level {
 	/**
 	 * save the Level
 	 */
-	public void saveLevel() {
-		if(!level.isScore()) return;
+	public void saveLevel(boolean is_over) {
+		if(is_over)
+			if(!level.isScore()) return;
+		else
+			if(!old_level.isScore()) return;
 		game.getSave().setConf(Save.LEVEL, String.valueOf(getLevelCount()));
 		game.getSave().setConf(Save.SCORE, String.valueOf(game.getPlayer().getScore()));
 		game.getSave().setConf(Save.LIVES, String.valueOf(game.getPlayer().getLives()));
@@ -90,7 +95,8 @@ public class Level {
 			game.getSave().saveScore(game.getGUI(), game.getPlayer().getScore());
 		else
 			game.getMenu().EnterScore(false, game.getPlayer().getScore());
-		newGame(false);
+		if(isScore())
+			newGame(false);
 		game.endGame();
 		game.exitPause();
 	}
@@ -166,6 +172,11 @@ public class Level {
 		if(level==null)
 			return null;
 		return level.getFontColor();
+	}
+	
+	public boolean isScore() {
+		if(level==null) return false;
+		return level.isScore();
 	}
 	
 	/**

@@ -4,8 +4,6 @@ import java.awt.Graphics;
 import java.io.InputStream;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-
 /**
  * Level Loader and Symbol Parser
  * @author erwin

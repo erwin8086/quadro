@@ -1,5 +1,11 @@
 package game;
 
+import java.io.File;
+import java.io.IOException;
+
+import zip.ZipFile;
+import zip.ZipLevelSet;
+
 /**
  * Main Class
  * Creates GUI, Save, Game
@@ -31,7 +37,6 @@ public class Main {
 			Game game = new Game(gui, save);
 			save.attachGame(game);
 			Menu menu = new Menu(game);
-			
 			// Show The Menu
 			if(menu.showMainMenu(keys)) {
 				keys=true;

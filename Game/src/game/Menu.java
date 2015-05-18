@@ -23,6 +23,9 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
+import zip.ZipFile;
+import zip.ZipLevelSet;
+
 /**
  * The Menu
  * @author erwin
@@ -333,7 +336,19 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				clicked=false;
 				startLevelEditor();
 			}
-			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-40,120,20), "Exit Extras", g) && clicked) {
+			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-40,120,20), "Custom LevelSet", g) && clicked) {
+				clicked=false;
+				JFileChooser file = new JFileChooser();
+				if(file.showOpenDialog(game.getGUI())!=JFileChooser.APPROVE_OPTION) continue;
+				try {
+					ZipFile zip = new ZipFile(file.getSelectedFile());
+					game.start(new ZipLevelSet(game, zip));
+					zip.save(file.getSelectedFile());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-10,120,20), "Exit Extras", g) && clicked) {
 				clicked=false;
 				return;
 			}

@@ -208,7 +208,8 @@ public class Evil implements GameObject {
 	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
-		for(Evils e : evils) {
+		for(int i=0;i<evils.size();i++) {
+			Evils e = evils.get(i);
 			if(e.getPOS().intersects(r)) 
 				return true;
 		}

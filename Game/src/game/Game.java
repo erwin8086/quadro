@@ -42,6 +42,7 @@ public class Game implements Runnable, GameObject{
 		this.save=save;
 		gui.addGame(this);
 		level=new Level(this,null);
+		calcs=new ArrayList<Calculator>();
 	}
 	/**
 	 * gets the Save Instance
@@ -92,10 +93,10 @@ public class Game implements Runnable, GameObject{
 		
 		// Call LevelStarts
 		level.onLevelStarts();
-		this.reset();
 		gameover=false;
 		pause_menu=false;
 		pause=false;
+		this.reset();
 		new Thread(this).start();
 		while(!gameover) {
 			if(pause_menu) {
@@ -112,6 +113,7 @@ public class Game implements Runnable, GameObject{
 			}
 		}
 		player.destroy();
+		calcs=new ArrayList<Calculator>();
 	}
 	/**
 	 * Pause Game and Show Menu
@@ -225,7 +227,6 @@ public class Game implements Runnable, GameObject{
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					System.out.println("Pause");
 				}
 				try {
 					Thread.sleep(15);
@@ -248,7 +249,6 @@ public class Game implements Runnable, GameObject{
 	}
 	@Override
 	public boolean reset() {
-		calcs=new ArrayList<Calculator>();
 		pause=true;
 		color=level.getFontColor();
 		if(color==null)

@@ -109,7 +109,6 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	
 	public String EnterScore(boolean isHigh, Integer score) {
 		String in = "";
-		boolean ok=false;
 		last_key = 0;
 		last_typed='\0';
 		char cur=' ';

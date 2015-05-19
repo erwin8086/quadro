@@ -25,6 +25,7 @@ public class ZipLevelSet implements LevelSet {
 	private int width,height;
 	private int num_level=0;
 	private boolean first_start=true;
+	private ZipClassLoader modLoader;
 	
 	public void readSave() {
 		if(zip.getFile("save.txt")==null) {
@@ -58,6 +59,7 @@ public class ZipLevelSet implements LevelSet {
 	public ZipLevelSet(Game game, ZipFile zip) {
 		this.zip=zip;
 		this.game=game;
+		modLoader = new ZipClassLoader(ZipClassLoader.class.getClassLoader(), zip);
 		conf=new Scanner(zip.getFileAsStream("main.cnf"));
 		width=game.getGUI().getWidth();
 		height=game.getGUI().getHeight();
@@ -75,6 +77,20 @@ public class ZipLevelSet implements LevelSet {
 				level=zip.getFile(split[1]);
 				num_level=Integer.valueOf(split[2]);
 				break;
+			} else if(split[0].equals("mod")) {
+				try {
+					Class modc = modLoader.loadClass("mod." + split[1]);
+					try {
+						Mod mod = (Mod) modc.newInstance();
+						mod.load(game);
+					} catch (InstantiationException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					}
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 			l--;
 		}
@@ -98,6 +114,20 @@ public class ZipLevelSet implements LevelSet {
 					break;
 				} else if(split[0].equals("save")) {
 					writeSave();
+				} else if(split[0].equals("mod")) {
+					try {
+						Class modc = modLoader.loadClass("mod." + split[1]);
+						try {
+							Mod mod = (Mod) modc.newInstance();
+							mod.load(game);
+						} catch (InstantiationException e) {
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							e.printStackTrace();
+						}
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			if(level==null) return null;

@@ -138,7 +138,7 @@ public class Level {
 					game.getSave().setConf(Save.LEVELSET, String.valueOf(Integer.valueOf(game.getSave().getConf(Save.LEVELSET))+1));
 			}
 		}
-		level.onLevelStarts();
+		onLevelStarts();
 		
 		
 		// Reset all GameObjects
@@ -155,7 +155,7 @@ public class Level {
 	public void onLevelStarts() {
 		ArrayList<GameListener> gameListeners = game.getGameListeners();
 		for(int i=0;i<gameListeners.size();i++) {
-			gameListeners.get(i).onGameStarts();
+			gameListeners.get(i).onLevelStarts();
 		}
 		endGame=false;
 		level.onLevelStarts();

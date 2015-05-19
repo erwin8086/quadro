@@ -12,7 +12,7 @@ public class ZipClassLoader extends ClassLoader{
 		if(!name.startsWith("mod."))
 			return super.loadClass(name);
 		byte[] data = zip.getFile(name.substring("mod.".length()) + ".class");
-		return defineClass("zip." + name.substring("mod.".length()), data, 0, data.length);
+		return defineClass(name, data, 0, data.length);
 	}
 
 }

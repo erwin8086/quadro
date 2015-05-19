@@ -66,8 +66,9 @@ public class ZipLevelSet implements LevelSet {
 		color=Color.black;
 		readSave();
 		int l=save_line;
-		while(l>0) {
+		while(level==null && conf.hasNextLine() && l==0) {
 			String line = conf.nextLine();
+			save_line++;
 			String[] split = line.split(":");
 			if(split[0].equals("display")) {
 				game.getMenu().showScreen(zip.getFileAsStream(split[1]));
@@ -77,6 +78,43 @@ public class ZipLevelSet implements LevelSet {
 				level=zip.getFile(split[1]);
 				num_level=Integer.valueOf(split[2]);
 				break;
+			} else if(split[0].equals("save")) {
+				writeSave();
+			} else if(split[0].equals("mod")) {
+				try {
+					Class modc = modLoader.loadClass("mod." + split[1]);
+					try {
+						Mod mod = (Mod) modc.newInstance();
+						mod.load(game,zip);
+					} catch (InstantiationException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					}
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		while(l>0) {
+			if(!conf.hasNextLine()) {
+				InputStream in=getClass().getResourceAsStream("/res/level.txt");
+				Scanner s = new Scanner(in);
+				ByteArrayOutputStream out = new ByteArrayOutputStream();
+				PrintWriter p = new PrintWriter(out);
+				while(s.hasNextLine())
+					p.println(s.nextLine());
+				p.close();
+				s.close();
+				level=out.toByteArray();
+				break;
+			}
+			String line = conf.nextLine();
+			String[] split = line.split(":");
+			if(split[0].equals("display")) {
+				game.getMenu().showScreen(zip.getFileAsStream(split[1]));
+			} else if(split[0].equals("color")) {
+				color = new Color(Integer.valueOf(split[1]), Integer.valueOf(split[2]), Integer.valueOf(split[3]));
 			} else if(split[0].equals("mod")) {
 				try {
 					Class modc = modLoader.loadClass("mod." + split[1]);
@@ -93,8 +131,7 @@ public class ZipLevelSet implements LevelSet {
 				}
 			}
 			l--;
-		}
-		level=null;
+		}	
 	}
 
 	@Override

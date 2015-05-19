@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 public class Episode3 implements LevelSet{
 	
-	private String levels[] = {"level3_1.txt", "level3_2.txt", "level3_3.txt", "level3_4.txt", "level3_5.txt", "level3_6.txt"};
+	private String levels[] = {"level3_1.txt", "level3_2.txt", "level3_3.txt", "level3_4.txt", "level3_5.txt", "level3_6.txt", "level3_7.txt", "level3_8.txt", "level3_9.txt", "level3_10.txt"};
 	private int level;
 	private int width,height;
 	private Color color = Color.white;
@@ -47,7 +47,8 @@ public class Episode3 implements LevelSet{
 
 	@Override
 	public void onLevelStarts() {
-		
+		if(level==9)
+			game.getGameObjects().add(new EndEvil(game));
 	}
 
 	@Override

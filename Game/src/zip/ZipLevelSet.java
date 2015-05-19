@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import game.Game;
 import game.LevelSet;
+import game.Player;
 
 public class ZipLevelSet implements LevelSet {
 	
@@ -18,30 +19,36 @@ public class ZipLevelSet implements LevelSet {
 	private Scanner conf;
 	private byte[] level;
 	private int save_score;
-	private int save_level;
+	private int save_line;
 	private int save_lives;
 	private Color color;
 	private int width,height;
+	private int num_level=0;
+	private boolean first_start=true;
 	
 	public void readSave() {
 		if(zip.getFile("save.txt")==null) {
 			save_score=0;
-			save_level=0;
+			save_line=0;
 			save_lives=3;
 			return;
 		}
 		Scanner in = new Scanner(zip.getFileAsStream("save.txt"));
 		save_score=Integer.valueOf(in.nextLine());
-		save_level=Integer.valueOf(in.nextLine());
+		save_line=Integer.valueOf(in.nextLine());
 		save_lives=Integer.valueOf(in.nextLine());
 		in.close();
 	}
 	
 	public void writeSave() {
+		Player play = game.getPlayer();
+		if(play==null) return;
+		save_lives = play.getLives();
+		save_score = play.getScore();
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		PrintWriter pr = new PrintWriter(out);
 		pr.println(save_score);
-		pr.println(save_level);
+		pr.println(save_line);
 		pr.println(save_lives);
 		pr.close();
 		zip.replace(out.toByteArray(), "save.txt");
@@ -56,18 +63,22 @@ public class ZipLevelSet implements LevelSet {
 		height=game.getGUI().getHeight();
 		color=Color.black;
 		readSave();
-		int l=save_level;
-		getLevel();
-		level=null;
+		int l=save_line;
 		while(l>0) {
-			if(getLevel()==null) break;
-			level=null;
+			String line = conf.nextLine();
+			String[] split = line.split(":");
+			if(split[0].equals("display")) {
+				game.getMenu().showScreen(zip.getFileAsStream(split[1]));
+			} else if(split[0].equals("color")) {
+				color = new Color(Integer.valueOf(split[1]), Integer.valueOf(split[2]), Integer.valueOf(split[3]));
+			} else if(split[0].equals("level")) {
+				level=zip.getFile(split[1]);
+				num_level=Integer.valueOf(split[2]);
+				break;
+			}
 			l--;
 		}
-		if(level==null) {
-			save_level=0;
-			conf=new Scanner(zip.getFileAsStream("main.cnf"));
-		}
+		level=null;
 	}
 
 	@Override
@@ -75,6 +86,7 @@ public class ZipLevelSet implements LevelSet {
 		if(level==null) {
 			while(level==null && conf.hasNextLine()) {
 				String line = conf.nextLine();
+				save_line++;
 				String[] split = line.split(":");
 				if(split[0].equals("display")) {
 					game.getMenu().showScreen(zip.getFileAsStream(split[1]));
@@ -82,7 +94,10 @@ public class ZipLevelSet implements LevelSet {
 					color = new Color(Integer.valueOf(split[1]), Integer.valueOf(split[2]), Integer.valueOf(split[3]));
 				} else if(split[0].equals("level")) {
 					level=zip.getFile(split[1]);
+					num_level=Integer.valueOf(split[2]);
 					break;
+				} else if(split[0].equals("save")) {
+					writeSave();
 				}
 			}
 			if(level==null) return null;
@@ -93,25 +108,29 @@ public class ZipLevelSet implements LevelSet {
 	@Override
 	public boolean nextLevel() {
 		level=null;
-		save_level++;
-		writeSave();
 		if(getLevel()==null) return false;
 		return true;
 	}
 
 	@Override
 	public LevelSet nextLevelSet() {
+		zip.delete("save.txt");
 		return null;
 	}
 
 	@Override
 	public void onLevelStarts() {
-		
+		if(first_start) {
+			Player play = game.getPlayer();
+			play.addScore(save_score);
+			play.setLives(save_lives);
+			first_start=false;
+		}
 	}
 
 	@Override
 	public int getLevelNum() {
-		return save_level;
+		return num_level;
 	}
 
 	@Override

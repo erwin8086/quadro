@@ -62,6 +62,31 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		
 	}
 	
+	private boolean continueGameMenu() {
+		clicked=false;
+		visible=true;
+		while(true) {
+			Graphics g = gui.getPaint();
+			paintGeneric(g);
+			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-100,100,20), "Continue Game", g) && clicked) {
+				clicked=false;
+				return false;
+				
+			}
+			if(drawButton(new Rectangle(gui.getWidth()/2-50,gui.getHeight()/2-70,100,20), "New Game", g) && clicked) {
+				clicked=false;
+				return true;
+			}
+			
+			gui.finishPaint();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	/**
 	 * paints Titlebar and Background
 	 * @param g Graphics to Paint
@@ -336,13 +361,21 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 				clicked=false;
 				startLevelEditor();
 			}
+			// Custom LevelSet
 			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-40,120,20), "Custom LevelSet", g) && clicked) {
 				clicked=false;
 				JFileChooser file = new JFileChooser();
 				if(file.showOpenDialog(game.getGUI())!=JFileChooser.APPROVE_OPTION) continue;
 				try {
 					ZipFile zip = new ZipFile(file.getSelectedFile());
+					if(zip.getFile("save.txt")!=null) {
+						if(continueGameMenu()) {
+							zip.delete("save.txt");
+						}
+					}
+					visible=false;
 					game.start(new ZipLevelSet(game, zip));
+					visible=true;
 					zip.save(file.getSelectedFile());
 				} catch (IOException e) {
 					e.printStackTrace();

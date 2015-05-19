@@ -473,6 +473,10 @@ public class Player implements GameObject, KeyListener {
 	public void setY(float y) {
 		this.y=y;
 	}
+	
+	public void setLives(int lives) {
+		this.lives=lives;
+	}
 
 
 }

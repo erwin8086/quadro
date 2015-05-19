@@ -90,6 +90,16 @@ public class ZipFile {
 		append(data,name);
 	}
 	
+	public void delete(String name) {
+		for(int i=0;i<files.size();i++) {
+			ZipObject zip=files.get(i);
+			if(zip.name.equals(name)) {
+				files.remove(zip);
+				break;
+			}
+		}
+	}
+	
 	private static class ZipObject {
 		byte[] data;
 		String name;

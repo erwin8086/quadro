@@ -108,7 +108,8 @@ public class Evil implements GameObject {
 		// Calculate Changedest if Colidate
 		for(GameObject g : game.getGameObjects()) {
 			if(g==this) continue;
-			for(Evils e : evils) {
+			for(int i2=0;i2<evils.size();i2++) {
+				Evils e = evils.get(i2);
 				if(g.isColidate(e.getPOS())) {
 					g.changeDest(e.getPOS());
 					e.dest*=-1;

@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 
 public class EndEvil implements GameObject {
 	private int width, height;
-	private Game game;
 	private ArrayList<Canon> canon;
 	private float x,y;
 	private int size_x, size_y;

@@ -31,6 +31,7 @@ public class Game implements Runnable, GameObject{
 	private Color color=Color.white;
 	
 	private GUI gui;
+	private ArrayList<GameListener> gameListeners;
 	
 	/**
 	 * Creates Game
@@ -38,6 +39,7 @@ public class Game implements Runnable, GameObject{
 	 * @param save the SaveGame
 	 */
 	public Game(GUI gui, Save save) {
+		gameListeners=new ArrayList<GameListener>();
 		this.gui=gui;
 		this.save=save;
 		gui.addGame(this);
@@ -68,9 +70,15 @@ public class Game implements Runnable, GameObject{
 	 * start Game Contains Gameloop
 	 */
 	public void start(LevelSet levels) {
+		for(int i=0;i<gameListeners.size();i++) {
+			gameListeners.get(i).onGameStarts();
+		}
 		// Create Array for GameObjects
 		gos = new ArrayList<GameObject>();
-				
+		
+		for(int i=0;i<gameListeners.size();i++) {
+			gameListeners.get(i).preCreateGameObjects();
+		}
 				
 		// Create GameObjects 
 		level = new Level(this, levels);
@@ -90,7 +98,9 @@ public class Game implements Runnable, GameObject{
 		gos.add(new VerticalMauer(this));
 		gos.add(this);
 		
-		
+		for(int i=0;i<gameListeners.size();i++) {
+			gameListeners.get(i).postCreateGameObjects();
+		}
 		// Call LevelStarts
 		level.onLevelStarts();
 		gameover=false;
@@ -114,6 +124,9 @@ public class Game implements Runnable, GameObject{
 		}
 		player.destroy();
 		calcs=new ArrayList<Calculator>();
+		for(int i=0;i<gameListeners.size();i++) {
+			gameListeners.get(i).onGameExit();
+		}
 	}
 	/**
 	 * Pause Game and Show Menu
@@ -285,6 +298,10 @@ public class Game implements Runnable, GameObject{
 	@Override
 	public int getCons() {
 		return 0;
+	}
+	
+	public ArrayList<GameListener> getGameListeners() {
+		return gameListeners;
 	}
 
 }

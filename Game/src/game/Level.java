@@ -2,6 +2,7 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -152,6 +153,10 @@ public class Level {
 	 * Calls LevelSets on LevelStarts
 	 */
 	public void onLevelStarts() {
+		ArrayList<GameListener> gameListeners = game.getGameListeners();
+		for(int i=0;i<gameListeners.size();i++) {
+			gameListeners.get(i).onGameStarts();
+		}
 		endGame=false;
 		level.onLevelStarts();
 	}

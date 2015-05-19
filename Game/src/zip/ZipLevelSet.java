@@ -82,7 +82,7 @@ public class ZipLevelSet implements LevelSet {
 					Class modc = modLoader.loadClass("mod." + split[1]);
 					try {
 						Mod mod = (Mod) modc.newInstance();
-						mod.load(game);
+						mod.load(game,zip);
 					} catch (InstantiationException e) {
 						e.printStackTrace();
 					} catch (IllegalAccessException e) {
@@ -119,7 +119,7 @@ public class ZipLevelSet implements LevelSet {
 						Class modc = modLoader.loadClass("mod." + split[1]);
 						try {
 							Mod mod = (Mod) modc.newInstance();
-							mod.load(game);
+							mod.load(game,zip);
 						} catch (InstantiationException e) {
 							e.printStackTrace();
 						} catch (IllegalAccessException e) {

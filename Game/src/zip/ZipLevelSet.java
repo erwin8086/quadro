@@ -59,7 +59,7 @@ public class ZipLevelSet implements LevelSet {
 	public ZipLevelSet(Game game, ZipFile zip) {
 		this.zip=zip;
 		this.game=game;
-		modLoader = new ZipClassLoader(ZipClassLoader.class.getClassLoader(), zip);
+		modLoader = new ZipClassLoader(getClass().getClassLoader(), zip);
 		conf=new Scanner(zip.getFileAsStream("main.cnf"));
 		width=game.getGUI().getWidth();
 		height=game.getGUI().getHeight();

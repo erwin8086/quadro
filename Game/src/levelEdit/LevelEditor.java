@@ -65,6 +65,7 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 	private JMenuItem coin50;
 	private JMenuItem coin500;
 	private JMenuItem coin100;
+	private JMenuItem custom;
 	// Labels
 	private JLabel sel;
 	private JButton back;
@@ -167,6 +168,7 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		evil3_button=new JButton("Speedy");
 		vEvil_button=new JButton("Vertical Evil");
 		sEvil_button=new JButton("Static Evil");
+		custom=new JMenuItem("Custom");
 		
 		file.add(fnew);
 		file.addSeparator();
@@ -193,6 +195,7 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		objects.add(coin50);
 		objects.add(coin100);
 		objects.add(coin500);
+		objects.add(custom);
 		
 		menuBar.add(file);
 		menuBar.add(objects);
@@ -238,6 +241,7 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		vEvil_button.addActionListener(this);
 		sEvil_button.addActionListener(this);
 		start.addActionListener(this);
+		custom.addActionListener(this);
 	}
 	
 	
@@ -332,6 +336,10 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 			}
 		} else if(s==start) {
 			start_level=true;
+		} else if(s==custom) {
+			String c = JOptionPane.showInputDialog("Input the char");
+			if(c.length()>0)
+				cSel=c.toCharArray()[0];
 		}
 		sel.setText("Selected: '" + cSel + "'");
 	}

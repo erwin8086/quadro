@@ -101,7 +101,7 @@ public class Episode1 implements LevelSet, GameObject {
 	 */
 	@Override
 	public boolean calc(float time) {
-		if(level==10) {
+		if(level==9) {
 			Player player = game.getPlayer();
 			if(player.isColidate(new Rectangle(0, 0, width, size_y))) {
 				player.delEvil();
@@ -115,7 +115,7 @@ public class Episode1 implements LevelSet, GameObject {
 	 */
 	@Override
 	public boolean paint(Graphics g) {
-		if(level==10) {
+		if(level==9) {
 			g.setColor(Color.green);
 			g.fillRect(0, 0, width, size_y);
 		}

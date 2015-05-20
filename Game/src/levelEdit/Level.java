@@ -108,6 +108,7 @@ public class Level {
 	}
 	
 	public void load(File file) {
+		clear();
 		if(!file.exists()) return;
 		Scanner s = null;
 		try {

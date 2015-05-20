@@ -24,7 +24,7 @@ public class Player implements GameObject, KeyListener {
 	// Speed of Player
 	private int speed;
 	// Num of Evils to KILL
-	private int num_evils;
+	private int num_evils=0;
 	private Level level;
 	// is force JUMPING
 	private boolean jumping;
@@ -132,7 +132,10 @@ public class Player implements GameObject, KeyListener {
 	public boolean calc(float time) {
 		if(no_jump>0) no_jump-=time;
 		// Decrase Invincible
-		invincible-=time;
+		if(invincible>0)
+			invincible-=time;
+		else
+			destroyEvils=false;
 		boolean is_mauer=false;
 		for (GameObject g : game.getGameObjects()) {
 			if(g.getCons()!=GameObject.CONS_MAUER) continue;
@@ -286,7 +289,6 @@ public class Player implements GameObject, KeyListener {
 		key_right=false;
 		key_up=false;
 		up=0;
-		num_evils=0;
 		jumping=false;
 		invincible=2;
 		destroyEvils=false;
@@ -339,7 +341,9 @@ public class Player implements GameObject, KeyListener {
 	 * Set Player Level Complete
 	 */
 	public void gameComplete() {
+		game.pauseGame(false);
 		level.nextLevel(score);
+		game.exitPause();
 	}
 
 	/**

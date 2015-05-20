@@ -115,10 +115,12 @@ public class EndEvil implements GameObject {
 				size_x-=size_minus;
 				size_y-=size_minus;
 				lives--;
+				play.addScore(50);
 				image=image.getScaledInstance(size_x, size_y, 0);
 				if(lives<=0) {
 					play.delEvil();
 					destroyed=true;
+					play.addScore(500);
 				}
 			} else {
 				play.gameOver();

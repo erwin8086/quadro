@@ -126,7 +126,6 @@ public class Level {
 	 * @param score
 	 */
 	public void nextLevel(Integer score) {
-		game.pauseGame(false);
 		old_level=level;
 		if(!level.nextLevel()) {
 			level=level.nextLevelSet();
@@ -145,7 +144,6 @@ public class Level {
 		for(GameObject g : game.getGameObjects()) {
 			g.reset();
 		}
-		game.exitPause();
 	}
 	
 	/**

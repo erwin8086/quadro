@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.InputStream;
 
-public class Episode3 implements LevelSet{
+public class Episode3 implements LevelSet, GameListener{
 	
 	private String levels[] = {"level3_1.txt", "level3_2.txt", "level3_3.txt", "level3_4.txt", "level3_5.txt", "level3_6.txt", "level3_7.txt", "level3_8.txt", "level3_9.txt", "level3_10.txt"};
 	private int level;
@@ -50,8 +50,10 @@ public class Episode3 implements LevelSet{
 	public void onLevelStarts() {
 		if(level==0)
 			game.getMenu().showScreen(getClass().getResourceAsStream("/res/story2.txt"));
-		if(level==9)
+		if(level==9) {
 			game.getGameObjects().add(new EndEvil(game));
+			game.getGameListeners().add(this);
+		}
 	}
 
 	@Override
@@ -73,6 +75,27 @@ public class Episode3 implements LevelSet{
 	@Override
 	public Color getFontColor() {
 		return Color.black;
+	}
+
+	@Override
+	public void onGameExit() {
+		game.getMenu().showScreen(getClass().getResourceAsStream("/res/story3.txt"));
+		game.getGameListeners().remove(this);
+	}
+
+	@Override
+	public void postCreateGameObjects() {
+		
+	}
+
+	@Override
+	public void preCreateGameObjects() {
+		
+	}
+
+	@Override
+	public void onGameStarts() {
+		
 	}
 
 }

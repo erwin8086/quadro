@@ -23,6 +23,7 @@ public class Evil implements GameObject {
 	// The Level
 	private Level level;
 	protected Game game;
+	private boolean calc=false;
 	/**
 	 * Generate Generic Evil
 	 * @param game The Game
@@ -44,6 +45,7 @@ public class Evil implements GameObject {
 	 */
 	@Override
 	public boolean calc(float time) {
+		calc=true;
 		int i;
 		// Calculate all Evils
 		for(i=0;i<evils.size();i++) {
@@ -127,7 +129,7 @@ public class Evil implements GameObject {
 				}
 			}
 		}
-		
+		calc=false;
 		return false;
 	}
 	/**
@@ -161,6 +163,7 @@ public class Evil implements GameObject {
 	 * @param g
 	 */
 	public void paintEvils(Graphics g) {
+		waitCalc();
 		for(int i=0;i<evils.size();i++) {
 			Evils e = evils.get(i);
 			g.fillRect((int)e.x, (int)e.y, e.size_x, e.size_y);
@@ -183,6 +186,7 @@ public class Evil implements GameObject {
 	 * @return
 	 */
 	public boolean reset(char check) {
+		calc=false;
 		// Reset Evils List
 		evils = new ArrayList<Evils>();
 		// Read Level file
@@ -202,6 +206,16 @@ public class Evil implements GameObject {
 		evils.add(new Evils(x,y,1));
 		player.addEvil();
 	}
+	
+	private void waitCalc() {
+		if(calc) {
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
 
 	/**
 	 * Check if Object Colidate
@@ -209,6 +223,7 @@ public class Evil implements GameObject {
 	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
+		waitCalc();
 		for(int i=0;i<evils.size();i++) {
 			Evils e = evils.get(i);
 			if(e.getPOS().intersects(r)) 

@@ -22,6 +22,7 @@ public class VerticalMauer implements GameObject{
 	private float last;
 	private int speed;
 	private Color color=new Color(0 , 0, 200);
+	private boolean calc=false;
 	
 	/**
 	 * Creates the Instance
@@ -41,6 +42,7 @@ public class VerticalMauer implements GameObject{
 	 */
 	@Override
 	public boolean calc(float time) {
+		calc=true;
 		last+=time;
 		// Creates new moving
 		if(last>5) {
@@ -83,7 +85,18 @@ public class VerticalMauer implements GameObject{
 				}
 			}
 		}
+		calc=false;
 		return false;
+	}
+	
+	private void waitCalc() {
+		if(calc) {
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -96,6 +109,7 @@ public class VerticalMauer implements GameObject{
 			g.fillRect(r.x, r.y, r.width, r.height);
 		}
 		g.setColor(color);
+		waitCalc();
 		for(int i=0;i<mov.size();i++) {
 			Moving m = mov.get(i);
 			g.fillRect((int)m.x, (int)m.y, size_x, size_y);
@@ -131,6 +145,7 @@ public class VerticalMauer implements GameObject{
 			Rectangle r2 = mauern.get(i);
 			if(r2.intersects(r)) return true;
 		}
+		waitCalc();
 		for(int i=0;i<mov.size();i++) {
 			Moving m = mov.get(i);
 			if(new Rectangle((int)m.x, (int)m.y, size_x, size_y).intersects(r)) {

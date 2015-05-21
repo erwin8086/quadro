@@ -22,6 +22,7 @@ public class Bonus implements GameObject{
 	// Contains all Boni
 	private ArrayList<BonusObject> boni;
 	private Game game;
+	private boolean calc=false;
 	/**
 	 * Creates and resets Bonus
 	 * @param player // The Player
@@ -41,12 +42,24 @@ public class Bonus implements GameObject{
 	@Override
 	public boolean calc(float time) {
 		int i;
+		calc=true;
 		for(i=0;i<boni.size();i++) {
 			if(boni.get(i).calc()) {
 				boni.remove(i);
 			}
 		}
+		calc=false;
 		return false;
+	}
+	
+	private void waitCalc() {
+		if(calc) {
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -54,6 +67,7 @@ public class Bonus implements GameObject{
 	 */
 	@Override
 	public boolean paint(Graphics g) {
+		waitCalc();
 		for(int i=0;i<boni.size();i++) {
 			boni.get(i).paint(g);
 		}

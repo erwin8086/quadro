@@ -30,13 +30,14 @@ public class Episode3 implements LevelSet{
 
 	@Override
 	public boolean nextLevel() {
+		boolean ret=true;
 		level++;
 		if(level>=levels.length) {
 			level=0;
-			return false;
+			ret=false;
 		}
 		game.getLevel().saveLevel(false);
-		return true;
+		return ret;
 			
 	}
 
@@ -47,6 +48,8 @@ public class Episode3 implements LevelSet{
 
 	@Override
 	public void onLevelStarts() {
+		if(level==0)
+			game.getMenu().showScreen(getClass().getResourceAsStream("/res/story2.txt"));
 		if(level==9)
 			game.getGameObjects().add(new EndEvil(game));
 	}

@@ -49,13 +49,14 @@ public class Episode2 implements LevelSet, GameObject {
 	 */
 	@Override
 	public boolean nextLevel() {
+		boolean ret=true;
 		level++;
 		if(level>=levels.length) {
 			level=0;
-			return false;
+			ret=false;
 		}
 		game.getLevel().saveLevel(false);
-		return true;
+		return ret;
 	}
 
 	/**

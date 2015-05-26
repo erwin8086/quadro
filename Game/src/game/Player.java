@@ -280,7 +280,7 @@ public class Player implements GameObject, KeyListener {
 		new Level.LevelLoader() {
 			
 			@Override
-			void onFound(int x1, int y1) {
+			public void onFound(int x1, int y1) {
 				x=x1;
 				y=y1;
 			}

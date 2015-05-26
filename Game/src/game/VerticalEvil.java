@@ -62,7 +62,7 @@ public class VerticalEvil implements GameObject {
 		new Level.LevelLoader() {
 			
 			@Override
-			void onFound(int x, int y) {
+			public void onFound(int x, int y) {
 				evils.add(new VEvil(x,y));
 			}
 		}.load('V', game.getLevel().getLevel(), game);

@@ -62,7 +62,12 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		
 	}
 	
-	protected boolean continueGameMenu() {
+	public void hide() {
+		visible=false;
+		clicked=false;
+	}
+	
+	public boolean continueGameMenu() {
 		clicked=false;
 		visible=true;
 		while(true) {

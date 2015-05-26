@@ -193,7 +193,7 @@ public class Level {
 	 * @author erwin
 	 *
 	 */
-	abstract static class LevelLoader {
+	abstract static public class LevelLoader {
 		/**
 		 * Load Level file
 		 * @param check Identifier
@@ -222,7 +222,7 @@ public class Level {
 		 * @param x
 		 * @param y
 		 */
-		abstract void onFound(int x, int y);
+		abstract public void onFound(int x, int y);
 	}
 
 }

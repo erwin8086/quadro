@@ -1,5 +1,11 @@
 package game;
 
+import java.io.File;
+import java.io.IOException;
+
+import zip.ZipFile;
+import zip.ZipLevelSet;
+
 
 /**
  * Main Class
@@ -32,6 +38,28 @@ public class Main {
 			Game game = new Game(gui, save);
 			save.attachGame(game);
 			Menu menu = new Menu(game);
+			if(args.length>0) {
+				String file = args[0];
+				if(file.length()>0) {
+					File f = new File(file);
+					if(f.exists()) {
+						try {
+							ZipFile zip = new ZipFile(f);
+							if(zip.getFile("save.txt")!=null) {
+								if(menu.continueGameMenu()) {
+									zip.delete("save.txt");
+								}
+							}
+							menu.hide();
+							game.start(new ZipLevelSet(game, zip));
+							zip.save(f);
+							System.exit(0);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
 			// Show The Menu
 			if(menu.showMainMenu(keys)) {
 				keys=true;

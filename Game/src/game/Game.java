@@ -131,6 +131,7 @@ public class Game implements Runnable, GameObject{
 		for(int i=0;i<gameListeners.size();i++) {
 			gameListeners.get(i).onGameExit();
 		}
+		gos=new ArrayList<GameObject>();
 	}
 	/**
 	 * Pause Game and Show Menu

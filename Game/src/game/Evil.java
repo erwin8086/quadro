@@ -195,7 +195,7 @@ public class Evil implements GameObject {
 		new Level.LevelLoader() {
 			
 			@Override
-			void onFound(int x, int y) {
+			public void onFound(int x, int y) {
 				addEvil(x, y);
 			}
 		}.load(check, level.getLevel(), game);
@@ -254,13 +254,13 @@ public class Evil implements GameObject {
 	 * @author erwin
 	 *
 	 */
-	class Evils {
+	protected class Evils {
 		//Position
-		float x,y;
+		public float x,y;
 		// Richtung 1 = right, -1 = left
-		int dest;
+		public int dest;
 		// Size
-		int size_x,size_y;
+		public int size_x,size_y;
 		
 		/**
 		 * Init Evil

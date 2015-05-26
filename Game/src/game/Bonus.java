@@ -123,7 +123,7 @@ public class Bonus implements GameObject{
 		new Level.LevelLoader() {
 			
 			@Override
-			void onFound(int x, int y) {
+			public void onFound(int x, int y) {
 				boni.add(new Coin().setValue(50).setImage(image_50).setPos(x, y));
 			}
 		}.load('5', level.getLevel(), game);
@@ -131,7 +131,7 @@ public class Bonus implements GameObject{
 		new Level.LevelLoader() {
 			
 			@Override
-			void onFound(int x, int y) {
+			public void onFound(int x, int y) {
 				boni.add(new Coin().setValue(100).setImage(image_100).setPos(x, y));
 			}
 		}.load('1', level.getLevel(), game);
@@ -139,7 +139,7 @@ public class Bonus implements GameObject{
 		new Level.LevelLoader() {
 			
 			@Override
-			void onFound(int x, int y) {
+			public void onFound(int x, int y) {
 				boni.add(new Coin().setValue(500).setImage(image_500).setPos(x, y));
 			}
 		}.load('%', level.getLevel(), game);
@@ -147,7 +147,7 @@ public class Bonus implements GameObject{
 		new Level.LevelLoader() {
 			
 			@Override
-			void onFound(int x, int y) {
+			public void onFound(int x, int y) {
 				boni.add(new Invincible().setImage(image_invincible).setPos(x, y));
 			}
 		}.load('I', level.getLevel(), game);
@@ -155,7 +155,7 @@ public class Bonus implements GameObject{
 		new Level.LevelLoader() {
 			
 			@Override
-			void onFound(int x, int y) {
+			public void onFound(int x, int y) {
 				boni.add(new Live().setImage(image_live).setPos(x, y));
 			}
 		}.load('L', level.getLevel(), game);

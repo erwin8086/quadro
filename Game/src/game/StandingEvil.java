@@ -71,7 +71,7 @@ public class StandingEvil implements GameObject {
 		new Level.LevelLoader() {
 			
 			@Override
-			void onFound(int x, int y) {
+			public void onFound(int x, int y) {
 				evils.add(new Rectangle(x,y, size_x, size_y));
 			}
 		}.load('s', game.getLevel().getLevel(), game);

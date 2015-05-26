@@ -46,7 +46,7 @@ public class DublicatingEvil extends StandingEvil{
 		new Level.LevelLoader() {
 			
 			@Override
-			void onFound(int x, int y) {
+			public void onFound(int x, int y) {
 				evils.add(new Rectangle(x,y, size_x, size_y));
 			}
 		}.load('D', game.getLevel().getLevel(), game);

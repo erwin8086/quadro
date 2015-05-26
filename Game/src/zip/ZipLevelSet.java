@@ -27,6 +27,7 @@ public class ZipLevelSet implements LevelSet {
 	private int save_line;
 	private int save_lives;
 	private Color color;
+	private Color font=Color.white;
 	private int width,height;
 	private int num_level=0;
 	private boolean first_start=true;
@@ -110,6 +111,8 @@ public class ZipLevelSet implements LevelSet {
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
+			} else if(split[0].equals("font")) {
+				font = new Color(Integer.valueOf(split[1]), Integer.valueOf(split[2]), Integer.valueOf(split[3]));
 			}
 		}
 		// Loads Saved State
@@ -146,6 +149,8 @@ public class ZipLevelSet implements LevelSet {
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
+			} else if(split[0].equals("font")) {
+				font = new Color(Integer.valueOf(split[1]), Integer.valueOf(split[2]), Integer.valueOf(split[3]));
 			}
 			l--;
 		}	
@@ -185,6 +190,8 @@ public class ZipLevelSet implements LevelSet {
 					} catch (ClassNotFoundException e) {
 						e.printStackTrace();
 					}
+				} else if(split[0].equals("font")) {
+					font = new Color(Integer.valueOf(split[1]), Integer.valueOf(split[2]), Integer.valueOf(split[3]));
 				}
 			}
 			if(level==null) return null;
@@ -245,7 +252,7 @@ public class ZipLevelSet implements LevelSet {
 	 */
 	@Override
 	public Color getFontColor() {
-		return Color.white;
+		return font;
 	}
 
 	/**

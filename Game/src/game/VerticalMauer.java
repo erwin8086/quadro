@@ -131,7 +131,7 @@ public class VerticalMauer implements GameObject{
 		new Level.LevelLoader() {
 			
 			@Override
-			void onFound(int x, int y) {
+			public void onFound(int x, int y) {
 				mauern.add(new Rectangle(x,y, size_x, size_y));
 			}
 		}.load('m', game.getLevel().getLevel(), game);

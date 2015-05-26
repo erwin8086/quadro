@@ -75,12 +75,12 @@ public class GUI extends JFrame implements KeyListener {
 		}
 	}
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {}
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {}

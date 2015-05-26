@@ -1,5 +1,10 @@
 package mod;
-
+/**
+ * A Basic TestMod
+ * Displays Messages and Show Screen by Test.class
+ * @author erwin
+ *
+ */
 public class TestMod extends zip.BaseMod {
 
 	@Override

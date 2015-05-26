@@ -62,12 +62,16 @@ public class Game implements Runnable, GameObject{
 		this.menu=menu;
 	}
 	
+	/**
+	 * Start Default Game
+	 */
 	public void start() {
 		start(null);
 	}
 	
 	/**
 	 * start Game Contains Gameloop
+	 * @param levels The LevelSet if null use Default LevelSets
 	 */
 	public void start(LevelSet levels) {
 		for(int i=0;i<gameListeners.size();i++) {
@@ -143,6 +147,7 @@ public class Game implements Runnable, GameObject{
 		gameover=true;
 	}
 	
+	
 	public Level getLevel() {
 		return level;
 	}
@@ -178,6 +183,10 @@ public class Game implements Runnable, GameObject{
 	public Evil getEvil() {
 		return evil;
 	}
+	
+	/**
+	 * Paints GameObjects to Screen
+	 */
 	@Override
 	public void run() {
 		while(!gameover) {
@@ -197,6 +206,7 @@ public class Game implements Runnable, GameObject{
 			// Finish Draw
 			gui.finishPaint();
 			
+			// Paint Noting if Paused
 			while(pause) {
 				try {
 					Thread.sleep(100);
@@ -212,14 +222,26 @@ public class Game implements Runnable, GameObject{
 		}
 	}
 	
+	/**
+	 * Calculate GameObject
+	 * @author erwin
+	 *
+	 */
 	private class Calculator implements Runnable {
 		
-		GameObject g;
+		private GameObject g;
 		
+		/**
+		 * Create Calculator for g
+		 * @param g the GameObject
+		 */
 		public Calculator(GameObject g) {
 			this.g = g;
 		}
 
+		/**
+		 * Calculate GameObject in loop
+		 */
 		@Override
 		public void run() {
 			long last_frame, this_frame;
@@ -232,7 +254,10 @@ public class Game implements Runnable, GameObject{
 				float time = ( (float) (this_frame-last_frame) )/1000;
 				if(time>0.5f) time=0.1f;
 				last_frame=this_frame;
+				// Calculate
 				g.calc(time);
+				
+				// If Pause do not Calc
 				while(pause) {
 					try {
 						Thread.sleep(50);
@@ -251,14 +276,26 @@ public class Game implements Runnable, GameObject{
 		
 	}
 
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public boolean calc(float time) {
 		return false;
 	}
+	
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public boolean paint(Graphics g) {
 		return false;
 	}
+	
+	/**
+	 * get FontColor and
+	 * resets Calculators
+	 */
 	@Override
 	public boolean reset() {
 		pause=true;
@@ -279,21 +316,40 @@ public class Game implements Runnable, GameObject{
 		pause=false;
 		return false;
 	}
+	
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
 		return false;
 	}
+	
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public boolean destroyColidate(Rectangle r) {
 		return false;
 	}
+	
+	/**
+	 * Return 0 for Custom Type
+	 */
 	@Override
 	public int getType() {
 		return 0;
 	}
+	
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public void changeDest(Rectangle r) {}
 	
+	/**
+	 * Return 0 for Custom Consistence
+	 */
 	@Override
 	public int getCons() {
 		return 0;

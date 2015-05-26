@@ -89,6 +89,11 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 	
 	private boolean start_level;
 	
+	/**
+	 * Create LevelEditor
+	 * @param gui the Main Window of Game
+	 * @param game
+	 */
 	public LevelEditor(JFrame gui, Game game) {
 		this.gui = gui;
 		gui.addMouseListener(this);
@@ -114,6 +119,9 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		
 	}
 	
+	/**
+	 * Starts Level from Editor
+	 */
 	private void startLevel() {
 		active=false;
 		tools.setVisible(false);
@@ -132,6 +140,9 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		start_level=false;
 	}
 	
+	/**
+	 * Add Components to Tools
+	 */
 	private void addComponents() {
 		menuBar = new JMenuBar();
 		file = new JMenu("File");
@@ -213,6 +224,9 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		tools.add(exit_button);
 	}
 	
+	/**
+	 * Add Listeners to Components
+	 */
 	private void addListeners() {
 		exit.addActionListener(this);
 		load.addActionListener(this);
@@ -244,7 +258,9 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		custom.addActionListener(this);
 	}
 	
-	
+	/**
+	 * Show LevelEditor
+	 */
 	public void show() {
 		cSel=' ';
 		sel.setText("Selecetd: ' '");
@@ -265,6 +281,9 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		
 	}
 	
+	/**
+	 * Display the Level
+	 */
 	private void display() {
 		Graphics g = buffer.getDrawGraphics();
 		g.setColor(Color.white);
@@ -273,13 +292,22 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		buffer.show();
 	}
 	
+	/**
+	 * Undo last Step
+	 */
 	private void onBack() {
 		level.back();
 	}
 
+	/**
+	 * The ActionListener for Components
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// Get Source
 		Object s = e.getSource();
+		
+		// Check for Source and do Action
 		if(s==back) {
 			onBack();
 		} else if(s==exit || s==exit_button) {
@@ -344,6 +372,9 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		sel.setText("Selected: '" + cSel + "'");
 	}
 
+	/**
+	 * On Mouse Clicked sets Char in Level
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(!active) return;
@@ -367,31 +398,54 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 		}
 	}
 
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public void mouseEntered(MouseEvent arg0) {}
 
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public void mouseExited(MouseEvent arg0) {}
 
+	/**
+	 * Save Button
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		button = e.getButton();
 	}
 
+	/**
+	 * Resets Button
+	 */
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		button=0;
 	}
 
+	/**
+	 * Sets Level on Mouse Dragged
+	 */
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		MouseEvent e = new MouseEvent((Component) arg0.getSource(), arg0.getID(), arg0.getWhen(), arg0.getModifiers(), arg0.getX(), arg0.getY(), arg0.getClickCount(), false , button);
 		mouseClicked(e);
 	}
 
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public void mouseMoved(MouseEvent arg0) {}
 	
+	/**
+	 * The Titlebar for LevelEditor
+	 * @author erwin
+	 *
+	 */
 	private class TitleBar extends JFrame implements MouseMotionListener {
 		private static final long serialVersionUID = -2592627871847839810L;
 		private String title;
@@ -402,6 +456,9 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 			addMouseMotionListener(this);
 		}
 
+		/**
+		 * Paints the TitleBar
+		 */
 		@Override
 		public void paint(Graphics g) {
 			g.setColor(Color.black);
@@ -416,6 +473,9 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 			g.drawString(title, getWidth()/2-width/2, height);
 		}
 		
+		/**
+		 * Update Position of Window
+		 */
 		public void updatePOS() {
 			Rectangle[] bounds = new Rectangle[3];
 			bounds[0] = getBounds();
@@ -430,6 +490,9 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 
 		}
 
+		/**
+		 * Move Window
+		 */
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			if( (oldx!=e.getX()) || (oldy!=e.getY()) ) {
@@ -448,6 +511,9 @@ public class LevelEditor implements ActionListener, MouseListener, MouseMotionLi
 			}
 		}
 
+		/**
+		 * Sets oldx and oldy
+		 */
 		@Override
 		public void mouseMoved(MouseEvent e) {
 			oldx=e.getX();

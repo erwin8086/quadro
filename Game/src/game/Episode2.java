@@ -75,9 +75,11 @@ public class Episode2 implements LevelSet, GameObject {
 	 */
 	@Override
 	public void onLevelStarts() {
+		// Show Story1.txt
 		if(level==0) {
 			game.getMenu().showScreen(getClass().getResourceAsStream("/res/story1.txt"));
 		}
+		// Add white bar
 		if(level==9) {
 			game.getGameObjects().add(this);
 			game.getPlayer().addEvil();
@@ -101,11 +103,17 @@ public class Episode2 implements LevelSet, GameObject {
 		g.fillRect(0, 0, width, height);
 	}
 
+	/**
+	 * The Default Game isScore
+	 */
 	@Override
 	public boolean isScore() {
 		return true;
 	}
 
+	/**
+	 * Check if Player colidates with white bar
+	 */
 	@Override
 	public boolean calc(float time) {
 		if(game.getPlayer().isColidate(new Rectangle(0,0,width,16))) {
@@ -114,6 +122,9 @@ public class Episode2 implements LevelSet, GameObject {
 		return false;
 	}
 
+	/**
+	 * Paint
+	 */
 	@Override
 	public boolean paint(Graphics g) {
 		g.setColor(Color.white);
@@ -121,35 +132,56 @@ public class Episode2 implements LevelSet, GameObject {
 		return false;
 	}
 
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public boolean reset() {
 		return false;
 	}
 
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
 		return false;
 	}
 
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public boolean destroyColidate(Rectangle r) {
 		return false;
 	}
 
+	/**
+	 * Return 0 for not Default Object
+	 */
 	@Override
 	public int getType() {
 		return 0;
 	}
 
+	/**
+	 * Do Nothing
+	 */
 	@Override
 	public void changeDest(Rectangle r) {}
 
+	/**
+	 * Is CONS_EVIL consistence
+	 */
 	@Override
 	public int getCons() {
 
 		return GameObject.CONS_EVIL;
 	}
 
+	/**
+	 * White font on green ground
+	 */
 	@Override
 	public Color getFontColor() {
 		return Color.white;

@@ -11,18 +11,30 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
-
+/**
+ * The Level loaded in Editor
+ * @author erwin
+ *
+ */
 public class Level {
+	// The Level
 	private char[][] level = new char[37][50];
 	private int size_x, size_y;
 	private LastAction last=null;
 	
+	/**
+	 * Creates Instance and clear()
+	 * @param frame
+	 */
 	public Level(JFrame frame) {
 		clear();
 		size_x=frame.getWidth()/50;
 		size_y=frame.getHeight()/37;
 	}
 	
+	/**
+	 * Clear the Level loaded
+	 */
 	public void clear() {
 		last=null;
 		for(int y=0;y<37;y++) {
@@ -32,6 +44,11 @@ public class Level {
 		}
 	}
 	
+	/**
+	 * Find char in Level and return Position
+	 * @param f the char
+	 * @return null if cold not found
+	 */
 	public Rectangle find(char f) {
 		for(int y=0;y<37;y++) {
 			for(int x=0;x<50;x++) {
@@ -43,6 +60,13 @@ public class Level {
 		return null;
 	}
 	
+	/**
+	 * set Char in Level
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @param sel the char to set
+	 * @param user is User?
+	 */
 	public void set(int x, int y, char sel, boolean user) {
 		x /= size_x;
 		y /= size_y;
@@ -58,6 +82,9 @@ public class Level {
 		level[y][x] = sel;
 	}
 	
+	/**
+	 * Undo last Step
+	 */
 	public void back() {
 		if(last==null) return;
 		boolean user = last.user;
@@ -66,12 +93,25 @@ public class Level {
 		if(!user) back();
 	}
 	
+	/**
+	 * get Char for Position
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @return the char
+	 */
 	public char get(int x, int y) {
 		x /= size_x;
 		y /= size_y;
 		return level[y][x];
 	}
 	
+	/**
+	 * showRectangle
+	 * @param g the Graphics to Show
+	 * @param c the color
+	 * @param x the x coordinate in array
+	 * @param y the y coordinate in array
+	 */
 	private void showRect(Graphics g, Color c, int x, int y) {
 		Color old = g.getColor();
 		g.setColor(c);
@@ -79,10 +119,15 @@ public class Level {
 		g.setColor(old);
 	}
 	
+	/**
+	 * Display the level
+	 * @param g the Graphics to draw
+	 */
 	public void display(Graphics g) {
 		g.setColor(Color.black);
 		for(int y=0;y<37;y++) {
 			for(int x=0;x<50;x++) {
+				// Show Color
 				switch(level[y][x]) {
 				case 'm':
 				case '#':
@@ -101,12 +146,17 @@ public class Level {
 					showRect(g, Color.YELLOW, x, y);
 					break;
 				}
+				// Show Char
 				g.drawRect(x*size_x, y*size_y, size_x, size_y);
 				g.drawChars(level[y], x, 1, x*size_x+size_x/2, (y+1)*size_y);
 			}
 		}
 	}
 	
+	/**
+	 * Load Level
+	 * @param file the File to Load
+	 */
 	public void load(File file) {
 		clear();
 		if(!file.exists()) return;
@@ -133,6 +183,10 @@ public class Level {
 		}
 	}
 	
+	/**
+	 * Save Level
+	 * @param os the OutputStream to Save
+	 */
 	public void save(OutputStream os) {
 		PrintWriter out=null;
 		out=new PrintWriter(os);
@@ -142,6 +196,10 @@ public class Level {
 		out.close();
 	}
 	
+	/**
+	 * Save Level
+	 * @param file the File to Save
+	 */
 	public void save(File file) {
 		try {
 			save(new FileOutputStream(file));
@@ -150,7 +208,12 @@ public class Level {
 		}
 	}
 	
-	class LastAction {
+	/**
+	 * Save Last Action for Undo
+	 * @author erwin
+	 *
+	 */
+	private class LastAction {
 		public LastAction pre=null;
 		public int x,y;
 		public char old;

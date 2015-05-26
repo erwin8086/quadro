@@ -52,6 +52,9 @@ public class Bonus implements GameObject{
 		return false;
 	}
 	
+	/**
+	 * Wait while calc()
+	 */
 	private void waitCalc() {
 		if(calc) {
 			try {
@@ -161,7 +164,7 @@ public class Bonus implements GameObject{
 	}
 
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
@@ -169,7 +172,7 @@ public class Bonus implements GameObject{
 	}
 
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public boolean destroyColidate(Rectangle r) {
@@ -295,14 +298,24 @@ public class Bonus implements GameObject{
 		}
 		
 	}
+	
+	/**
+	 * get type of GameObject
+	 */
 	@Override
 	public int getType() {
 		return GameObject.BONUS;
 	}
 
+	/**
+	 * Do Noting
+	 */
 	@Override
 	public void changeDest(Rectangle r) {}
 
+	/**
+	 * get Consistence
+	 */
 	@Override
 	public int getCons() {
 		return GameObject.CONS_EVIL;

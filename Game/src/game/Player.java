@@ -425,7 +425,7 @@ public class Player implements GameObject, KeyListener {
 	}
 	
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public void changeDest(Rectangle r) {
@@ -473,6 +473,10 @@ public class Player implements GameObject, KeyListener {
 		this.y=y;
 	}
 	
+	/**
+	 * set Lives
+	 * @param lives number of Lives
+	 */
 	public void setLives(int lives) {
 		this.lives=lives;
 	}

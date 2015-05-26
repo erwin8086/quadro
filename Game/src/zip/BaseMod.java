@@ -1,7 +1,12 @@
 package zip;
 
 import game.Game;
-
+/**
+ * The BaseMod used for Base for Other Mods
+ * Adds a GameListener and dels the GameListener on Exit
+ * @author erwin
+ *
+ */
 public abstract class BaseMod implements game.GameListener, Mod{
 
 	protected Game game;

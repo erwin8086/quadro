@@ -34,7 +34,7 @@ import zip.ZipLevelSet;
 public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	private GUI gui;
 	private boolean visible;
-	private Game game;
+	protected Game game;
 	private boolean move;
 	private boolean clicked;
 	private int mouse_x=0, mouse_y=0;
@@ -62,7 +62,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		
 	}
 	
-	private boolean continueGameMenu() {
+	protected boolean continueGameMenu() {
 		clicked=false;
 		visible=true;
 		while(true) {
@@ -91,7 +91,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	 * paints Titlebar and Background
 	 * @param g Graphics to Paint
 	 */
-	private void paintGeneric(Graphics g) {
+	protected void paintGeneric(Graphics g) {
 		// Draw Background
 		g.setColor(Color.black);
 		g.fillRect(0, 0, gui.getWidth(), gui.getHeight());
@@ -192,7 +192,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	 * @param msg Message
 	 * @param g Graphics to Paint
 	 */
-	private void showMSG(String msg, Graphics g) {
+	protected void showMSG(String msg, Graphics g) {
 		int x = gui.getWidth()/2 -100;
 		int y = gui.getHeight()/2 -50;
 		g.setColor(Color.white);
@@ -208,7 +208,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	 * @param Key key to set
 	 * @param key_name name of key
 	 */
-	private void setKey(int Key, String key_name) {
+	protected void setKey(int Key, String key_name) {
 		last_key=0;
 		while(last_key==0) {
 			Graphics g = gui.getPaint();
@@ -229,7 +229,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	 * Show OptionsMenu
 	 * @return
 	 */
-	private boolean showKeyMenu() {
+	protected boolean showKeyMenu() {
 		while(true) {
 			visible=true;
 			Graphics g = gui.getPaint();
@@ -284,7 +284,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	/**
 	 * Show Hiscore Menu
 	 */
-	private void showHighScore() {
+	protected void showHighScore() {
 		String[] scores = new String[5];
 		for(int i=0;i<5;i++) {
 			Save.Score score = game.getSave().getHighScore(i);
@@ -314,13 +314,13 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 		}
 	}
 	
-	private void startLevelEditor() {
+	protected void startLevelEditor() {
 		visible=false;
 		new levelEdit.LevelEditor(gui, game).show();
 		visible=true;
 	}
 	
-	private void showExtrasMenu() {
+	protected void showExtrasMenu() {
 		clicked=false;
 		visible=true;
 		while(true) {
@@ -570,7 +570,7 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 	 * @param g Graphics to Paint
 	 * @return
 	 */
-	private boolean drawButton(Rectangle r, String text, Graphics g) {
+	protected boolean drawButton(Rectangle r, String text, Graphics g) {
 		FontMetrics fm = g.getFontMetrics();
 		LineMetrics lm = fm.getLineMetrics(text, g);
 		int width=0;

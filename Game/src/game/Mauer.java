@@ -30,7 +30,7 @@ public class Mauer implements GameObject {
 	}
 	
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public boolean calc(float time) {
@@ -87,7 +87,7 @@ public class Mauer implements GameObject {
 	}
 
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public boolean destroyColidate(Rectangle r) {
@@ -104,7 +104,7 @@ public class Mauer implements GameObject {
 	}
 
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public void changeDest(Rectangle r) {}

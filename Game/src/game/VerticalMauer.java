@@ -89,6 +89,9 @@ public class VerticalMauer implements GameObject{
 		return false;
 	}
 	
+	/**
+	 * Wait while calc()
+	 */
 	private void waitCalc() {
 		if(calc) {
 			try {

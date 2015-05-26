@@ -14,9 +14,20 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+/**
+ * A ZipFile
+ * @author erwin
+ *
+ */
 public class ZipFile {
 
 	private ArrayList<ZipObject> files;
+	
+	/**
+	 * Loads ZipFile
+	 * @param load the ZipFile
+	 * @throws IOException a Exeption for ZipInpuStream
+	 */
 	public ZipFile(File load) throws IOException {
 		files = new ArrayList<ZipObject>();
 		final int BUFFER=2048;

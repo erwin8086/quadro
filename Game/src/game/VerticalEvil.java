@@ -72,7 +72,7 @@ public class VerticalEvil implements GameObject {
 	}
 
 	/**
-	 * check if is Colidating with r
+	 * check if is Collidating with r
 	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
@@ -84,7 +84,7 @@ public class VerticalEvil implements GameObject {
 	}
 
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public boolean destroyColidate(Rectangle r) {

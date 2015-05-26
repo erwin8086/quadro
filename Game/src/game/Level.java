@@ -169,12 +169,20 @@ public class Level {
 		return 0;
 	}
 	
+	/**
+	 * gets FontColor for Display
+	 * Lives and Score and Level
+	 * @return
+	 */
 	public Color getFontColor() {
 		if(level==null)
 			return null;
 		return level.getFontColor();
 	}
 	
+	/**
+	 * @return is The LevelSet Default?
+	 */
 	public boolean isScore() {
 		if(level==null) return false;
 		return level.isScore();

@@ -21,7 +21,7 @@ public class Episode1 implements LevelSet, GameObject {
 	private int width, height;
 	
 	/**
-	 * Creates a Episode1 Object
+	 * Creates an Episode1 Object
 	 * @param game The Game Instance
 	 * @param level The Level to start
 	 */
@@ -98,7 +98,7 @@ public class Episode1 implements LevelSet, GameObject {
 
 	/**
 	 * Calculate green bar
-	 * finish if Player colidate
+	 * finish if Player colidates
 	 */
 	@Override
 	public boolean calc(float time) {
@@ -124,7 +124,7 @@ public class Episode1 implements LevelSet, GameObject {
 	}
 
 	/**
-	 * on Level 10 add a Evil to exit after green bar toucht
+	 * on Level 10 add an Evil to exit after green bar touched
 	 */
 	@Override
 	public boolean reset() {
@@ -132,7 +132,7 @@ public class Episode1 implements LevelSet, GameObject {
 	}
 
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
@@ -140,7 +140,7 @@ public class Episode1 implements LevelSet, GameObject {
 	}
 
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public boolean destroyColidate(Rectangle r) {
@@ -165,7 +165,7 @@ public class Episode1 implements LevelSet, GameObject {
 	}
 
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public void changeDest(Rectangle r) {}
@@ -178,11 +178,17 @@ public class Episode1 implements LevelSet, GameObject {
 		return GameObject.CONS_EVIL;
 	}
 
+	/**
+	 * The Default Game isScore
+	 */
 	@Override
 	public boolean isScore() {
 		return true;
 	}
-
+	
+	/**
+	 * White font on black ground
+	 */
 	@Override
 	public Color getFontColor() {
 		return Color.white;

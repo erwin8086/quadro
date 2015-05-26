@@ -11,7 +11,12 @@ import java.util.Scanner;
 import game.Game;
 import game.LevelSet;
 import game.Player;
-
+/**
+ * A LevelSet from ZipFile
+ * used for CustomLevelSets and Mods
+ * @author erwin
+ *
+ */
 public class ZipLevelSet implements LevelSet {
 	
 	private ZipFile zip;
@@ -27,6 +32,9 @@ public class ZipLevelSet implements LevelSet {
 	private boolean first_start=true;
 	private ZipClassLoader modLoader;
 	
+	/**
+	 * Reads the SaveGame
+	 */
 	public void readSave() {
 		if(zip.getFile("save.txt")==null) {
 			save_score=0;
@@ -41,6 +49,9 @@ public class ZipLevelSet implements LevelSet {
 		in.close();
 	}
 	
+	/**
+	 * Writes The SaveGame
+	 */
 	public void writeSave() {
 		Player play = game.getPlayer();
 		if(play==null) return;
@@ -55,7 +66,11 @@ public class ZipLevelSet implements LevelSet {
 		zip.replace(out.toByteArray(), "save.txt");
 	}
 	
-	
+	/**
+	 * Load first Level and Mods
+	 * @param game the Game
+	 * @param zip the ZipFile
+	 */
 	public ZipLevelSet(Game game, ZipFile zip) {
 		this.zip=zip;
 		this.game=game;
@@ -66,6 +81,7 @@ public class ZipLevelSet implements LevelSet {
 		color=Color.black;
 		readSave();
 		int l=save_line;
+		// Loads first Level if no SaveGame
 		while(level==null && conf.hasNextLine() && l==0) {
 			String line = conf.nextLine();
 			save_line++;
@@ -82,7 +98,7 @@ public class ZipLevelSet implements LevelSet {
 				writeSave();
 			} else if(split[0].equals("mod")) {
 				try {
-					Class modc = modLoader.loadClass("mod." + split[1]);
+					Class<?> modc = modLoader.loadClass("mod." + split[1]);
 					try {
 						Mod mod = (Mod) modc.newInstance();
 						mod.load(game,zip);
@@ -96,6 +112,7 @@ public class ZipLevelSet implements LevelSet {
 				}
 			}
 		}
+		// Loads Saved State
 		while(l>0) {
 			if(!conf.hasNextLine()) {
 				InputStream in=getClass().getResourceAsStream("/res/level.txt");
@@ -117,7 +134,7 @@ public class ZipLevelSet implements LevelSet {
 				color = new Color(Integer.valueOf(split[1]), Integer.valueOf(split[2]), Integer.valueOf(split[3]));
 			} else if(split[0].equals("mod")) {
 				try {
-					Class modc = modLoader.loadClass("mod." + split[1]);
+					Class<?> modc = modLoader.loadClass("mod." + split[1]);
 					try {
 						Mod mod = (Mod) modc.newInstance();
 						mod.load(game,zip);
@@ -134,6 +151,9 @@ public class ZipLevelSet implements LevelSet {
 		}	
 	}
 
+	/**
+	 * Gets the Level
+	 */
 	@Override
 	public InputStream getLevel() {
 		if(level==null) {
@@ -153,7 +173,7 @@ public class ZipLevelSet implements LevelSet {
 					writeSave();
 				} else if(split[0].equals("mod")) {
 					try {
-						Class modc = modLoader.loadClass("mod." + split[1]);
+						Class<?> modc = modLoader.loadClass("mod." + split[1]);
 						try {
 							Mod mod = (Mod) modc.newInstance();
 							mod.load(game,zip);
@@ -172,6 +192,9 @@ public class ZipLevelSet implements LevelSet {
 		return new ByteArrayInputStream(level);
 	}
 
+	/**
+	 * loads nextLevel
+	 */
 	@Override
 	public boolean nextLevel() {
 		level=null;
@@ -179,12 +202,19 @@ public class ZipLevelSet implements LevelSet {
 		return true;
 	}
 
+	/**
+	 * LevelSet finish
+	 */
 	@Override
 	public LevelSet nextLevelSet() {
 		zip.delete("save.txt");
 		return null;
 	}
 
+	/**
+	 * on Level starts first
+	 * set Player lives and Score
+	 */
 	@Override
 	public void onLevelStarts() {
 		if(first_start) {
@@ -195,22 +225,32 @@ public class ZipLevelSet implements LevelSet {
 		}
 	}
 
+	// Return number of Level
 	@Override
 	public int getLevelNum() {
 		return num_level;
 	}
 
+	/**
+	 * Draw Background
+	 */
 	@Override
 	public void drawBackground(Graphics g) {
 		g.setColor(color);
 		g.fillRect(0, 0,width, height);
 	}
 
+	/**
+	 * gets font color
+	 */
 	@Override
 	public Color getFontColor() {
 		return Color.white;
 	}
 
+	/**
+	 * is not Default
+	 */
 	@Override
 	public boolean isScore() {
 		return false;

@@ -40,7 +40,7 @@ public class Evil implements GameObject {
 	}
 
 	/**
-	 * Calculate move set Player Gameover if Colidate
+	 * Calculate move set Player Gameover if Colidates
 	 * Destroy Evil if jump
 	 */
 	@Override
@@ -51,10 +51,12 @@ public class Evil implements GameObject {
 		for(i=0;i<evils.size();i++) {
 			Evils e = evils.get(i);
 			e.x += speed*time*e.dest;
-			// TODO: Use GameObjects to Calculate
-			if(mauer.isColidate(e.getPOS())) e.dest*=-1;
-			while(mauer.isColidate(e.getPOS())) {
-				e.x += 1*e.dest;
+			for(GameObject g : game.getGameObjects()) {
+				if(g.getCons()!=GameObject.CONS_MAUER) continue;
+				if(g.isColidate(e.getPOS())) e.dest*=-1;
+				while(g.isColidate(e.getPOS())) {
+					e.x += 1*e.dest;
+				}
 			}
 			
 			// Evil cannot exit Screen
@@ -202,11 +204,19 @@ public class Evil implements GameObject {
 		return false;
 	}
 	
+	/**
+	 * Add an Evil an Pos(x,y)
+	 * @param x
+	 * @param y
+	 */
 	public void addEvil(int x, int y) {
 		evils.add(new Evils(x,y,1));
 		player.addEvil();
 	}
 	
+	/**
+	 * Wait while calc()
+	 */
 	private void waitCalc() {
 		if(calc) {
 			try {
@@ -233,7 +243,7 @@ public class Evil implements GameObject {
 	}
 
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public boolean destroyColidate(Rectangle r) {

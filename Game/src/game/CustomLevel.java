@@ -4,7 +4,13 @@ import java.awt.Graphics;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-
+/**
+ * CustomLevel from byte[]
+ * Used for LevelEditor and CustomLevel
+ * use as LevelSet
+ * @author erwin
+ *
+ */
 public class CustomLevel implements LevelSet {
 	private byte[] level;
 	private Game game;

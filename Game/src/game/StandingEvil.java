@@ -35,8 +35,8 @@ public class StandingEvil implements GameObject {
 	}
 
 	/**
-	 * Calculate Collissions
-	 * Dont move the Evil
+	 * Calculate Collisions
+	 * Don't move the Evil
 	 */
 	@Override
 	public boolean calc(float time) {
@@ -80,7 +80,7 @@ public class StandingEvil implements GameObject {
 	}
 
 	/**
-	 * check if Object collidate with Evil
+	 * check if Object collidates with Evil
 	 */
 	@Override
 	public boolean isColidate(Rectangle r) {
@@ -91,7 +91,7 @@ public class StandingEvil implements GameObject {
 	}
 
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public boolean destroyColidate(Rectangle r) {
@@ -107,7 +107,7 @@ public class StandingEvil implements GameObject {
 	}
 
 	/**
-	 * Do Noting
+	 * Do Nothing
 	 */
 	@Override
 	public void changeDest(Rectangle r) {}

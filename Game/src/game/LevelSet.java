@@ -46,8 +46,15 @@ public interface LevelSet {
 	 */
 	public void drawBackground(Graphics g);
 	
+	/**
+	 * @return The FontColor for Status bar
+	 */
 	public Color getFontColor();
 	
+	/**
+	 * is The LevelSet Default?
+	 * @return true if Default
+	 */
 	public boolean isScore();
 	
 }

@@ -28,12 +28,20 @@ public class ZipFile {
 	 * @param load the ZipFile
 	 * @throws IOException a Exeption for ZipInpuStream
 	 */
-	public ZipFile(File load) throws IOException {
+	public ZipFile(File f) throws IOException {
+		FileInputStream fis = new FileInputStream(f);
+		load(fis);
+	}
+	
+	public ZipFile(InputStream in) throws IOException {
+		load(in);
+	}
+	
+	public void load(InputStream in) throws IOException {
 		files = new ArrayList<ZipObject>();
 		final int BUFFER=2048;
 		byte[] data=new byte[BUFFER];
-		FileInputStream fis = new FileInputStream(load);
-		ZipInputStream zis = new ZipInputStream(new BufferedInputStream(fis));
+		ZipInputStream zis = new ZipInputStream(new BufferedInputStream(in));
 		ZipEntry entry;
 		while( (entry = zis.getNextEntry()) != null) {
 			ByteArrayOutputStream bout = new ByteArrayOutputStream();

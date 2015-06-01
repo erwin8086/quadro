@@ -11,9 +11,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.font.LineMetrics;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -386,7 +389,29 @@ public class Menu implements MouseListener, MouseMotionListener, KeyListener{
 					e.printStackTrace();
 				}
 			}
-			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-10,120,20), "Exit Extras", g) && clicked) {
+			// Bonus Level Set
+			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2-10,120,20), "Bonus Levels", g) && clicked) {
+				File f = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "." + Main.title + ".bonus.zip");
+				try {
+					ZipFile zip = null;
+					if(f.exists())
+						zip = new ZipFile(f);
+					else
+						zip = new ZipFile(getClass().getResourceAsStream("/res/bonus.zip"));
+					if(zip.getFile("save.txt")!=null) {
+						if(continueGameMenu()) {
+							zip.delete("save.txt");
+						}
+					}
+					hide();
+					game.start(new ZipLevelSet(game, zip));
+					zip.save(f);
+					System.exit(0);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(drawButton(new Rectangle(gui.getWidth()/2-60,gui.getHeight()/2+20,120,20), "Exit Extras", g) && clicked) {
 				clicked=false;
 				return;
 			}
